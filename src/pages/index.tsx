@@ -11,10 +11,6 @@ const inter = Inter({
   adjustFontFallback: false,
 });
 
-interface sizeTypes {
-  height: number | null;
-  width: number | null;
-}
 
 export default function Home() {
   return (
