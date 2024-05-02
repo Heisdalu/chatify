@@ -7,7 +7,25 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    screens: { sm: "480px", md: "768px" },
+    container: {
+      // padding: {
+      //   DEFAULT: "1rem",
+      //   sm: "1rem",
+      //   lg: "4rem",
+      //   xl: "5rem",
+      //   "2xl": "6rem",
+      // },
+    },
+
+    extend: {
+      borderColor: {
+        1: "#000",
+      },
+      borderWidth: {
+        1: "1px",
+      },
+    },
   },
   plugins: [],
 };

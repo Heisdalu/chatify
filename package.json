@@ -11,6 +11,7 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "@uidotdev/usehooks": "^2.4.1",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18"
