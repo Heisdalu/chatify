@@ -1,22 +1,12 @@
-import { Inter } from "next/font/google";
-import { useWindowSize } from "@uidotdev/usehooks";
-import { useEffect, ReactEventHandler, useState, useCallback } from "react";
 import Logo from "@/components/Logo/Logo";
 import Wrapper from "@/components/Wrapper/Wrapper";
 import Image from "next/image";
 
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  adjustFontFallback: false,
-});
-
-
 export default function Home() {
   return (
-    <div className={`${inter.className}`}>
+    <div>
       <Wrapper>
-        <div className="py-[2rem] sm:py-[2.5rem]">
+        <div className="">
           <div className="flex justify-center">
             <h1 className="text-[1.1rem] font-[600] flex items-center space-x-[0.5rem]">
               <Logo />
