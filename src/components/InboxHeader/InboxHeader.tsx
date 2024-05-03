@@ -3,8 +3,8 @@ import Image from "next/image";
 
 const InboxHeader = () => {
   return (
-    <div className="border-1 fluid py-[0.5rem] flex justify-between items-center flex-wrap">
-      <span className="md:hidden">
+    <div className="fluid py-[0.5rem] flex justify-between items-center flex-wrap">
+      <span className="">
         <Logo />
       </span>
 

@@ -22,21 +22,10 @@
   }
 } */
 
-
 .fluid {
-    @apply px-[1rem] sm:px-[1rem] md:px-[3rem] lg:px-[4rem] xl:px-[6rem];
-  }
+  @apply px-[1rem] sm:px-[1rem] md:px-[3rem] lg:px-[4rem] xl:px-[6rem];
+}
 
-  .const {
-    display: grid;
-  }
-
-  .nav {
-    grid-template-columns: 100px 1fr;
-  }
-
-  @media screen and (min-width: 768px) {
-    .const {
-      grid-template-columns: 300px 1fr;
-    }
-  }
+.box {
+  @apply border-gray-100 border-[1px] rounded-[10px] md:py-[1rem];
+}

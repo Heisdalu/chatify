@@ -11,9 +11,8 @@ const InboxContainer = () => {
   // if (!width) return <div></div>;
 
   return (
-    <div className="relative const">
+    <div className="relative">
       <UserInboxList />
-      <UserDirectChat />
     </div>
   );
 };

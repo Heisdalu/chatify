@@ -4,12 +4,13 @@ import InboxNavigation from "@/components/InboxNavigation/InboxNavigation";
 
 const UserInboxList = () => {
   return (
-    <div className="border-1 md:grid md:bg-green-200 md:grid-cols-2">
+    <div className="box">
       <InboxNavigation />
       <div className="space-y-[1rem]">
         <InboxHeader />
         <h1 className="fluid font-[600]">Messages</h1>
         <div className="space-y-[1rem]">
+          <UserInboxCard />
           <UserInboxCard />
           <UserInboxCard />
         </div>
