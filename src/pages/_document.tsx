@@ -5,7 +5,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <title>Chatify</title>
+        {/* <title>Chatify</title> */}
       </Head>
       <body>
         <Main />

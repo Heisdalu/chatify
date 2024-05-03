@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* @layer components {
+  .fluid {
+    @apply px-[1rem] sm:px-[1rem] md:px-[3rem] lg:px-[4rem] xl:px-[6rem];
+  }
+
+  .const {
+    display: grid;
+  }
+
+  .nav {
+    grid-template-columns: ;
+  }
+
+  @media screen and (min-width: 768px) {
+    .const {
+      grid-template-columns: 300px 1fr;
+    }
+  }
+} */
+
+
+.fluid {
+    @apply px-[1rem] sm:px-[1rem] md:px-[3rem] lg:px-[4rem] xl:px-[6rem];
+  }
+
+  .const {
+    display: grid;
+  }
+
+  .nav {
+    grid-template-columns: 100px 1fr;
+  }
+
+  @media screen and (min-width: 768px) {
+    .const {
+      grid-template-columns: 300px 1fr;
+    }
+  }

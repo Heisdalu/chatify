@@ -29,6 +29,7 @@ export default function Home() {
               width={300}
               src="/humans_talking.svg"
               alt="home chatting with their phones"
+              priority={true}
             />
           </div>
 

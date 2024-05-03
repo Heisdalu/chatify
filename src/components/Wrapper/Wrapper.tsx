@@ -7,4 +7,5 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
     </div>
   );
 };
+
 export default Wrapper;
