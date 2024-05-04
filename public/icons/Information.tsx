@@ -2,8 +2,8 @@ const Information = () => {
   return (
     <div>
       <svg
-        width="109px"
-        height="109px"
+        width="39px"
+        height="30px"
         viewBox="-0.5 0 25 25"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

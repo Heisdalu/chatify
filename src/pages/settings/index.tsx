@@ -2,6 +2,7 @@ import Loading from "@/components/Loading/Loading";
 import Logo from "@/components/Logo/Logo";
 import Wrapper from "@/components/Wrapper/Wrapper";
 import { useRef, useState } from "react";
+import Link from "next/link";
 
 const Settings = () => {
   const [isReadonly, setIsReadonly] = useState(true);
@@ -21,6 +22,12 @@ const Settings = () => {
           <span>Chatify</span>
         </h1>
         <div className="space-y-[1rem] mt-[1rem] py-[2rem] max-w-[500px] mx-auto md:space-y-[1.3rem]">
+          <Link
+            href="/inbox"
+            className="text-[1rem] text-black rounded-[10px] border-[1px] border-gray-200 px-[1rem] py-[0.5rem] active:bg-black active:text-white active:border-black"
+          >
+            Back
+          </Link>
           <h1 className="flex justify-center text-[1.125rem] font-[700]">
             Your Personal Info
           </h1>

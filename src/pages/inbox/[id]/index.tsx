@@ -5,6 +5,7 @@ import ChatDisplay from "@/components/ChatDisplay/ChatDisplay";
 import "@/styles/style.module.css";
 import { useWindowSize } from "@uidotdev/usehooks";
 import Link from "next/link";
+import Information from "../../../../public/icons/Information";
 
 const UserDirectChatID = () => {
   const { height } = useWindowSize();
@@ -33,6 +34,19 @@ const UserDirectChatID = () => {
           />
         </div>
         <h1 className="text-[1.3rem] font-[600]">dhe_vine</h1>
+
+        <div
+          className=" ml-[auto] flex items-center"
+          style={{ marginLeft: "auto" }}
+          title="user profile"
+        >
+          <Link
+            href="/inbox/135768/profile"
+            className="active:bg-gray-400"
+          >
+            <Information />
+          </Link>
+        </div>
       </div>
 
       <div

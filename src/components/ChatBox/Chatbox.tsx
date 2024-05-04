@@ -39,7 +39,7 @@ const Chatbox = () => {
           ref={textAreaRef}
           onChange={typingHandler}
           name=""
-          className="outline-none p-[5px] h-[35px] w-[100%] resize-none placeholder:[vertical-align:middle]"
+          className="outline-none p-[7px] h-[45px] w-[100%] resize-none placeholder:[vertical-align:middle]"
           id=""
           placeholder="Write your message..."
         ></textarea>
