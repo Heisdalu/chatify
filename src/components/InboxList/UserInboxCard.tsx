@@ -1,14 +1,18 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const UserInboxCard = () => {
   return (
-    <div className="py-[0.2rem] fluid grid [grid-template-columns:70px_5fr_1fr] space-x-[0.5rem] hover:bg-gray-100">
+    <Link
+      href="/inbox/1"
+      className="py-[0.2rem] fluid grid [grid-template-columns:70px_5fr_1fr] space-x-[0.5rem] hover:bg-gray-100 cursor-pointer"
+    >
       <div aria-label="user image" className="">
         <Image
           height={60}
           width={60}
           src="/humans_talking.svg"
-          className="rounded-full"
+          className="rounded-full border-[1px] border-gray-200"
           alt=""
         />
       </div>
@@ -23,7 +27,7 @@ const UserInboxCard = () => {
         </p>
       </div>
       <div className="self-center justify-self-end h-[8px] w-[8px] bg-[#0095f6] rounded-full"></div>
-    </div>
+    </Link>
   );
 };
 export default UserInboxCard;
