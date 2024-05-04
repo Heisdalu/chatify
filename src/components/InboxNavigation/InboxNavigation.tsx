@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Logo from "../Logo/Logo";
+import Link from "next/link";
 
 const InboxNavigation = () => {
   return (
@@ -17,10 +17,13 @@ const InboxNavigation = () => {
           </div>
           <span className="text-[0.8rem]">Chats</span>
         </button>
-        <button className="border-l-1 flex items-center flex-col justify-center p-[0.5rem] hover:bg-gray-200">
+        <Link
+          href="/settings"
+          className="border-l-1 flex items-center flex-col justify-center p-[0.5rem] hover:bg-gray-200"
+        >
           <Image height={30} width={30} src="/setting.png" alt="" />
           <span className="text-[0.8rem]">Settings</span>
-        </button>
+        </Link>
       </div>
     </div>
   );
