@@ -37,3 +37,7 @@
 .scroll::-webkit-scrollbar-thumb {
   @apply bg-gray-400 rounded-[10px];
 }
+
+.effect {
+  @apply rounded-[5px] animate-pulse bg-gray-200;
+}

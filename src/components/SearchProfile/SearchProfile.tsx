@@ -1,6 +1,7 @@
 import Close from "../../../public/icons/Close";
 import { motion } from "framer-motion";
 import SearchedUsers from "./SearchedUsers";
+import InboxUserLoading from "../Loading/InboxUserLoading";
 
 const SearchProfile = ({ close }: { close: any }) => {
   const exitHandler = () => {
@@ -44,6 +45,12 @@ const SearchProfile = ({ close }: { close: any }) => {
         </div> */}
 
         <div className="scroll h-[calc(350px-116px)] p-[1rem] px-[0.5rem] space-y-[0.5rem] overflow-y-scroll">
+          {/* loading */}
+          {/* <div className="px-[0.5rem]">
+            <InboxUserLoading />
+            <InboxUserLoading />
+            <InboxUserLoading />
+          </div> */}
           <SearchedUsers />
           <SearchedUsers />
         </div>

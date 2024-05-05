@@ -1,4 +1,3 @@
-import InboxContainer from "@/views/InboxContainer/InboxContainer";
 import Image from "next/image";
 import LeftArrow from "../../../../public/icons/LeftArrow";
 import ChatDisplay from "@/components/ChatDisplay/ChatDisplay";
@@ -6,11 +5,14 @@ import "@/styles/style.module.css";
 import { useWindowSize } from "@uidotdev/usehooks";
 import Link from "next/link";
 import Information from "../../../../public/icons/Information";
+import ChatLoading from "@/components/ChatDisplay/ChatLoading";
 
 const UserDirectChatID = () => {
   const { height } = useWindowSize();
 
   console.log(height);
+
+  //   return <ChatLoading />; // loading state
 
   return (
     <div className="h-[100vh] overflow-hidden py-[1rem] max-w-[700px] mx-auto lg:py-[1rem] relative">
@@ -40,10 +42,7 @@ const UserDirectChatID = () => {
           style={{ marginLeft: "auto" }}
           title="user profile"
         >
-          <Link
-            href="/inbox/135768/profile"
-            className="active:bg-gray-400"
-          >
+          <Link href="/inbox/135768/profile" className="active:bg-gray-400">
             <Information />
           </Link>
         </div>

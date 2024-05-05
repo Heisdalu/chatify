@@ -1,10 +1,14 @@
-import InboxContainer from "@/views/InboxContainer/InboxContainer";
+import InboxLoading from "@/components/Loading/InboxLoading";
+import UserInboxList from "@/views/UserInboxList/UserInboxList";
 
 const Inbox = () => {
   return (
     <div>
       <div className="py-[1rem] max-w-[700px] mx-auto lg:py-[2rem]">
-        <InboxContainer />
+        <div className="relative">
+          <UserInboxList />
+          {/* <InboxLoading /> */}
+        </div>
       </div>
     </div>
   );
