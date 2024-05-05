@@ -1,8 +1,17 @@
 import Logo from "@/components/Logo/Logo";
 import Wrapper from "@/components/Wrapper/Wrapper";
 import Image from "next/image";
+import { SyntheticEvent } from "react";
 
 export default function Home() {
+  const loadHandler = (e: SyntheticEvent<HTMLImageElement>) => {
+    // console.log(e.target.classList);
+    //@ts-ignore
+    e.target?.classList.remove("animate-pulse");
+    //@ts-ignore
+    e.target?.classList.remove("bg-gray-200");
+  };
+
   return (
     <div>
       <Wrapper>
@@ -27,8 +36,10 @@ export default function Home() {
             <Image
               height={300}
               width={300}
+              onLoad={loadHandler}
               src="/humans_talking.svg"
               alt="home chatting with their phones"
+              className="bg-gray-200 animate-pulse"
               priority={true}
             />
           </div>
