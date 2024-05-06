@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useState } from "react";
 import Close from "../../../public/icons/Close";
 import Play from "../../../public/icons/Play";
 import Pause from "../../../public/icons/Pause";
-import { useAudioRecorder } from "@sarafhbk/react-audio-recorder";
+// import { useAudioRecorder } from "@sarafhbk/react-audio-recorder";
 import { AudioStateType } from "@/types";
 
 interface AudioBoxProps {
@@ -12,9 +12,9 @@ interface AudioBoxProps {
 const AudioBox: FC<AudioBoxProps> = ({ toggleAudio }) => {
   // playing immediately
   const [isPlaying, setIsPlaying] = useState(true);
-  const { startRecording, status, errorMessage, stopRecording } =
-    useAudioRecorder();
-  console.log(status, errorMessage);
+  //   const { startRecording, status, errorMessage, stopRecording } =
+  //     useAudioRecorder();
+  //   console.log(status, errorMessage);
 
   //   const stopAudio = () => {
   //     recorderControls.stopRecording();
@@ -28,16 +28,14 @@ const AudioBox: FC<AudioBoxProps> = ({ toggleAudio }) => {
   //   console.log(recorderControls.mediaRecorder);
 
   useEffect(() => {
-    if (!errorMessage) {
-      startRecording();
-    } else {
-      console.log("yessss");
-
-      stopRecording();
-    }
-
+    // if (!errorMessage) {
+    //   startRecording();
+    // } else {
+    //   console.log("yessss");
+    //   stopRecording();
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errorMessage]);
+  }, []);
 
   return (
     <div>
