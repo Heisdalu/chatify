@@ -41,3 +41,8 @@
 .effect {
   @apply rounded-[5px] animate-pulse bg-gray-200;
 }
+
+.reduce_svg svg {
+  height: 15px;
+  width: 15px;
+}
