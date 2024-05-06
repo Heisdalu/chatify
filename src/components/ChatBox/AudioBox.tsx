@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useState } from "react";
 import Close from "../../../public/icons/Close";
 import Play from "../../../public/icons/Play";
 import Pause from "../../../public/icons/Pause";
-// import { useAudioRecorder } from "@sarafhbk/react-audio-recorder";
+import { useAudioRecorder } from "react-audio-voice-recorder";
 import { AudioStateType } from "@/types";
 
 interface AudioBoxProps {
@@ -12,24 +12,28 @@ interface AudioBoxProps {
 const AudioBox: FC<AudioBoxProps> = ({ toggleAudio }) => {
   // playing immediately
   const [isPlaying, setIsPlaying] = useState(true);
-  //   const { startRecording, status, errorMessage, stopRecording } =
-  //     useAudioRecorder();
+  const {
+    startRecording,
+    stopRecording,
+    mediaRecorder,
+    recordingBlob,
+    recordingTime,
+  } = useAudioRecorder();
   //   console.log(status, errorMessage);
 
-  //   const stopAudio = () => {
-  //     recorderControls.stopRecording();
-  //     console.log(
-  //       recorderControls.recordingBlob,
-  //       recorderControls.isRecording,
-  //       recorderControls.recordingTime
-  //     );
-  //   };
+  const stopAudio = () => {
+    // toggleAudio(false)
+
+    stopRecording();
+    console.log(mediaRecorder?.stream);
+    mediaRecorder?.stream.getAudioTracks()[0].stop();
+  };
 
   //   console.log(recorderControls.mediaRecorder);
+  console.log(isPlaying, recordingTime);
 
   useEffect(() => {
-    // if (!errorMessage) {
-    //   startRecording();
+    startRecording();
     // } else {
     //   console.log("yessss");
     //   stopRecording();
@@ -41,7 +45,7 @@ const AudioBox: FC<AudioBoxProps> = ({ toggleAudio }) => {
     <div>
       <div className="flex space-x-[1.3rem]">
         <button
-          onClick={() => toggleAudio(false)}
+          onClick={stopAudio}
           className="flex items-center reduce_svg border-[1px] p-[5px] border-gray-300 rounded-[5px]"
         >
           <Close />
