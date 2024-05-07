@@ -30,7 +30,6 @@ const AudioBox: FC<AudioBoxProps> = ({ toggleAudio, controls }) => {
 
   const stopAudio = () => {
     controls.stopRecording();
-    // controls.mediaRecorder?.stream.getAudioTracks()[0].stop();
     toggleAudio(false);
   };
 
@@ -52,9 +51,6 @@ const AudioBox: FC<AudioBoxProps> = ({ toggleAudio, controls }) => {
     ).play();
   };
 
-  const test = () => {
-    console.log("test");
-  };
 
   useEffect(() => {
     // recording must not exceed 60 secs
@@ -75,13 +71,13 @@ const AudioBox: FC<AudioBoxProps> = ({ toggleAudio, controls }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // turned off microphone when url changes
   useEffect(() => {
     router.events.on("routeChangeStart", stopAudio);
 
     return () => {
       // Cleanup function to remove event listener and stop recording
       router.events.off("routeChangeStart", stopAudio);
-      // stopRecording();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.events]);
