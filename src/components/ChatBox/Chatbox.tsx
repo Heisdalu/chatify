@@ -2,6 +2,7 @@ import { useState, useEffect, ChangeEvent, useRef, RefObject } from "react";
 import Microphone from "../../../public/icons/Microphone";
 import Picture from "../../../public/icons/Picture";
 import AudioBox from "./AudioBox";
+import { useAudioRecorder } from "react-audio-voice-recorder";
 import { AudioStateType } from "@/types";
 
 const Chatbox = () => {
@@ -9,6 +10,16 @@ const Chatbox = () => {
   const [isAudioClicked, setIsAudioClicked] = useState(false);
   const [isAudioPermitted, setIsAudioPermitted] = useState("idle");
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const { startRecording, ...controls } = useAudioRecorder(
+    {
+      noiseSuppression: true,
+      echoCancellation: true,
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
 
   const typingHandler = (e: ChangeEvent) => {
     if (
@@ -35,6 +46,16 @@ const Chatbox = () => {
     setIsAudioClicked(state);
   };
 
+  const microphoneHandler = () => {
+    console.log();
+    setIsAudioClicked(true);
+    if (isAudioPermitted === "granted" || isAudioPermitted === "prompt") {
+      startRecording();
+    }
+  };
+
+  // console.log(controls);
+
   useEffect(() => {
     navigator.permissions
       //@ts-ignore
@@ -47,6 +68,13 @@ const Chatbox = () => {
 
         if (permissionStatus.state === "denied") {
           setIsAudioPermitted("denied");
+        }
+        // audio is recording and status is denied
+        if (permissionStatus.state === "denied" && controls.isRecording) {
+          controls.stopRecording();
+        }
+        if (permissionStatus.state === "prompt") {
+          setIsAudioPermitted("prompt");
         }
         if (permissionStatus.state === "granted") {
           setIsAudioPermitted("granted");
@@ -67,7 +95,7 @@ const Chatbox = () => {
     <div className="bg-white p-[1rem] px-[0.5rem] max-w-[700px] fixed bottom-0 left-[50%] translate-x-[-50%] w-[100%]">
       {isAudioClicked && isAudioPermitted === "granted" ? (
         <div className="rounded-[10px] border-gray-300 border-[1px] p-[0.5rem] py-[0.6rem]">
-          <AudioBox toggleAudio={toggleAudio} />
+          <AudioBox toggleAudio={toggleAudio} controls={controls} />
         </div>
       ) : (
         <div className="px-[0.5rem] flex items-center rounded-[10px] border-[1px] border-gray-300 space-x-[1rem]">
@@ -83,7 +111,7 @@ const Chatbox = () => {
           {!isTyping && (
             <div className="">
               <button
-                onClick={() => setIsAudioClicked(true)}
+                onClick={microphoneHandler}
                 className="hover:bg-gray-200 active:bg-gray-500 px-[0.5rem] h-[30px] w-[30px flex items-center justify-center] rounded-[5px]"
               >
                 <Microphone />

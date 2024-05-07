@@ -4,42 +4,43 @@ import Play from "../../../public/icons/Play";
 import Pause from "../../../public/icons/Pause";
 import { useAudioRecorder } from "react-audio-voice-recorder";
 import { AudioStateType } from "@/types";
+import { convertSecToAudioTimeStamp } from "@/utlis";
 
 interface AudioBoxProps {
   toggleAudio: (state: boolean) => void;
+  controls: {
+    stopRecording: () => void;
+    togglePauseResume: () => void;
+    recordingBlob?: Blob | undefined;
+    isRecording: boolean;
+    isPaused: boolean;
+    recordingTime: number;
+    mediaRecorder?: MediaRecorder | undefined;
+  };
 }
 
-const AudioBox: FC<AudioBoxProps> = ({ toggleAudio }) => {
-  // playing immediately
-  const [isPlaying, setIsPlaying] = useState(true);
-  const {
-    startRecording,
-    stopRecording,
-    mediaRecorder,
-    recordingBlob,
-    recordingTime,
-  } = useAudioRecorder();
-  //   console.log(status, errorMessage);
+const AudioBox: FC<AudioBoxProps> = ({ toggleAudio, controls }) => {
+
+  console.log(controls.recordingTime);
 
   const stopAudio = () => {
-    // toggleAudio(false)
-
-    stopRecording();
-    console.log(mediaRecorder?.stream);
-    mediaRecorder?.stream.getAudioTracks()[0].stop();
+    controls.stopRecording();
+    controls.mediaRecorder?.stream.getAudioTracks()[0].stop();
+    toggleAudio(false);
   };
 
-  //   console.log(recorderControls.mediaRecorder);
-  console.log(isPlaying, recordingTime);
+  useEffect(() => {
+    if (!controls.recordingBlob) return;
+    console.log(controls.recordingBlob);
+  }, [controls.recordingBlob]);
 
   useEffect(() => {
-    startRecording();
-    // } else {
-    //   console.log("yessss");
-    //   stopRecording();
-    // }
+    // recording must not exceed 60 secs
+    if (controls.recordingTime >= 60) {
+      controls.stopRecording();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [controls.recordingTime]);
 
   return (
     <div>
@@ -59,7 +60,9 @@ const AudioBox: FC<AudioBoxProps> = ({ toggleAudio }) => {
               <Pause />
             </button>
           </div>
-          <div className="ml-auto">0:00</div>
+          <div className="ml-auto">
+            {convertSecToAudioTimeStamp(controls.recordingTime)}
+          </div>
         </div>
         <button className="ml-auto">Send</button>
         {/* <div>{recorderControls.recordingTime}</div> */}
