@@ -5,15 +5,17 @@ import AudioBox from "./AudioBox";
 import { useAudioRecorder } from "react-audio-voice-recorder";
 import { AudioStateType } from "@/types";
 import toast from "react-hot-toast";
+import ImageBox from "./ImageBox";
 
 const Chatbox = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [isAudioClicked, setIsAudioClicked] = useState(false);
+  const [isImageClicked, setIsImageClicked] = useState(false);
   const [isAudioPermitted, setIsAudioPermitted] =
     useState<AudioStateType>("idle");
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const { startRecording, ...controls } = useAudioRecorder(
+  const { startRecording, recordingBlob, ...controls } = useAudioRecorder(
     {
       noiseSuppression: true,
       echoCancellation: true,
@@ -50,9 +52,13 @@ const Chatbox = () => {
     setIsAudioClicked(state);
   };
 
+  const toggleImage = (state: boolean) => {
+    setIsImageClicked(state);
+  };
+
   const microphoneHandler = () => {
-    setIsAudioClicked(true);
     if (isAudioPermitted === "granted" || isAudioPermitted === "prompt") {
+      setIsAudioClicked(true);
       startRecording();
     }
 
@@ -61,8 +67,6 @@ const Chatbox = () => {
       toast.error("Mic permisson denied. Turn on mic");
     }
   };
-
-  // console.log(controls);
 
   useEffect(() => {
     navigator.permissions
@@ -94,13 +98,17 @@ const Chatbox = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [controls]);
 
+  useEffect(() => {
+    if (!recordingBlob) return;
+    console.log(recordingBlob, controls.recordingTime);
+  }, [controls.recordingTime, recordingBlob]);
 
   return (
     <div className="bg-white p-[1rem] px-[0.5rem] max-w-[700px] fixed bottom-0 left-[50%] translate-x-[-50%] w-[100%]">
       {isAudioClicked && controls.isRecording ? (
-        <div className="rounded-[10px] border-gray-300 border-[1px] p-[0.5rem] py-[0.6rem]">
-          <AudioBox toggleAudio={toggleAudio} controls={controls} />
-        </div>
+        <AudioBox toggleAudio={toggleAudio} controls={controls} />
+      ) : isImageClicked ? (
+        <ImageBox toggleImage={toggleImage} />
       ) : (
         <div className="px-[0.5rem] flex items-center rounded-[10px] border-[1px] border-gray-300 space-x-[1rem]">
           <textarea
@@ -124,7 +132,10 @@ const Chatbox = () => {
           )}
           {!isTyping && (
             <div className="">
-              <button className="hover:bg-gray-200 active:bg-gray-500 px-[0.5rem] h-[30px] w-[30px flex items-center justify-center] rounded-[5px]">
+              <button
+                onClick={() => setIsImageClicked(true)}
+                className="hover:bg-gray-200 active:bg-gray-500 px-[0.5rem] h-[30px] flex items-center justify-center] rounded-[5px]"
+              >
                 <Picture />
               </button>
             </div>

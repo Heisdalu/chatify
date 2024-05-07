@@ -104,7 +104,10 @@ const AudioBox: FC<AudioBoxProps> = ({ toggleAudio, controls }) => {
             {convertSecToAudioTimeStamp(controls.recordingTime)}
           </div>
         </div>
-        <button className="ml-auto" onClick={stopAudio}>
+        <button
+          className="ml-auto active:bg-blue-600 active:text-white rounded-[7px] px-[0.7rem] text-blue-600 flex items-center justify-center] text-[1rem]"
+          onClick={stopAudio}
+        >
           Send
         </button>
       </div>
