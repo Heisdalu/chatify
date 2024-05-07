@@ -15,7 +15,6 @@ interface AudioBoxProps {
   controls: {
     stopRecording: () => void;
     togglePauseResume: () => void;
-    recordingBlob?: Blob | undefined;
     isRecording: boolean;
     isPaused: boolean;
     recordingTime: number;
@@ -25,10 +24,11 @@ interface AudioBoxProps {
 
 const AudioBox: FC<AudioBoxProps> = ({ toggleAudio, controls }) => {
   const [scope, animate] = useAnimate();
+  const [audioLimitExceeded, setAudioLimitExceeded] = useState(false);
 
   const stopAudio = () => {
     controls.stopRecording();
-    controls.mediaRecorder?.stream.getAudioTracks()[0].stop();
+    // controls.mediaRecorder?.stream.getAudioTracks()[0].stop();
     toggleAudio(false);
   };
 
@@ -37,43 +37,40 @@ const AudioBox: FC<AudioBoxProps> = ({ toggleAudio, controls }) => {
     animate(
       scope.current,
       { width: "100%" },
-      { duration: 60, ease: "linear" }
+      { duration: 100, ease: "linear" }
     ).stop();
   };
 
   const playAudio = () => {
     controls.togglePauseResume();
-    // animateControls.;
-    // scope.current, { width: "100%" }, { duration: 60, ease: "linear" }
     animate(
       scope.current,
       { width: "100%" },
-      { duration: 60, ease: "linear" }
+      { duration: 100, ease: "linear" }
     ).play();
   };
 
   useEffect(() => {
-    if (!controls.recordingBlob) return;
-    console.log(controls.recordingBlob);
-  }, [controls.recordingBlob]);
-
-  useEffect(() => {
     // recording must not exceed 60 secs
     if (controls.recordingTime >= 60) {
-      controls.stopRecording();
+      controls.togglePauseResume();
+      setAudioLimitExceeded(true);
+      animate(
+        scope.current,
+        { width: "100%" },
+        { duration: 100, ease: "linear" }
+      ).stop();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [controls.recordingTime]);
 
-  // console.log(controls.isPaused, controls.isRecording);
   useEffect(() => {
-    console.log(animate, scope);
     animate(scope.current, { width: "100%" }, { duration: 60, ease: "linear" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div>
+    <div className="rounded-[10px] border-gray-300 border-[1px] p-[0.5rem] py-[0.6rem]">
       <div className="flex space-x-[1.3rem]">
         <button
           onClick={stopAudio}
@@ -81,33 +78,35 @@ const AudioBox: FC<AudioBoxProps> = ({ toggleAudio, controls }) => {
         >
           <Close />
         </button>
-        <div className="relative border-[1px] border-gray-300 px-[0.5rem] flex items-center rounded-[7px] h-[30px] w-[100%] bg-gray-00">
+        <div className="overflow-hidden relative border-[1px] border-gray-300 px-[0.5rem] flex items-center rounded-[7px] h-[30px] w-[100%] bg-gray-00">
           <div
             ref={scope}
-            // initial={{ width: 0 }}
-            // animate={animateControls}
-            // animate={{ width: "100%" }}
-            // transition={{ duration: 60, ease: "linear" }}
             className={`absolute top-[0] z-[1] left-[0] h-[100%] w-[0] bg-gray-200`}
           ></div>
-          <div className="border-1 z-[2] p-[1px] flex items-center rounded-[50%]">
-            {controls.isPaused ? (
-              <button className="reduce_svg" onClick={playAudio}>
-                <Play />
-              </button>
-            ) : (
-              <button className="reduce_svg" onClick={pauseAudio}>
-                <Pause />
-              </button>
-            )}
-          </div>
+          {audioLimitExceeded ? (
+            <div className="z-[2] text-[0.6rem] sm:text-[0.8rem]">
+              Recorded. Audio Limit Exceeded
+            </div>
+          ) : (
+            <div className="border-1 z-[2] p-[1px] flex items-center rounded-[50%]">
+              {controls.isPaused ? (
+                <button className="reduce_svg" onClick={playAudio}>
+                  <Play />
+                </button>
+              ) : (
+                <button className="reduce_svg" onClick={pauseAudio}>
+                  <Pause />
+                </button>
+              )}
+            </div>
+          )}
           <div className="ml-auto z-[2]">
             {convertSecToAudioTimeStamp(controls.recordingTime)}
           </div>
         </div>
-        <button className="ml-auto">Send</button>
-        {/* <div>{recorderControls.recordingTime}</div> */}
-        {/* <button onClick={stopAudio}>button</button> */}
+        <button className="ml-auto" onClick={stopAudio}>
+          Send
+        </button>
       </div>
     </div>
   );
