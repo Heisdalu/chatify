@@ -9,6 +9,7 @@ import {
   useAnimationControls,
   useAnimate,
 } from "framer-motion";
+import { useRouter } from "next/router";
 
 interface AudioBoxProps {
   toggleAudio: (state: boolean) => void;
@@ -25,6 +26,7 @@ interface AudioBoxProps {
 const AudioBox: FC<AudioBoxProps> = ({ toggleAudio, controls }) => {
   const [scope, animate] = useAnimate();
   const [audioLimitExceeded, setAudioLimitExceeded] = useState(false);
+  const router = useRouter();
 
   const stopAudio = () => {
     controls.stopRecording();
@@ -50,6 +52,10 @@ const AudioBox: FC<AudioBoxProps> = ({ toggleAudio, controls }) => {
     ).play();
   };
 
+  const test = () => {
+    console.log("test");
+  };
+
   useEffect(() => {
     // recording must not exceed 60 secs
     if (controls.recordingTime >= 60) {
@@ -68,6 +74,17 @@ const AudioBox: FC<AudioBoxProps> = ({ toggleAudio, controls }) => {
     animate(scope.current, { width: "100%" }, { duration: 60, ease: "linear" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    router.events.on("routeChangeStart", stopAudio);
+
+    return () => {
+      // Cleanup function to remove event listener and stop recording
+      router.events.off("routeChangeStart", stopAudio);
+      // stopRecording();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.events]);
 
   return (
     <div className="rounded-[10px] border-gray-300 border-[1px] p-[0.5rem] py-[0.6rem]">
