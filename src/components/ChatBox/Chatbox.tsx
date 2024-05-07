@@ -4,11 +4,13 @@ import Picture from "../../../public/icons/Picture";
 import AudioBox from "./AudioBox";
 import { useAudioRecorder } from "react-audio-voice-recorder";
 import { AudioStateType } from "@/types";
+import toast from "react-hot-toast";
 
 const Chatbox = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [isAudioClicked, setIsAudioClicked] = useState(false);
-  const [isAudioPermitted, setIsAudioPermitted] = useState("idle");
+  const [isAudioPermitted, setIsAudioPermitted] =
+    useState<AudioStateType>("idle");
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const { startRecording, ...controls } = useAudioRecorder(
@@ -18,6 +20,8 @@ const Chatbox = () => {
     },
     (err) => {
       console.log(err);
+      //when micrphone prompt is blocked
+      toast.error("Microphone permisson denied");
     }
   );
 
@@ -47,10 +51,14 @@ const Chatbox = () => {
   };
 
   const microphoneHandler = () => {
-    console.log();
     setIsAudioClicked(true);
     if (isAudioPermitted === "granted" || isAudioPermitted === "prompt") {
       startRecording();
+    }
+
+    // when micrphone access is denied
+    if (isAudioPermitted === "denied") {
+      toast.error("Mic permisson denied. Turn on mic");
     }
   };
 
@@ -61,9 +69,9 @@ const Chatbox = () => {
       //@ts-ignore
       .query({ name: "microphone" })
       .then((permissionStatus) => {
-        console.log("Permission status:", permissionStatus.state);
         // permissionStatus returns state of the microphone
         // granted -- ready to use
+        // prompt -- mic prompt opened to either grant or deny permission
         // denied ---- not ready to use due to permission of mic denied
 
         if (permissionStatus.state === "denied") {
@@ -80,20 +88,16 @@ const Chatbox = () => {
           setIsAudioPermitted("granted");
         }
       })
-      .catch((error) => {
-        console.error("Error checking microphone permission:", error);
+      .catch(() => {
+        toast.error("Error checking microphone permission");
       });
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [controls]);
 
-  useEffect(() => {
-    if (isAudioClicked && isAudioPermitted === "denied") {
-      console.log("yessss");
-    }
-  }, [isAudioPermitted, isAudioClicked]);
 
   return (
     <div className="bg-white p-[1rem] px-[0.5rem] max-w-[700px] fixed bottom-0 left-[50%] translate-x-[-50%] w-[100%]">
-      {isAudioClicked && isAudioPermitted === "granted" ? (
+      {isAudioClicked && controls.isRecording ? (
         <div className="rounded-[10px] border-gray-300 border-[1px] p-[0.5rem] py-[0.6rem]">
           <AudioBox toggleAudio={toggleAudio} controls={controls} />
         </div>

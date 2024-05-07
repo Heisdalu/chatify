@@ -9,9 +9,6 @@ import ChatLoading from "@/components/ChatDisplay/ChatLoading";
 
 const UserDirectChatID = () => {
   const { height } = useWindowSize();
-
-  console.log(height);
-
   //   return <ChatLoading />; // loading state
 
   return (

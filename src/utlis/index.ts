@@ -22,3 +22,10 @@ export const convertSecToAudioTimeStamp = (totalSecs: number): string => {
 
   return durationMaths;
 };
+
+export const widthCalc = (currentTime: number) => {
+  //   const result = currentTime / 60;
+  //   console.log(result, Math.floor(currentTime * 100));
+
+  return Math.floor((currentTime / 60) * 100);
+};
