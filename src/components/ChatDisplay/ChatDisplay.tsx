@@ -1,6 +1,7 @@
 // import { useNetworkState } from "@uidotdev/usehooks";
 
 import Chatbox from "../ChatBox/Chatbox";
+import ImageDisplay from "./ImageDisplay";
 import DateGroup from "./DateGroup";
 import ReceiverChat from "./ReceiverChat";
 import SenderChat from "./SenderChat";
@@ -22,6 +23,7 @@ const ChatDisplay = () => {
         <SenderChat />
         <ReceiverChat />
         <ReceiverChat />
+        <ImageDisplay />
         <ReceiverChat />
         <ReceiverChat />
         <ReceiverChat />

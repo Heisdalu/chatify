@@ -7,6 +7,7 @@ import {
 } from "react";
 import Picture from "../../../public/icons/Picture";
 import Close from "../../../public/icons/Close";
+import toast from "react-hot-toast";
 
 const ImageBox = ({
   toggleImage,
@@ -25,6 +26,9 @@ const ImageBox = ({
   const changeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     const pic = e.target.files;
 
+    if (!pic || !pic[0].type.includes("image")) {
+      return toast.error("Kindly select an image");
+    }
     if (pic && pic[0]) {
       console.log(pic[0]);
 

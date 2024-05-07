@@ -2,6 +2,7 @@ import Close from "../../../public/icons/Close";
 import { motion } from "framer-motion";
 import SearchedUsers from "./SearchedUsers";
 import InboxUserLoading from "../Loading/InboxUserLoading";
+import Overlay from "../Overlay/Overlay";
 
 const SearchProfile = ({ close }: { close: any }) => {
   const exitHandler = () => {
@@ -55,13 +56,7 @@ const SearchProfile = ({ close }: { close: any }) => {
           <SearchedUsers />
         </div>
       </motion.div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        transition={{ duration: 0.5 }}
-        animate={{ opacity: 0.3 }}
-        onClick={exitHandler}
-        className="cursor overlayModal fixed h-[100vh] w-[100%] left-0 top-[0] bg-black  z-[100]"
-      ></motion.div>
+      <Overlay onClick={exitHandler} />
     </div>
   );
 };
