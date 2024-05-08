@@ -5,6 +5,7 @@ import ImageDisplay from "./ImageDisplay";
 import DateGroup from "./DateGroup";
 import ReceiverChat from "./ReceiverChat";
 import SenderChat from "./SenderChat";
+import AudioDisplay from "./AudioDisplay";
 
 const ChatDisplay = () => {
   //   const network = useNetworkState();
@@ -16,6 +17,7 @@ const ChatDisplay = () => {
         <DateGroup text="15, January, 2023" />
         <SenderChat />
         <SenderChat />
+        <AudioDisplay />
         <DateGroup text="14, April, 2023" />
         <ReceiverChat />
         <SenderChat />
