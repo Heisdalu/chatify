@@ -57,7 +57,8 @@ const AudioDisplay = () => {
   }, []);
 
   useEffect(() => {
-    const errorFunc = () => {
+    const errorFunc = (e: ErrorEvent) => {
+      console.log(e);
       toast.error("Failed to play audio. Check your Internet connection");
       setAudioState((prev) => ({
         ...prev,
