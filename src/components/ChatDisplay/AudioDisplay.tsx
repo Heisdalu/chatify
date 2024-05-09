@@ -4,7 +4,7 @@ const AudioDisplay = () => {
   const [url, setUrl] = useState("");
   const lol = () => {
     setUrl(
-      "https://res.cloudinary.com/dfusdfpfh/video/upload/v1715166737/chatify/audio_cigt0e.webm"
+      "https://res.cloudinary.com/dfusdfpfh/video/upload/v1715215686/chatify/chatify_audios/6dc1cda83e4f7a45c055a5607_cfvanv.mp3"
     );
   };
 
