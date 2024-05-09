@@ -14,6 +14,7 @@ const Chatbox = () => {
   const [isAudioPermitted, setIsAudioPermitted] =
     useState<AudioStateType>("idle");
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [audioDuration, setAudioDuration] = useState(0);
 
   const { startRecording, recordingBlob, ...controls } = useAudioRecorder(
     {
@@ -26,6 +27,10 @@ const Chatbox = () => {
       toast.error("Microphone permisson denied");
     }
   );
+
+  const audioDurationHandler = (value: number) => {
+    setAudioDuration(value);
+  };
 
   const typingHandler = (e: ChangeEvent) => {
     if (
@@ -100,13 +105,17 @@ const Chatbox = () => {
 
   useEffect(() => {
     if (!recordingBlob) return;
-    console.log(recordingBlob, controls.recordingTime);
-  }, [controls.recordingTime, recordingBlob]);
+    console.log(recordingBlob, audioDuration);
+  }, [controls.recordingTime, recordingBlob, audioDuration]);
 
   return (
     <div className="bg-white p-[1rem] px-[0.5rem] max-w-[700px] fixed bottom-0 left-[50%] translate-x-[-50%] w-[100%]">
       {isAudioClicked && controls.isRecording ? (
-        <AudioBox toggleAudio={toggleAudio} controls={controls} />
+        <AudioBox
+          toggleAudio={toggleAudio}
+          controls={controls}
+          audioDurationHandler={audioDurationHandler}
+        />
       ) : isImageClicked ? (
         <ImageBox toggleImage={toggleImage} />
       ) : (

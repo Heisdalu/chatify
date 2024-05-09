@@ -1,18 +1,14 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import Close from "../../../public/icons/Close";
 import Play from "../../../public/icons/Play";
 import Pause from "../../../public/icons/Pause";
 import { convertSecToAudioTimeStamp, widthCalc } from "@/utlis";
-import {
-  animate,
-  motion,
-  useAnimationControls,
-  useAnimate,
-} from "framer-motion";
+import { useAnimate } from "framer-motion";
 import { useRouter } from "next/router";
 
 interface AudioBoxProps {
   toggleAudio: (state: boolean) => void;
+  audioDurationHandler: (value: number) => void;
   controls: {
     stopRecording: () => void;
     togglePauseResume: () => void;
@@ -23,12 +19,22 @@ interface AudioBoxProps {
   };
 }
 
-const AudioBox: FC<AudioBoxProps> = ({ toggleAudio, controls }) => {
+const AudioBox: FC<AudioBoxProps> = ({
+  toggleAudio,
+  controls,
+  audioDurationHandler,
+}) => {
   const [scope, animate] = useAnimate();
   const [audioLimitExceeded, setAudioLimitExceeded] = useState(false);
   const router = useRouter();
 
   const stopAudio = () => {
+    controls.stopRecording();
+    toggleAudio(false);
+  };
+
+  const sendAudioHandler = () => {
+    audioDurationHandler(controls.recordingTime); //send audio current time
     controls.stopRecording();
     toggleAudio(false);
   };
@@ -50,7 +56,6 @@ const AudioBox: FC<AudioBoxProps> = ({ toggleAudio, controls }) => {
       { duration: 100, ease: "linear" }
     ).play();
   };
-
 
   useEffect(() => {
     // recording must not exceed 60 secs
@@ -119,7 +124,7 @@ const AudioBox: FC<AudioBoxProps> = ({ toggleAudio, controls }) => {
         </div>
         <button
           className="ml-auto active:bg-blue-600 active:text-white rounded-[7px] px-[0.7rem] text-blue-600 flex items-center justify-center] text-[1rem]"
-          onClick={stopAudio}
+          onClick={sendAudioHandler}
         >
           Send
         </button>
@@ -127,4 +132,4 @@ const AudioBox: FC<AudioBoxProps> = ({ toggleAudio, controls }) => {
     </div>
   );
 };
-export default AudioBox;
+export default memo(AudioBox);

@@ -1,11 +1,4 @@
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  useCallback,
-  useRef,
-  useState,
-} from "react";
-import Picture from "../../../public/icons/Picture";
+import { ChangeEventHandler, useCallback, useRef, useState, memo } from "react";
 import Close from "../../../public/icons/Close";
 import toast from "react-hot-toast";
 
@@ -83,4 +76,4 @@ const ImageBox = ({
     </div>
   );
 };
-export default ImageBox;
+export default memo(ImageBox);
