@@ -52,4 +52,29 @@
   width: 20px !important;
   animation-duration: 0.7s !important;
 }
+.dalu_special_spinner svg {
+  height: 17px !important;
+  width: 17px !important;
+  animation-duration: 0.7s !important;
+}
 
+.dalu_range input::-webkit-slider-thumb {
+  @apply h-[15px] w-[15px] bg-blue-600;
+}
+.dalu_range input::-moz-range-thumb {
+  @apply h-[15px] w-[15px];
+}
+
+.resetFlowBite,
+.resetFlowBite:focus,
+.resetFlowBite:active {
+  border: none;
+  outline: none !important;
+  outline-offset: 20px;
+}
+
+.resetFlowBite:focus {
+  border: 1px solid white;
+  outline: none !important;
+  outline-offset: 0px;
+}
