@@ -134,8 +134,7 @@ const AudioDisplay = () => {
   }, [audioFile]);
 
   useEffect(() => {
-    if (!audioFile) toast.error("Something went wrong. Try again");
-    else {
+    if (audioFile) {
       audioFile.currentTime = rangeValue;
     }
   }, [audioFile, rangeValue]);
