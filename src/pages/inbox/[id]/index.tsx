@@ -51,7 +51,7 @@ const UserDirectChatID = () => {
             typeof height === "number" ? `${height - 170}px` : "700px"
           }`,
         }}
-        className={`scroll overflow-y-scroll py-[1rem] relative`}
+        className={`scroll overflow-y-scroll overflow-x-hidden py-[1rem] relative`}
       >
         <ChatDisplay />
       </div>

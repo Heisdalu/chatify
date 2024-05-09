@@ -1,4 +1,4 @@
-const Loading = () => {
+const Loading = ({ color = "currentColor" }) => {
   return (
     <svg
       className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
@@ -11,7 +11,7 @@ const Loading = () => {
         cx="12"
         cy="12"
         r="10"
-        stroke="currentColor"
+        stroke={color}
         strokeWidth="4"
       ></circle>
       <path
