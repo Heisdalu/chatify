@@ -53,7 +53,7 @@ const AudioProgress: FC<AudioProgressProps> = ({
         <RangeSlider
           ref={rangeRef}
           onClick={clickHandler}
-          disabled={audioReady ? false : true}
+          // disabled={audioReady ? false : true}
           className="dalu_range w-[100%]"
           id="sm-range"
           onChange={rangeChangehandler}
