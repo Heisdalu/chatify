@@ -33,7 +33,7 @@ const AudioDisplay = () => {
     if (!audioFile.src) {
       //playing for the first time
       audioFile.src =
-        "https://res.cloudinary.com/dfusdfpfh/video/upload/v1715339673/chatify/chatify_audios/eaa4a1562e865f16d5e199a07_koiwp1.mp3";
+        "https://res.cloudinary.com/dfusdfpfh/video/upload/chatify/chatify_audios/eaa4a1562e865f16d5e199a07_koiwp1.mp3";
       return setAudioState((prev) => ({
         ...prev,
         loading: true,
