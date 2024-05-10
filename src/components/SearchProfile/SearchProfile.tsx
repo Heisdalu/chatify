@@ -37,7 +37,7 @@ const SearchProfile = ({ close }: { close: any }) => {
             placeholder="Search..."
             id="search"
             autoComplete="off"
-            className="resetFlowBite w-full outline-none placeholder:text-[0.8rem] text-[1rem]"
+            className="resetFlowBite caret-black w-full outline-none placeholder:text-[0.8rem] text-[1rem]"
           />
         </div>
 

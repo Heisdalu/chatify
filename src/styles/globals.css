@@ -38,20 +38,16 @@
   @apply bg-gray-400 rounded-[10px];
 }
 
-.scroll::-webkit-scrollbar {
-  background-color: white;
-}
-
 /* Scrollbar thumb */
 .scroll::-moz-scrollbar-thumb {
-  background-color: #8b8b8b; /* Adjust the color as needed */
-  border-radius: 10px; /* Adjust the border radius as needed */
+  background-color: #8b8b8b;
+  border-radius: 10px;
 }
 
 /* Scrollbar thumb on textarea */
 .scrollTextarea::-moz-scrollbar-thumb {
-  background-color: #8b8b8b; /* Adjust the color as needed */
-  border-radius: 5px; /* Adjust the border radius as needed */
+  background-color: #8b8b8b;
+  border-radius: 5px;
 }
 
 .scrollTextarea::-webkit-scrollbar-thumb {
