@@ -26,7 +26,7 @@ const UserInfo = () => {
                 placeholder="display name must be unique"
                 type="text"
                 autoComplete="off"
-                className="border-b-[1px] border-[#CDD1D0] py-[0.5rem] px-[0.3rem] focus:outline-none focus:border-b-black focus:border-b-[2px]"
+                className="caret-black rounded-[5px] userReset border-b-[1px] !border-[#CDD1D0] py-[0.5rem] px-[0.3rem] focus:outline-none focus:border-b-black !focus:border-b-[2px]"
                 name="display_name"
                 id="display_name"
               />
@@ -42,7 +42,7 @@ const UserInfo = () => {
               <textarea
                 autoComplete="off"
                 name="bio"
-                className="border-1 border-[#CDD1D0] py-[0.5rem] px-[0.3rem] focus:outline-black"
+                className="userTextReset rounded-[5px] caret-black border-1 border-[#CDD1D0] py-[0.5rem] px-[0.3rem] focus:outline-black"
                 id=""
                 cols={30}
                 rows={5}
