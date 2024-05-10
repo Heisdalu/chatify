@@ -33,7 +33,7 @@ const AudioDisplay = () => {
     if (!audioFile.src) {
       //playing for the first time
       audioFile.src =
-        "https://uljzszxyrxoupprqlucs.supabase.co/storage/v1/object/public/audios/audio-_2_.mp3";
+        "https://res.cloudinary.com/dfusdfpfh/video/upload/v1715339673/chatify/chatify_audios/eaa4a1562e865f16d5e199a07_koiwp1.mp3";
       return setAudioState((prev) => ({
         ...prev,
         loading: true,
@@ -118,7 +118,7 @@ const AudioDisplay = () => {
     };
 
     audioFile?.addEventListener("error", errorFunc);
-    audioFile?.addEventListener("loadedmetadata", playThroughFunc);
+    audioFile?.addEventListener("canplaythrough", playThroughFunc);
     audioFile?.addEventListener("timeupdate", timeUpdateHandler);
     audioFile?.addEventListener("ended", endedAudioHandler);
     audioFile?.addEventListener("play", playAudioHandler);
@@ -126,7 +126,7 @@ const AudioDisplay = () => {
 
     return () => {
       audioFile?.removeEventListener("error", errorFunc);
-      audioFile?.removeEventListener("loadedmetadata", playThroughFunc);
+      audioFile?.removeEventListener("canplaythrough", playThroughFunc);
       audioFile?.removeEventListener("timeupdate", timeUpdateHandler);
       audioFile?.removeEventListener("ended", endedAudioHandler);
       audioFile?.removeEventListener("play", playAudioHandler);
@@ -166,6 +166,7 @@ const AudioDisplay = () => {
         <AudioProgress
           currentTime={audioCurrentTime}
           getRangeValueHandler={getRangeValueHandler}
+          audioReady={audioState.ready}
         />
       </div>
     </div>

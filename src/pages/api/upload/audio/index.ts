@@ -47,11 +47,11 @@ export default async function handler(
 
         const cloudinaryResponse = await cloudinary.uploader.upload(fileUri, {
           invalidate: true,
-          resource_type: "raw",
+          resource_type: "video",
           filename_override: file.newFilename,
           folder: `chatify/chatify_audios`,
           use_filename: true,
-          format: "wav",
+          format: "mp3",
         });
 
         console.log(cloudinaryResponse);

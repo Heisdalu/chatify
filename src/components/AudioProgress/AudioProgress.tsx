@@ -5,11 +5,13 @@ import toast from "react-hot-toast";
 interface AudioProgressProps {
   currentTime: number;
   getRangeValueHandler: (value: number) => void;
+  audioReady: boolean;
 }
 
 const AudioProgress: FC<AudioProgressProps> = ({
   currentTime,
   getRangeValueHandler,
+  audioReady,
 }) => {
   const rangeRef = useRef<HTMLInputElement | null>(null);
 
@@ -44,12 +46,14 @@ const AudioProgress: FC<AudioProgressProps> = ({
     }
   }, [currentTime]);
 
+
   return (
     <>
       <div className="flex items-center translate-y-[-3px] w-[100%]">
         <RangeSlider
           ref={rangeRef}
           onClick={clickHandler}
+          disabled={audioReady ? false : true}
           className="dalu_range w-[100%]"
           id="sm-range"
           onChange={rangeChangehandler}
