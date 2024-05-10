@@ -72,7 +72,9 @@ const AudioDisplay = () => {
       if (!audioFile) return toast("Cannot play audio. Kindly refresh Browser");
       // console.dir(audioFile);
 
-      audioFile.play();
+      audioFile.play().catch((e) => {
+        console.log(e);
+      });
       setAudioState((prev) => ({
         ...prev,
         loading: false,
