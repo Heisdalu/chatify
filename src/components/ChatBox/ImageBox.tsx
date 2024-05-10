@@ -66,8 +66,8 @@ const ImageBox = ({
       </div>
       <button
         disabled={!!picFile?.name ? false : true}
-        className={`disabled:text-gray-100 !ml-auto active:bg-blue-600 active:text-white rounded-[7px] px-[0.7rem] text-blue-600 flex items-center justify-center] text-[1rem] ${
-          picFile?.name ? "cursor-pointer" : "cursor-not-allowed"
+        className={`disabled:text-gray-100 opacity-[0] !ml-auto active:bg-blue-600 active:text-white rounded-[7px] px-[0.7rem] text-blue-600 flex items-center justify-center] text-[1rem] ${
+          picFile?.name ? "cursor-pointer !opacity-[1]" : "cursor-not-allowed"
         }`}
         onClick={sendImageToServer}
       >

@@ -27,7 +27,7 @@ const SearchProfile = ({ close }: { close: any }) => {
             <Close />
           </button>
         </div>
-        <div className="flex border-b-[1px] border-gray-200 py-[0.5rem] px-[1rem] space-x-[1rem]">
+        <div className="flex border-b-[1px] items-center border-gray-200 py-[0.5rem] px-[1rem] space-x-[1rem]">
           <label htmlFor="search" className="font-[600]">
             To:
           </label>
@@ -37,7 +37,7 @@ const SearchProfile = ({ close }: { close: any }) => {
             placeholder="Search..."
             id="search"
             autoComplete="off"
-            className="w-full outline-none placeholder:text-[0.8rem] text-[0.9rem]"
+            className="resetFlowBite w-full outline-none placeholder:text-[0.8rem] text-[1rem]"
           />
         </div>
 

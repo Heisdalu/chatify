@@ -38,6 +38,26 @@
   @apply bg-gray-400 rounded-[10px];
 }
 
+.scroll::-webkit-scrollbar {
+  background-color: white;
+}
+
+/* Scrollbar thumb */
+.scroll::-moz-scrollbar-thumb {
+  background-color: #8b8b8b; /* Adjust the color as needed */
+  border-radius: 10px; /* Adjust the border radius as needed */
+}
+
+/* Scrollbar thumb on textarea */
+.scrollTextarea::-moz-scrollbar-thumb {
+  background-color: #8b8b8b; /* Adjust the color as needed */
+  border-radius: 5px; /* Adjust the border radius as needed */
+}
+
+.scrollTextarea::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 rounded-[5px];
+}
+
 .effect {
   @apply rounded-[5px] animate-pulse bg-gray-200;
 }
@@ -65,16 +85,15 @@
   @apply h-[15px] w-[15px];
 }
 
-.resetFlowBite,
-.resetFlowBite:focus,
-.resetFlowBite:active {
+.resetFlowBite {
   border: none;
   outline: none !important;
   outline-offset: 20px;
 }
 
 .resetFlowBite:focus {
-  border: 1px solid white;
+  border: none;
   outline: none !important;
   outline-offset: 0px;
+  box-shadow: 0 0 0 transparent !important;
 }

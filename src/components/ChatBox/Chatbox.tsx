@@ -124,7 +124,7 @@ const Chatbox = () => {
             ref={textAreaRef}
             onChange={typingHandler}
             name=""
-            className="resetFlowBite outline-none p-[7px] h-[45px] w-[100%] resize-none placeholder:[vertical-align:middle]"
+            className="resetFlowBite outline-none p-[7px] h-[45px] w-[100%] resize-none  placeholder:text-[1rem] placeholder:leading-[1.7rem] scroll scrollTextarea"
             id=""
             placeholder="Write your message..."
           ></textarea>
