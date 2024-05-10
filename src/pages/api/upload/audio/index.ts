@@ -31,9 +31,9 @@ export default async function handler(
         console.log(file);
 
         // must be an image format
-        if (!file.mimetype?.includes("audio")) {
-          throw new Error("Format not allowed. Upload an Audio Format");
-        }
+        // if (!file.mimetype?.includes("audio")) {
+        //   throw new Error("Format not allowed. Upload an Audio Format");
+        // }
 
         const fileBuffer = fs.readFileSync(file.filepath);
 
@@ -51,7 +51,7 @@ export default async function handler(
           filename_override: file.newFilename,
           folder: `chatify/chatify_audios`,
           use_filename: true,
-          format: "mp3",
+          format: "wav",
         });
 
         console.log(cloudinaryResponse);
