@@ -33,7 +33,7 @@ const AudioDisplay = () => {
     if (!audioFile.src) {
       //playing for the first time
       audioFile.src =
-        "https://uljzszxyrxoupprqlucs.supabase.co/storage/v1/object/public/audios/test";
+        "https://uljzszxyrxoupprqlucs.supabase.co/storage/v1/object/public/audios/test?t=2024-05-10T16%3A29%3A13.892Z";
       return setAudioState((prev) => ({
         ...prev,
         loading: true,
@@ -120,7 +120,7 @@ const AudioDisplay = () => {
     };
 
     audioFile?.addEventListener("error", errorFunc);
-    audioFile?.addEventListener("canplaythrough", playThroughFunc);
+    audioFile?.addEventListener("loadedmetadata", playThroughFunc);
     audioFile?.addEventListener("timeupdate", timeUpdateHandler);
     audioFile?.addEventListener("ended", endedAudioHandler);
     audioFile?.addEventListener("play", playAudioHandler);
@@ -128,7 +128,7 @@ const AudioDisplay = () => {
 
     return () => {
       audioFile?.removeEventListener("error", errorFunc);
-      audioFile?.removeEventListener("canplaythrough", playThroughFunc);
+      audioFile?.removeEventListener("loadedmetadata", playThroughFunc);
       audioFile?.removeEventListener("timeupdate", timeUpdateHandler);
       audioFile?.removeEventListener("ended", endedAudioHandler);
       audioFile?.removeEventListener("play", playAudioHandler);
