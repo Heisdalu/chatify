@@ -6,9 +6,12 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import Link from "next/link";
 import Information from "../../../../public/icons/Information";
 import ChatLoading from "@/components/ChatDisplay/ChatLoading";
+import { useContext } from "react";
+import { ChatReplyingContext } from "@/context/ChatReplyingProvider";
 
 const UserDirectChatID = () => {
   const { height } = useWindowSize();
+  const { chatType } = useContext(ChatReplyingContext);
   //   return <ChatLoading />; // loading state
 
   return (
@@ -44,11 +47,15 @@ const UserDirectChatID = () => {
           </Link>
         </div>
       </div>
-{/* 170 // when replay box is not on*/}
+      {/* 170 // when replay box is not on*/}
       <div
         style={{
           height: `${
-            typeof height === "number" ? `${height - 210}px` : "700px"
+            typeof height === "number" && chatType === "none"
+              ? `${height - 170}px`
+              : chatType !== "none" && typeof height === "number"
+              ? `${height - 210}px`
+              : "700px"
           }`,
         }}
         className={`scroll overflow-y-scroll overflow-x-hidden py-[1rem] relative`}

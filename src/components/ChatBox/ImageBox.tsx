@@ -40,7 +40,7 @@ const ImageBox = ({
   };
 
   return (
-    <div className="space-x-[1rem] overflow-hidden relative flex items-center rounded-[10px] border-gray-300 border-[1px] p-[0.5rem] py-[0.6rem]">
+    <div className="space-x-[1rem] overflow-hidden relative flex items-center p-[0.5rem] py-[0.6rem]">
       <button
         onClick={() => toggleImage(false)}
         className="flex items-center reduce_svg border-[1px] p-[5px] border-gray-300 rounded-[5px]"
@@ -56,7 +56,7 @@ const ImageBox = ({
       />
       <button
         onClick={photoHandler}
-        className="hover:bg-gray-200 active:bg-gray-500 p-[0.4rem] py-[0.2rem] flex items-center border-[1px] border-gray-300 justify-center] rounded-[5px] text-[0.7rem] md:text-[1rem]"
+        className="hover:bg-gray-200 active:bg-gray-500 p-[0.3rem] py-[0.2rem] flex items-center border-[1px] border-gray-300 justify-center rounded-[5px] text-[0.7rem] md:text-[0.8rem]"
       >
         Change Photo
       </button>

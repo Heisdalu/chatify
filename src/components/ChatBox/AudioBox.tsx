@@ -88,7 +88,7 @@ const AudioBox: FC<AudioBoxProps> = ({
   }, [router.events]);
 
   return (
-    <div className="rounded-[10px] border-gray-300 border-[1px] p-[0.5rem] py-[0.6rem]">
+    <div className="p-[0.5rem] py-[0.6rem]">
       <div className="flex space-x-[1.3rem]">
         <button
           onClick={stopAudio}

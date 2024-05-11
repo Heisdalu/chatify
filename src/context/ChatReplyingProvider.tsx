@@ -19,6 +19,13 @@ const ChatReplyingProvider = ({ children }: { children: ReactNode }) => {
 
   const chatReplyStateHandler = useCallback((data: ChatReplyDetail) => {
     setChatReplyState(data);
+    console.log(data);
+
+    if (data.chatType !== "none") {
+      document.querySelector(".chatbox")?.classList.add("hideTopBorder");
+    } else {
+      document.querySelector(".chatbox")?.classList.remove("hideTopBorder");
+    }
   }, []);
 
   const ctxstate = {

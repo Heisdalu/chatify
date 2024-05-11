@@ -97,10 +97,8 @@ const Chatbox = () => {
         if (permissionStatus.state === "granted") {
           setIsAudioPermitted("granted");
         }
-
-        console.log("y");
       })
-      .catch((e) => {
+      .catch(() => {
         // mozilla firefox does not support this navigator.permission
         // install platfrom for better usage
         if (navigator.userAgent.toLowerCase().includes("mozilla")) {
@@ -115,64 +113,65 @@ const Chatbox = () => {
   useEffect(() => {
     if (!recordingBlob) return;
     console.log(recordingBlob, audioDuration);
-  }, [controls.recordingTime, recordingBlob, audioDuration]);
+  }, [recordingBlob, audioDuration]);
 
   return (
     <div className="bg-white p-[1rem] px-[0.5rem] max-w-[700px] fixed bottom-0 left-[50%] translate-x-[-50%] w-[100%]">
       <div className="relative flex flex-col">
         <ReplyBox />
+        <div className="rounded-[10px] border-[1px] border-gray-300 chatbox">
+          {isAudioClicked && controls.isRecording ? (
+            <AudioBox
+              toggleAudio={toggleAudio}
+              controls={controls}
+              audioDurationHandler={audioDurationHandler}
+            />
+          ) : isImageClicked ? (
+            <ImageBox toggleImage={toggleImage} />
+          ) : (
+            <div className="px-[0.5rem] flex items-center space-x-[1rem]">
+              <textarea
+                ref={textAreaRef}
+                onChange={typingHandler}
+                name=""
+                className="resetFlowBite caret-black outline-none p-[7px] h-[45px] w-[100%] resize-none  placeholder:text-[1rem] placeholder:leading-[1.7rem] scroll scrollTextarea text-[1rem]"
+                id=""
+                placeholder="Write your message..."
+              ></textarea>
 
-        {isAudioClicked && controls.isRecording ? (
-          <AudioBox
-            toggleAudio={toggleAudio}
-            controls={controls}
-            audioDurationHandler={audioDurationHandler}
-          />
-        ) : isImageClicked ? (
-          <ImageBox toggleImage={toggleImage} />
-        ) : (
-          <div className="px-[0.5rem] flex items-center rounded-[10px] border-[1px] border-gray-300 space-x-[1rem]">
-            <textarea
-              ref={textAreaRef}
-              onChange={typingHandler}
-              name=""
-              className="resetFlowBite caret-black outline-none p-[7px] h-[45px] w-[100%] resize-none  placeholder:text-[1rem] placeholder:leading-[1.7rem] scroll scrollTextarea text-[1rem]"
-              id=""
-              placeholder="Write your message..."
-            ></textarea>
-
-            {!isTyping && (
-              <div className="">
-                <button
-                  onClick={microphoneHandler}
-                  className="hover:bg-gray-200 active:bg-gray-500 px-[0.5rem] h-[30px] w-[30px flex items-center justify-center] rounded-[5px]"
-                >
-                  <Microphone />
-                </button>
-              </div>
-            )}
-            {!isTyping && (
-              <div className="">
-                <button
-                  onClick={() => setIsImageClicked(true)}
-                  className="hover:bg-gray-200 active:bg-gray-500 px-[0.5rem] h-[30px] flex items-center justify-center] rounded-[5px]"
-                >
-                  <Picture />
-                </button>
-              </div>
-            )}
-            {isTyping && (
-              <div className="">
-                <button
-                  onClick={sendHandler}
-                  className="active:bg-blue-600 active:text-white rounded-[7px] px-[0.7rem] text-blue-600 flex items-center justify-center] text-[1rem]"
-                >
-                  Send
-                </button>
-              </div>
-            )}
-          </div>
-        )}
+              {!isTyping && (
+                <div className="">
+                  <button
+                    onClick={microphoneHandler}
+                    className="hover:bg-gray-200 active:bg-gray-500 px-[0.5rem] h-[30px] w-[30px flex items-center justify-center] rounded-[5px]"
+                  >
+                    <Microphone />
+                  </button>
+                </div>
+              )}
+              {!isTyping && (
+                <div className="">
+                  <button
+                    onClick={() => setIsImageClicked(true)}
+                    className="hover:bg-gray-200 active:bg-gray-500 px-[0.5rem] h-[30px] flex items-center justify-center] rounded-[5px]"
+                  >
+                    <Picture />
+                  </button>
+                </div>
+              )}
+              {isTyping && (
+                <div className="">
+                  <button
+                    onClick={sendHandler}
+                    className="active:bg-blue-600 active:text-white rounded-[7px] px-[0.7rem] text-blue-600 flex items-center justify-center] text-[1rem]"
+                  >
+                    Send
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

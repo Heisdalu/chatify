@@ -12,8 +12,6 @@ import { memo } from "react";
 const ChatDisplay = () => {
   //   const network = useNetworkState();
   //   console.log(network);
-console.log('ddddd');
-
 
   return (
     <div className="flex flex-col">
