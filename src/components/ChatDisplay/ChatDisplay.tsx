@@ -6,10 +6,14 @@ import DateGroup from "./DateGroup";
 import ReceiverChat from "./ReceiverChat";
 import SenderChat from "./SenderChat";
 import AudioDisplay from "./AudioDisplay";
+import { ChatReplyingContextType } from "@/types";
+import { memo } from "react";
 
 const ChatDisplay = () => {
   //   const network = useNetworkState();
   //   console.log(network);
+console.log('ddddd');
+
 
   return (
     <div className="flex flex-col">
@@ -43,4 +47,4 @@ const ChatDisplay = () => {
     </div>
   );
 };
-export default ChatDisplay;
+export default memo(ChatDisplay);

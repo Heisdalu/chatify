@@ -44,11 +44,11 @@ const UserDirectChatID = () => {
           </Link>
         </div>
       </div>
-
+{/* 170 // when replay box is not on*/}
       <div
         style={{
           height: `${
-            typeof height === "number" ? `${height - 170}px` : "700px"
+            typeof height === "number" ? `${height - 210}px` : "700px"
           }`,
         }}
         className={`scroll overflow-y-scroll overflow-x-hidden py-[1rem] relative`}

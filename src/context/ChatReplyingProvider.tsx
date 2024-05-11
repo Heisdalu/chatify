@@ -1,27 +1,32 @@
-import { ChatReplyingContextType } from "@/types";
+import { ChatReplyingContextType, ChatReplyDetail } from "@/types";
 import React, { ReactNode, createContext, useCallback, useState } from "react";
 
 const inital: ChatReplyingContextType = {
   chatType: "none",
   userReplyName: "",
   replyContext: "",
+  chatReplyStateHandler: (data: ChatReplyDetail) => {},
 };
 
 export const ChatReplyingContext = createContext(inital);
 
 const ChatReplyingProvider = ({ children }: { children: ReactNode }) => {
-  const [chatReplyState, setChatReplyState] = useState(inital);
+  const [chatReplyState, setChatReplyState] = useState({
+    chatType: "none",
+    userReplyName: "",
+    replyContext: "",
+  });
 
-  const chatReplyStateHandler = useCallback((data: ChatReplyingContextType) => {
+  const chatReplyStateHandler = useCallback((data: ChatReplyDetail) => {
     setChatReplyState(data);
   }, []);
 
   const ctxstate = {
     ...chatReplyState,
     chatReplyStateHandler,
-  };
+  } as ChatReplyingContextType;
 
-  console.log(ctxstate);
+  // console.log(ctxstate);
 
   return (
     <ChatReplyingContext.Provider value={ctxstate}>

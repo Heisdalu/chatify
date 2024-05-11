@@ -11,3 +11,18 @@ export type UploadError = {
 export type UploadSuccess = {
   secure_url: string;
 };
+
+export type ChatType = "none" | "text" | "photo" | "audio";
+export type ChatReplyDetail = {
+  chatType: ChatType;
+  userReplyName: string;
+  replyContext: ChatType extends "audio" ? number : string;
+};
+// export type ChatDetail  
+
+export type ChatReplyingContextType = {
+  chatType: ChatType;
+  userReplyName: string;
+  replyContext: ChatType extends "audio" ? number : string;
+  chatReplyStateHandler: (data: ChatReplyDetail) => void;
+};

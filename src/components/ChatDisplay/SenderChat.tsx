@@ -1,9 +1,14 @@
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, useContext } from "react";
 import ChatDeliveryStatus from "./ChatDeliveryStatus";
 import { PanInfo, motion, useMotionValue } from "framer-motion";
+import { ChatReplyingContext } from "@/context/ChatReplyingProvider";
 
 const SenderChat = () => {
   const x = useMotionValue(0);
+  const { chatReplyStateHandler } = useContext(ChatReplyingContext);
+
+  // console.log(ctx);
+
   const dragEndFunc = (
     e: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo
@@ -11,6 +16,11 @@ const SenderChat = () => {
     // console.log(e, info);
     if (x.get() >= 30) {
       console.log("show message replying UI");
+      chatReplyStateHandler({
+        chatType: "text",
+        replyContext: "Hello",
+        userReplyName: "divnie",
+      });
     }
   };
 
