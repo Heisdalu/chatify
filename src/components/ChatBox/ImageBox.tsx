@@ -56,7 +56,7 @@ const ImageBox = ({
       />
       <button
         onClick={photoHandler}
-        className="hover:bg-gray-200 active:bg-gray-500 p-[0.4rem] flex items-center border-[1px] border-gray-300 justify-center] rounded-[5px] text-[0.7rem] md:text-[1rem]"
+        className="hover:bg-gray-200 active:bg-gray-500 p-[0.4rem] py-[0.2rem] flex items-center border-[1px] border-gray-300 justify-center] rounded-[5px] text-[0.7rem] md:text-[1rem]"
       >
         Change Photo
       </button>
