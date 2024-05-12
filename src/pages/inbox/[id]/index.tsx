@@ -15,7 +15,7 @@ const UserDirectChatID = () => {
   //   return <ChatLoading />; // loading state
 
   return (
-    <div className="h-[100vh] overflow-hidden py-[1rem] max-w-[700px] mx-auto lg:py-[1rem] relative">
+    <div className="h-[100vh] [max-height:-webkit-fill-available] overflow-hidden py-[1rem] max-w-[700px] mx-auto lg:py-[1rem] relative">
       <div className="sticky top-[0] bg-white px-[1rem] border-b-[1px] border-b-gray-200 py-[0.5rem] flex items-center space-x-[1rem] ">
         <Link
           href="/inbox"
