@@ -27,7 +27,7 @@ const ReplyBox = () => {
   }, [router.events]);
   return (
     !(chatType === "none") && (
-      <div className="bg-gray-100 w-[100%] flex items-center space-x-[0.5rem] pr-[0.3rem]">
+      <div className="bg-gray-100 absolute top-[-46px] w-[100%] flex items-center space-x-[0.5rem] pr-[0.3rem]">
         <div className=" border-red-400 border-l-[5px] bg-gray-100 p-[0.3rem] px-[0.5rem]">
           <h1 className="font-[600] text-[0.8rem]">Doubs</h1>
           <p className="line-clamp-1 text-[0.7rem]">
