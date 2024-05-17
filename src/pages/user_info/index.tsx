@@ -26,7 +26,7 @@ const UserInfo = () => {
                 placeholder="display name must be unique"
                 type="text"
                 autoComplete="off"
-                className="caret-black rounded-[5px] userReset border-b-[1px] !border-[#CDD1D0] py-[0.5rem] px-[0.3rem] focus:outline-none focus:border-b-black !focus:border-b-[2px]"
+                className="caret-black rounded-[5px] border-b-[1px] !border-[#CDD1D0] py-[0.5rem] px-[0.3rem] userReset focus:outline-none focus:border-b-black !focus:border-b-[2px]"
                 name="display_name"
                 id="display_name"
               />
@@ -49,16 +49,15 @@ const UserInfo = () => {
               ></textarea>
               <div className="text-[0.7rem]">maximum of 40 characters</div>
             </div>
-
-            <div>
-              <button className="space-x-[0.8rem] flex py-[1rem] w-[100%] rounded-[1rem] bg-[#000E08] text-[#fff] justify-center items-center ">
-                <span>Submit</span>
-                <span>
-                  <Loading />
-                </span>
-              </button>
-            </div>
           </form>
+          <div>
+            <button className="space-x-[0.8rem] flex py-[1rem] w-[100%] rounded-[1rem] bg-[#000E08] text-[#fff] justify-center items-center ">
+              <span>Submit</span>
+              <span>
+                <Loading />
+              </span>
+            </button>
+          </div>
         </div>
       </Wrapper>
     </div>
