@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 import { PagesProgressBar as ProgressBar } from "next-nprogress-bar";
 import { Toaster } from "react-hot-toast";
 import ChatReplyingProvider from "@/context/ChatReplyingProvider";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -11,26 +12,28 @@ const inter = Inter({
   adjustFontFallback: false,
 });
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <>
-      <style jsx global>{`
-        html {
-          font-family: ${inter.style.fontFamily};
-        }
-      `}</style>
-      <ChatReplyingProvider>
-        <Component {...pageProps} />
-      </ChatReplyingProvider>
-      <ProgressBar
-        height="4px"
-        color="#000"
-        options={{ showSpinner: false }}
-        shallowRouting
-      />
-      <div>
-        <Toaster />
-      </div>
+      <SessionProvider session={session}>
+        <style jsx global>{`
+          html {
+            font-family: ${inter.style.fontFamily};
+          }
+        `}</style>
+        <ChatReplyingProvider>
+          <Component {...pageProps} />
+        </ChatReplyingProvider>
+        <ProgressBar
+          height="4px"
+          color="#000"
+          options={{ showSpinner: false }}
+          shallowRouting
+        />
+        <div>
+          <Toaster />
+        </div>
+      </SessionProvider>
     </>
   );
 }

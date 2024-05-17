@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id              Int                @id @default(autoincrement())
+  email           String             @unique
+  displayName     String             @unique
+  bio             String             @default("")
+  profileImageUrl String?
+  createdAt       DateTime           @default(now())
+  chatsList       Chatsparticipant[]
+
+  @@unique([email, displayName])
+  @@map("users")
+}
+
+// email as id
+
+model Chatsparticipant {
+  id               Int       @id @default(autoincrement())
+  senderId         String
+  receiverId       String
+  receiverImageUrl String
+  sender           User      @relation(fields: [senderId], references: [email])
+  messages         Message[]
+
+  @@unique([senderId, receiverId])
+  @@map("chats_participant")
+}
+
+model Message {
+  id               Int      @id @default(autoincrement())
+  msgSenderId      String   @map("message_senderId")
+  msgReceiverId    String   @map("message_receiverId")
+  msgType          Type     @default(NONE) @map("message_type")
+  msgContext       String   @map("message_context")
+  parentMsgType    Type     @default(NONE) @map("parent_messageType")
+  audioDuration    String?  @map("audio_duration")
+  parentMsgId      String?  @map("parent_messageId")
+  parentMsgContext String?  @map("parent_messageContext")
+  sentAt           DateTime @default(now()) @map("sent_at")
+  isSeen           Boolean  @default(false)
+  seenAt           DateTime @updatedAt()
+
+  Chatsparticipant Chatsparticipant[]
+
+  @@map("message")
+}
+
+enum Type {
+  NONE
+  TEXT
+  PHOTO
+  AUDIO
+}
