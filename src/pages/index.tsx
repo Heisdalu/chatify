@@ -19,7 +19,7 @@ export default function Home() {
     enabled: isAuthenticated,
     staleTime: 30 * 1000,
     refetchOnWindowFocus: false,
-    retry: 2,
+    retry: 1,
   });
   const router = useRouter();
 
@@ -49,8 +49,6 @@ export default function Home() {
       //@ts-ignore
       error?.message.toLowerCase() === "empty bio data"
     ) {
-      console.log("yessss");
-
       router.push("/user_info");
     }
     if (
@@ -66,8 +64,6 @@ export default function Home() {
       router.push("/inbox");
       // router.push("/user_info");
     }
-
-    console.log(error);
   }, [status, router, reactQueryStatus, error]);
 
   return (
@@ -108,7 +104,11 @@ export default function Home() {
           <div className="mt-[3rem] sm:flex sm:justify-center">
             <button
               onClick={clickFunc}
-              disabled={status === "loading" || isAuthenticated ? true : false}
+              disabled={
+                status === "loading" || isAuthenticated || isClicked
+                  ? true
+                  : false
+              }
               className="space-x-[0.5rem] flex py-[1rem] w-[100%] rounded-[1rem] bg-[#000E08] text-[#fff] sm:max-w-[400px] justify-center items-center disabled:opacity-[0.5] disabled:cursor-not-allowed"
             >
               <span> Sign in with Google</span>
