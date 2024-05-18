@@ -5,6 +5,7 @@ import { PagesProgressBar as ProgressBar } from "next-nprogress-bar";
 import { Toaster } from "react-hot-toast";
 import ChatReplyingProvider from "@/context/ChatReplyingProvider";
 import { SessionProvider } from "next-auth/react";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const inter = Inter({
@@ -40,6 +41,7 @@ export default function App({
           <div>
             <Toaster />
           </div>
+          <ReactQueryDevtools initialIsOpen />
         </QueryClientProvider>
       </SessionProvider>
     </>
