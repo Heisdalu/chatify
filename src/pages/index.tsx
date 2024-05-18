@@ -39,7 +39,7 @@ export default function Home() {
   useEffect(() => {
     if (status === "authenticated" && reactQueryStatus !== "error") {
       setIsAuthenticated(true);
-      toast.success("Authenticated. Redirecting user...", {
+      toast.success("Authenticated. Redirecting user. Please wait...", {
         duration: 5000,
       });
     }
@@ -47,9 +47,20 @@ export default function Home() {
     if (
       reactQueryStatus === "error" &&
       //@ts-ignore
-      error?.response?.data?.message.toLowerCase() === "empty bio data"
+      error?.message.toLowerCase() === "empty bio data"
     ) {
+      console.log("yessss");
+
       router.push("/user_info");
+    }
+    if (
+      reactQueryStatus === "error" &&
+      //@ts-ignore
+      error?.message.includes("Invalid `prisma.user.findFirst()")
+    ) {
+      toast.error(
+        "Redirecting failed. No/Slow Intenet connection. Refresh again"
+      );
     }
     if (reactQueryStatus === "success") {
       router.push("/inbox");
@@ -97,7 +108,7 @@ export default function Home() {
           <div className="mt-[3rem] sm:flex sm:justify-center">
             <button
               onClick={clickFunc}
-              disabled={isAuthenticated}
+              disabled={status === "loading" || isAuthenticated ? true : false}
               className="space-x-[0.5rem] flex py-[1rem] w-[100%] rounded-[1rem] bg-[#000E08] text-[#fff] sm:max-w-[400px] justify-center items-center disabled:opacity-[0.5] disabled:cursor-not-allowed"
             >
               <span> Sign in with Google</span>
