@@ -74,9 +74,13 @@
   box-shadow: 0 0 0 transparent !important;
 }
 
+.userReset {
+  border: none;
+}
+
 .userReset:focus {
   box-shadow: 0 0 0 transparent !important;
-  border: 2px solid black!important;
+  border: 0 solid transparent !important;
   outline: none;
 }
 
@@ -87,6 +91,6 @@
 }
 
 .hideTopBorder {
-  border-top-left-radius: 0!important;
-  border-top-right-radius: 0!important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
 }
