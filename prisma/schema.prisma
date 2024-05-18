@@ -30,12 +30,13 @@ model User {
 // email as id
 
 model Chatsparticipant {
-  id               Int       @id @default(autoincrement())
-  senderId         String
-  receiverId       String
-  receiverImageUrl String
-  sender           User      @relation(fields: [senderId], references: [email])
-  messages         Message[]
+  id                  Int       @id @default(autoincrement())
+  senderId            String
+  receiverId          String
+  receiverDisplayName String    @map("receiver_display_name")
+  receiverImageUrl    String    @map("receiver_image_url")
+  sender              User      @relation(fields: [senderId], references: [email])
+  messages            Message[]
 
   @@unique([senderId, receiverId])
   @@map("chats_participant")
