@@ -9,7 +9,6 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const { name } = req.query;
-    console.log(name);
 
     try {
       const session = await getServerSession(req, res, authOptions);
@@ -34,7 +33,7 @@ export default async function handler(
       });
 
       if (userInfo) {
-        throw new Error("display name taken");
+        throw new Error("display name taken. Try another one");
       }
 
       return res.status(200).json({ message: "display name can be used" });
