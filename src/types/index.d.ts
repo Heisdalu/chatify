@@ -18,11 +18,41 @@ export type ChatReplyDetail = {
   userReplyName: string;
   replyContext: ChatType extends "audio" ? number : string;
 };
-// export type ChatDetail  
+// export type ChatDetail
 
 export type ChatReplyingContextType = {
   chatType: ChatType;
   userReplyName: string;
   replyContext: ChatType extends "audio" ? number : string;
   chatReplyStateHandler: (data: ChatReplyDetail) => void;
+};
+
+export type Messages = {
+  id: Number;
+  isSeen: Boolean;
+  msgContext: String;
+  msgReceiverId: String;
+  msgSenderId: String;
+  msgType: Uppercase<ChatType>;
+  parentMsgContext: String | null;
+  parentMsgId: String | null;
+  parentMsgType: Uppercase<ChatType>;
+  seenAt: String;
+  sentAt: String;
+};
+
+export type ChatListTypes = {
+  receiverId: String;
+  receiverDisplayName: String;
+  receiverImageUrl: String;
+  messages: Messages[];
+};
+
+export type InboxListDataTypes = {
+  message: String;
+  data: {
+    email: String;
+    displayName: String;
+    chatsList: ChatListTypes[];
+  };
 };

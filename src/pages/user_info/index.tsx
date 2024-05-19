@@ -44,7 +44,7 @@ const UserInfo = () => {
   });
 
   const mutation = useMutation({
-    mutationFn: (data: { name: string; bio: string }) =>
+    mutationFn: (data: { name: string; bio: string; date:string }) =>
       fetcherPost("/api/add_new_user", data),
     onSuccess(data, variables, context) {
       toast.success("Account created");
@@ -87,6 +87,7 @@ const UserInfo = () => {
     mutation.mutate({
       name: displayNameRef.current.value,
       bio: bioRef.current.value,
+      date: new Date().toISOString(),
     });
   };
 

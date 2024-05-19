@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import prisma from "@/utlis/prisma";
 import { authOptions } from "../auth/[...nextauth]";
 
+/// note- supabse time issues.. it gives 7:00pm to 6pm
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -21,6 +22,7 @@ export default async function handler(
       if (
         !data.name ||
         !data.bio ||
+        !data.date ||
         data.name.length > 15 ||
         data.bio.length > 40 ||
         data.name.length === 0 ||
@@ -42,12 +44,15 @@ export default async function handler(
         throw new Error("Account registered already");
       }
 
+      console.log(data.date);
+
       const createNewUser = await prisma.user.create({
         data: {
           email: session.user.email,
           displayName: data.name,
           bio: data.bio,
           profileImageUrl: session.user.image,
+          createdAt: data.date,
         },
         select: {
           id: true,

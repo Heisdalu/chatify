@@ -17,8 +17,11 @@ CREATE TABLE "users" (
 CREATE TABLE "chats_participant" (
     "id" SERIAL NOT NULL,
     "senderId" TEXT NOT NULL,
+    "sender_display_name" TEXT NOT NULL,
+    "sender_image_url" TEXT NOT NULL,
     "receiverId" TEXT NOT NULL,
-    "receiverImageUrl" TEXT NOT NULL,
+    "receiver_display_name" TEXT NOT NULL,
+    "receiver_image_url" TEXT NOT NULL,
 
     CONSTRAINT "chats_participant_pkey" PRIMARY KEY ("id")
 );
@@ -57,6 +60,9 @@ CREATE UNIQUE INDEX "users_displayName_key" ON "users"("displayName");
 CREATE UNIQUE INDEX "users_email_displayName_key" ON "users"("email", "displayName");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "users_email_displayName_profileImageUrl_key" ON "users"("email", "displayName", "profileImageUrl");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "chats_participant_senderId_receiverId_key" ON "chats_participant"("senderId", "receiverId");
 
 -- CreateIndex
@@ -66,7 +72,7 @@ CREATE UNIQUE INDEX "_ChatsparticipantToMessage_AB_unique" ON "_Chatsparticipant
 CREATE INDEX "_ChatsparticipantToMessage_B_index" ON "_ChatsparticipantToMessage"("B");
 
 -- AddForeignKey
-ALTER TABLE "chats_participant" ADD CONSTRAINT "chats_participant_senderId_fkey" FOREIGN KEY ("senderId") REFERENCES "users"("email") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "chats_participant" ADD CONSTRAINT "chats_participant_senderId_sender_display_name_sender_imag_fkey" FOREIGN KEY ("senderId", "sender_display_name", "sender_image_url") REFERENCES "users"("email", "displayName", "profileImageUrl") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_ChatsparticipantToMessage" ADD CONSTRAINT "_ChatsparticipantToMessage_A_fkey" FOREIGN KEY ("A") REFERENCES "chats_participant"("id") ON DELETE CASCADE ON UPDATE CASCADE;

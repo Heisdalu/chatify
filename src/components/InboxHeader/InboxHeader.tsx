@@ -1,9 +1,14 @@
 import Logo from "@/components/Logo/Logo";
 import Image from "next/image";
 import SearchProfile from "../SearchProfile/SearchProfile";
-import { useState } from "react";
+import { FC, useState } from "react";
 
-const InboxHeader = () => {
+interface InboxHeaderProps {
+  email: String;
+  displayName: String | undefined;
+}
+
+const InboxHeader: FC<InboxHeaderProps> = ({ email, displayName }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeHandler = () => {
@@ -16,7 +21,7 @@ const InboxHeader = () => {
         <Logo />
       </span>
 
-      <h1 className="font-[700] text-[1.2rem]">@divineobi007</h1>
+      <h1 className="font-[700] text-[1.2rem]">@{displayName || ""}</h1>
 
       <button
         className="active:bg-gray-200"

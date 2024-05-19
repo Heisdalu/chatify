@@ -19,9 +19,63 @@ export default async function handler(
       //   }
 
       // check if user is present in supbase
-      const userInfo = await prisma.user.findFirst({
+      const userInfo = await prisma.chatsparticipant.findFirst({
         where: {
-          email: "divineobi07@gmail.com",
+          OR: [
+            {
+              AND: {
+                receiverId: "divineobi07@gmail.com",
+                senderId: "divineobi007@gmail.com",
+              },
+            },
+            {
+              AND: {
+                senderId: "divineobi07@gmail.com",
+                receiverId: "divineobi007@gmail.com",
+              },
+            },
+          ],
+        },
+      });
+
+      // new chat
+      // const userInfo = await prisma.chatsparticipant.create({
+      //   data: {
+      //     receiverId: "divineobi007@gmail.com",
+      //     receiverDisplayName: "dd_boy",
+      //     receiverImageUrl:
+      //       "https://lh3.googleusercontent.com/a/ACg8ocLh0NSuSkWk7RUGoGxiBmDdKLbwqMcJoAvl4tOyKyeZMYzZSg=s96-c",
+      //     sender: {
+      //       connect: {
+      //         email: "divineobi07@gmail.com",
+      //       },
+      //     },
+      //     messages: {
+      //       create: {
+      //         msgContext: "Hi bruh",
+      //         msgReceiverId: "divineobi007@gmail.com",
+      //         msgSenderId: "divineobi07@gmail.com",
+      //         msgType: "TEXT",
+      //       },
+      //     },
+      //   },
+      // });
+
+      console.log(userInfo);
+
+      const lol = await prisma.chatsparticipant.update({
+        where: {
+          id: 1,
+        },
+        data: {
+          messages: {
+            create: {
+              msgContext: "i am dope bruh.. how are you?",
+              msgReceiverId: "divineobi07@gmail.com",
+              msgSenderId: "divineobi007@gmail.com",
+              msgType: "PHOTO",
+            },
+          },
         },
       });
 
@@ -31,9 +85,9 @@ export default async function handler(
           .json({ status: 404, message: "user not available" });
       }
 
-      return res
-        .status(200)
-        .json({ message: "success", data: userInfo, session });
+      console.log(lol);
+
+      return res.status(200).json({ message: "success" });
     } catch (err: unknown) {
       if (
         (err as Error).message.includes(
