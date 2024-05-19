@@ -24,6 +24,7 @@ model User {
   chatsList       Chatsparticipant[]
 
   @@unique([email, displayName])
+  @@unique([email, displayName, profileImageUrl])
   @@map("users")
 }
 
@@ -32,10 +33,12 @@ model User {
 model Chatsparticipant {
   id                  Int       @id @default(autoincrement())
   senderId            String
+  senderDisplayName   String    @map("sender_display_name")
+  senderImageUrl      String    @map("sender_image_url")
   receiverId          String
   receiverDisplayName String    @map("receiver_display_name")
   receiverImageUrl    String    @map("receiver_image_url")
-  sender              User      @relation(fields: [senderId], references: [email])
+  sender              User      @relation(fields: [senderId, senderDisplayName, senderImageUrl], references: [email, displayName, profileImageUrl])
   messages            Message[]
 
   @@unique([senderId, receiverId])
