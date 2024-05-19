@@ -10,12 +10,12 @@ const SearchProfile = ({ close }: { close: any }) => {
   };
 
   return (
-    <div className="fixed">
+    <>
       <motion.div
         initial={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
         animate={{ opacity: 1 }}
-        className="overflow-hidden rounded-[10px] w-[300px] sm:w-[400px] md:w-[500px] absolute z-[120] top-[5rem] left-[50%] translate-x-[5%] h-[350px] bg-white"
+        className="overflow-hidden rounded-[10px] w-[300px] sm:w-[400px] md:w-[500px] fixed z-[120] top-[150px] left-[50%] translate-x-[-50%] h-[350px] bg-white"
       >
         <div className="border-b-[1px] border-gray-200 flex justify-between p-[1rem] items-center">
           <h1 className="mx-auto font-[700]">New Message</h1>
@@ -57,7 +57,7 @@ const SearchProfile = ({ close }: { close: any }) => {
         </div>
       </motion.div>
       <Overlay onClick={exitHandler} />
-    </div>
+    </>
   );
 };
 export default SearchProfile;
