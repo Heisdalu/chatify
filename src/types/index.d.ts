@@ -29,6 +29,7 @@ export type ChatReplyingContextType = {
 
 export type Messages = {
   id: Number;
+  audioDuration: String | null;
   isSeen: Boolean;
   msgContext: String;
   msgReceiverId: String;
@@ -42,9 +43,13 @@ export type Messages = {
 };
 
 export type ChatListTypes = {
+  id: Number;
   receiverId: String;
   receiverDisplayName: String;
   receiverImageUrl: String;
+  senderDisplayName: String;
+  senderId: String;
+  senderImageUrl: String;
   messages: Messages[];
 };
 

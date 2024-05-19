@@ -12,17 +12,15 @@ export default async function handler(
       const { name } = req.query;
 
       const session = await getServerSession(req, res, authOptions);
-      // if (!session) {
-      //   return res
-      //     .status(404)
-      //     .json({ status: 404, message: "You need to be authenticated" });
-      // }
+      if (!session) {
+        return res
+          .status(404)
+          .json({ status: 404, message: "You need to be authenticated" });
+      }
 
       if (!name || typeof name !== "string") {
         throw new Error("Input a valid user");
       }
-
-      console.log(name);
 
       // check if user is present in supbase
       const userInfo = await prisma.user.findFirst({
@@ -40,14 +38,29 @@ export default async function handler(
           OR: [{ senderId: name }, { receiverId: name }],
         },
         include: {
-          messages: true,
+          messages: {
+            orderBy: {
+              sentAt: "desc",
+            },
+            select: {
+              id: true,
+              audioDuration: true,
+              isSeen: true,
+              msgContext: true,
+              msgReceiverId: true,
+              msgSenderId: true,
+              msgType: true,
+              sentAt: true,
+            },
+            take: 1,
+          },
         },
       });
 
       if (!userInfo) {
         return res
           .status(404)
-          .json({ status: 404, message: "user not available" });
+          .json({ status: 404, message: "User not available" });
       }
 
       return res.status(200).json({
@@ -73,4 +86,3 @@ export default async function handler(
     return res.status(404).json({ message: "method not allowed" });
   }
 }
-// import { NextApiRequest, NextApiResponse } from "next";

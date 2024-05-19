@@ -1,4 +1,4 @@
-import { FC, Key, memo, useEffect } from "react";
+import { FC, Key, memo } from "react";
 import InboxHeader from "@/components/InboxHeader/InboxHeader";
 import UserInboxCard from "@/components/InboxList/UserInboxCard";
 import InboxNavigation from "@/components/InboxNavigation/InboxNavigation";
@@ -6,11 +6,9 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import { useQuery } from "@tanstack/react-query";
 import { fetcher } from "@/utlis/fetcher";
 import InboxLoading from "@/components/Loading/InboxLoading";
-import NoMessage from "@/components/icons/NoMessage";
 import NoChatPresent from "@/components/InboxList/NoChatPresent";
 import { InboxListDataTypes } from "@/types";
 import ErrorDisplay from "@/components/ErrorDisplay/ErrorDisplay";
-import toast from "react-hot-toast";
 
 interface UserInboxListProps {
   email: string | null | undefined;
@@ -36,9 +34,6 @@ const UserInboxList: FC<UserInboxListProps> = ({ email }) => {
     enabled: true,
   });
 
-  console.log(isPending, isFetching, result, other);
-  console.log(isSuccess);
-
   return (
     <>
       {!isPending && isSuccess && (
@@ -62,12 +57,15 @@ const UserInboxList: FC<UserInboxListProps> = ({ email }) => {
             >
               {result.data?.chatsList?.length > 0 ? (
                 result.data.chatsList.map((el) => (
-                  <UserInboxCard key={el.receiverId as Key} data={el} />
+                  <UserInboxCard
+                    key={el.id as Key}
+                    data={el}
+                    email={email as String}
+                  />
                 ))
               ) : (
                 <NoChatPresent />
               )}
-              {/* <UserInboxCard /> */}
             </div>
           </div>
         </div>

@@ -13,7 +13,7 @@ const ErrorDisplay = ({ message, refetch }: Props) => {
 
         <button
           onClick={() => refetch()}
-          className="bg-black rounded-[5px] w-[10rem] mx-auto text-white py-[0.5rem] px-[1rem]"
+          className="bg-black rounded-[5px] active:bg-white active:text-black w-[10rem] mx-auto text-white py-[0.5rem] px-[1rem]"
         >
           Retry
         </button>

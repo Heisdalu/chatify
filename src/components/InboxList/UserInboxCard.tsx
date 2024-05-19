@@ -1,15 +1,25 @@
-import { ChatListTypes, InboxListDataTypes } from "@/types";
+import { ChatListTypes } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
+import LastMessage from "../LastMessage/LastMessage";
 
 interface Props {
   data: ChatListTypes;
+  email: String;
 }
 
-const UserInboxCard: FC<Props> = ({ data }) => {
+const UserInboxCard: FC<Props> = ({ data, email }) => {
   // console.log(data.receiverImageUrl, data.receiverImageUrl === "null");
-  const result = data?.messages[0];
+  // check if the initator was the same as the senderId
+  // this affect the link, image and profile name
+  // const isSender = email === data.senderId;
+  const lastChat = data?.messages[0];
+  const image =
+    email === data.senderId ? data.receiverImageUrl : data.senderImageUrl;
+  const url = email === data.senderId ? "" : "";
+  const displayName =
+    email === data.senderId ? data.receiverDisplayName : data.senderDisplayName;
 
   return (
     <Link
@@ -25,7 +35,7 @@ const UserInboxCard: FC<Props> = ({ data }) => {
             height={60}
             width={60}
             //@ts-ignore
-            src={data.receiverImageUrl}
+            src={image}
             className="rounded-full border-[1px] border-gray-200"
             alt=""
           />
@@ -33,19 +43,17 @@ const UserInboxCard: FC<Props> = ({ data }) => {
       </div>
 
       <div className="space-y-[5px] px-[0.5rem] overflow-hidden">
-        <h1 className="user display name font-[500]">
-          {data.receiverDisplayName}
-        </h1>
-        <p
+        <h1 className="user display name font-[500]">{displayName}</h1>
+        <div
           aria-label="user last message"
           className={`${
-            result.isSeen ? "font-[400]" : "font-[700]"
+            lastChat.isSeen ? "font-[400]" : "font-[700]"
           } overflow-hidden text-ellipsis`}
         >
-          lasteeeeeeeeeeeeeeeee
-        </p>
+          <LastMessage result={lastChat} />
+        </div>
       </div>
-      {!result.isSeen && (
+      {!lastChat.isSeen && (
         <div className="self-center justify-self-end h-[8px] w-[8px] bg-[#0095f6] rounded-full"></div>
       )}
     </Link>
