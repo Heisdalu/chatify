@@ -1,3 +1,6 @@
+import AES from "crypto-js/aes";
+import { enc } from "crypto-js";
+
 export const convertSecToAudioTimeStamp = (totalSecs: number): string => {
   if (!Number.isFinite(totalSecs) || totalSecs <= 0) return "0:00";
 
@@ -28,4 +31,18 @@ export const widthCalc = (currentTime: number) => {
   //   console.log(result, Math.floor(currentTime * 100));
 
   return Math.floor((currentTime / 60) * 100);
+};
+
+export const decryptId = (str: string) => {
+  if (str) {
+    const decodedStr = decodeURIComponent(str);
+    return AES.decrypt(decodedStr, process.env.NEXT_PUBLIC_HASH!).toString(
+      enc.Utf8
+    );
+  }
+};
+
+export const encryptId = (str: string) => {
+  const encryptedString = AES.encrypt(str, process.env.NEXT_PUBLIC_HASH!);
+  return encodeURIComponent(encryptedString.toString());
 };

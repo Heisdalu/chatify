@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
 import LastMessage from "../LastMessage/LastMessage";
+import CryptoJS from "crypto-js";
+import { decryptId, encryptId } from "@/utlis";
 
 interface Props {
   data: ChatListTypes;
@@ -17,13 +19,14 @@ const UserInboxCard: FC<Props> = ({ data, email }) => {
   const lastChat = data?.messages[0];
   const image =
     email === data.senderId ? data.receiverImageUrl : data.senderImageUrl;
-  const url = email === data.senderId ? "" : "";
   const displayName =
     email === data.senderId ? data.receiverDisplayName : data.senderDisplayName;
 
+  const url = encryptId(`${data.senderId}&${data.receiverId}`);
+
   return (
     <Link
-      href="/inbox/1"
+      href={`/inbox/${url}`}
       className="py-[0.2rem] fluid grid [grid-template-columns:70px_5fr_1fr] space-x-[0.5rem] hover:bg-gray-100 cursor-pointer"
     >
       <div
