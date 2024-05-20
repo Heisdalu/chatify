@@ -3,8 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
 import LastMessage from "../LastMessage/LastMessage";
-import CryptoJS from "crypto-js";
-import { decryptId, encryptId } from "@/utlis";
+import { encryptId } from "@/utlis";
 
 interface Props {
   data: ChatListTypes;
@@ -47,16 +46,18 @@ const UserInboxCard: FC<Props> = ({ data, email }) => {
 
       <div className="space-y-[5px] px-[0.5rem] overflow-hidden">
         <h1 className="user display name font-[500]">{displayName}</h1>
-        <div
-          aria-label="user last message"
-          className={`${
-            lastChat.isSeen ? "font-[400]" : "font-[700]"
-          } overflow-hidden text-ellipsis`}
-        >
-          <LastMessage result={lastChat} />
-        </div>
+        {lastChat && (
+          <div
+            aria-label="user last message"
+            className={`${
+              lastChat?.isSeen ? "font-[400]" : "font-[700]"
+            } overflow-hidden text-ellipsis`}
+          >
+            <LastMessage result={lastChat} />
+          </div>
+        )}
       </div>
-      {!lastChat.isSeen && (
+      {lastChat && !lastChat?.isSeen && (
         <div className="self-center justify-self-end h-[8px] w-[8px] bg-[#0095f6] rounded-full"></div>
       )}
     </Link>
