@@ -81,6 +81,10 @@ export default async function handler(
           message: "Failed to Fetch. No/Slow internet connection",
         });
       }
+      return res.status(404).json({
+        status: 404,
+        message: (err as Error).message || "Something went wrong",
+      });
     }
   } else {
     return res.status(404).json({ message: "method not allowed" });
