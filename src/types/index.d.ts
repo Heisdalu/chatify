@@ -43,6 +43,7 @@ export type Messages = {
 };
 
 export type ChatListTypes = {
+  url: String;
   id: Number;
   receiverId: String;
   receiverDisplayName: String;

@@ -21,11 +21,9 @@ const UserInboxCard: FC<Props> = ({ data, email }) => {
   const displayName =
     email === data.senderId ? data.receiverDisplayName : data.senderDisplayName;
 
-  const url = encryptId(`${data.senderId}&${data.receiverId}`);
-
   return (
     <Link
-      href={`/inbox/${url}`}
+      href={`/inbox/${data.url}`}
       className="py-[0.2rem] fluid grid [grid-template-columns:70px_5fr_1fr] space-x-[0.5rem] hover:bg-gray-100 cursor-pointer"
     >
       <div
