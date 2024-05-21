@@ -62,3 +62,14 @@ export type InboxListDataTypes = {
     chatsList: ChatListTypes[];
   };
 };
+
+export type UserTypes = {
+  displayName: String;
+  email: String;
+  profileImageUrl: String;
+};
+
+
+export type AccTypes = {
+  [timestamp: number]: Messages[];
+};

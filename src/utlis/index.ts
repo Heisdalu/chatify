@@ -1,5 +1,6 @@
 import AES from "crypto-js/aes";
 import { enc } from "crypto-js";
+import { AccTypes, Messages } from "@/types";
 
 export const convertSecToAudioTimeStamp = (totalSecs: number): string => {
   if (!Number.isFinite(totalSecs) || totalSecs <= 0) return "0:00";
@@ -46,3 +47,43 @@ export const encryptId = (str: string) => {
   const encryptedString = AES.encrypt(str, process.env.NEXT_PUBLIC_HASH!);
   return encodeURIComponent(encryptedString.toString());
 };
+
+export const groupDates = (data: Messages[]) => {
+  if (data.length === 0) return [];
+  const batchGroupTimestamp = data.reduce((acc: AccTypes, cur, i) => {
+    const date = new Date(`${cur.sentAt}`);
+    const str = +new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+    if (!acc[str]) {
+      acc[str] = [cur];
+    } else {
+      acc[str] = [...acc[str], cur];
+    }
+
+    return acc;
+  }, {});
+  /// group dates into  millseconds and its data that falls inot that category
+
+  return Object.entries(batchGroupTimestamp)
+    .map((item) => ({
+      date: Number(item[0]),
+      value: item[1],
+    }))
+    .sort((a, b) => a.date - b.date);
+};
+
+
+export const monthsList: string[] = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
