@@ -6,6 +6,7 @@ import Pause from "../../../public/icons/Pause";
 import AudioProgress from "../AudioProgress/AudioProgress";
 import { Spinner } from "flowbite-react";
 import DragComponent from "../DragComponent/DragComponent";
+import { Messages } from "@/types";
 
 interface audioStateType {
   loading: boolean;
@@ -14,7 +15,7 @@ interface audioStateType {
   error: boolean;
 }
 
-const AudioDisplay = () => {
+const AudioDisplay = ({ item }: { item: Messages }) => {
   const [audioState, setAudioState] = useState<audioStateType>({
     loading: false,
     ready: false,

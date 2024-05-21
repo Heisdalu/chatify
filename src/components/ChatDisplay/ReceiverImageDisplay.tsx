@@ -3,8 +3,9 @@ import Photo from "../../../public/icons/Photo";
 import Overlay from "../Overlay/Overlay";
 import Close from "../../../public/icons/Close";
 import Image from "next/image";
+import { Messages } from "@/types";
 
-const ReceiverImageDisplay = () => {
+const ReceiverImageDisplay = ({ item }: { item: Messages }) => {
   const [isImageDisplayed, setIsImageDisplayed] = useState(false);
 
   const exitImagePreview = () => {

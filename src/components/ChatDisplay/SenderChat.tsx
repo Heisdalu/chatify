@@ -3,8 +3,9 @@ import ChatDeliveryStatus from "./ChatDeliveryStatus";
 import { PanInfo, motion, useMotionValue } from "framer-motion";
 import { ChatReplyingContext } from "@/context/ChatReplyingProvider";
 import DragComponent from "../DragComponent/DragComponent";
+import { Messages } from "@/types";
 
-const SenderChat = () => {
+const SenderChat = ({ item }: { item: Messages }) => {
   return (
     <DragComponent className="p-[0.5rem] rounded-[10px] leading-[1.3rem] ml-auto inline-block border-gray-200 border-[1px] w-auto max-w-[200px] [word-break:break-word] space-y-[5px] md:max-w-[300px]">
       <div className=" space-y-[0.3rem] rounded-[5px] border-red-400 border-l-[5px] bg-gray-100 p-[0.3rem] px-[0.5rem]">

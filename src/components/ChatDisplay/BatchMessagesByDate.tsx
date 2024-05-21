@@ -9,16 +9,19 @@ import ReceiverImageDisplay from "./ReceiverImageDisplay";
 
 const Transform = (data: Messages, email: string) => {
   if (data.msgSenderId === email) {
-    if (data.msgType === "TEXT") return <SenderChat key={data.id as Key} />;
-    if (data.msgType === "AUDIO") return <AudioDisplay key={data.id as Key} />;
-    if (data.msgType === "PHOTO") return <ImageDisplay key={data.id as Key} />;
+    if (data.msgType === "TEXT")
+      return <SenderChat item={data} key={data.id as Key} />;
+    if (data.msgType === "AUDIO")
+      return <AudioDisplay item={data} key={data.id as Key} />;
+    if (data.msgType === "PHOTO")
+      return <ImageDisplay item={data} key={data.id as Key} />;
     return;
   } else {
-    if (data.msgType === "TEXT") return <ReceiverChat key={data.id as Key} />;
+    if (data.msgType === "TEXT") return <ReceiverChat item={data} key={data.id as Key} />;
     if (data.msgType === "AUDIO")
-      return <ReceiverAudioDisplay key={data.id as Key} />;
+      return <ReceiverAudioDisplay item={data} key={data.id as Key} />;
     if (data.msgType === "PHOTO")
-      return <ReceiverImageDisplay key={data.id as Key} />;
+      return <ReceiverImageDisplay item={data} key={data.id as Key} />;
     return;
   }
 };

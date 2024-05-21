@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 import Overlay from "../Overlay/Overlay";
 import Close from "../../../public/icons/Close";
 import Image from "next/image";
+import { Messages } from "@/types";
 
-const ImageDisplay = () => {
+const ImageDisplay = ({ item }: { item: Messages }) => {
   const [isImageDisplayed, setIsImageDisplayed] = useState(false);
 
   const exitImagePreview = () => {

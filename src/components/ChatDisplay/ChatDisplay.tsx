@@ -4,8 +4,6 @@ import { memo } from "react";
 import { Messages } from "@/types";
 import { groupDates } from "@/utlis";
 import BatchMessagesByDate from "./BatchMessagesByDate";
-import ReceiverImageDisplay from "./ReceiverImageDisplay";
-import ReceiverChat from "./ReceiverChat";
 
 const ChatDisplay = ({ data, email }: { data: Messages[]; email: String }) => {
   console.log(data, email);
