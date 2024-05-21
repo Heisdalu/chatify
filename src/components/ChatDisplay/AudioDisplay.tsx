@@ -5,6 +5,7 @@ import Play from "../../../public/icons/Play";
 import Pause from "../../../public/icons/Pause";
 import AudioProgress from "../AudioProgress/AudioProgress";
 import { Spinner } from "flowbite-react";
+import DragComponent from "../DragComponent/DragComponent";
 
 interface audioStateType {
   loading: boolean;
@@ -142,8 +143,10 @@ const AudioDisplay = () => {
     }
   }, [audioFile, rangeValue]);
 
+  console.log("gggg");
+
   return (
-    <div className="ml-auto">
+    <DragComponent className="ml-auto border-1">
       <div className="border-gray-200 border-[1px] ml-auto w-[240px] space-x-[0.5rem] reduce_svg flex border-1 items-center px-[0.5rem] py-[1rem] rounded-[5px]">
         {/* <Photo /> */}
         <div className="flex items-center">
@@ -171,7 +174,7 @@ const AudioDisplay = () => {
           audioReady={audioState.ready}
         />
       </div>
-    </div>
+    </DragComponent>
   );
 };
 export default memo(AudioDisplay);

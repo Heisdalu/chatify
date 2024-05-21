@@ -69,7 +69,6 @@ export type UserTypes = {
   profileImageUrl: String;
 };
 
-
 export type AccTypes = {
   [timestamp: number]: Messages[];
 };

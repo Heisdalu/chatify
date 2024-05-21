@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Photo from "../../../public/icons/Photo";
-import { motion } from "framer-motion";
 import Overlay from "../Overlay/Overlay";
 import Close from "../../../public/icons/Close";
 import Image from "next/image";
@@ -13,10 +12,10 @@ const ReceiverImageDisplay = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <button
         onClick={() => setIsImageDisplayed(true)}
-        className="border-gray-200 hover:bg-gray-200 active:bg-gray-300 border-[1px] w-[100px] space-x-[0.5rem] reduce_svg flex border-1 items-center p-[0.5rem] rounded-[5px]"
+        className="border-gray-200 hover:bg-gray-200 active:bg-gray-300 border-[1px] space-x-[0.5rem] reduce_svg flex border-1 items-center p-[0.5rem] rounded-[5px]"
       >
         <Photo />
         <h1 className="font-[600]">Photo</h1>

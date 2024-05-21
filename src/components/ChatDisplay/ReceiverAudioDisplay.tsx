@@ -1,10 +1,10 @@
 import { useEffect, useState, memo, ReactEventHandler } from "react";
 import toast from "react-hot-toast";
-import Loading from "../Loading/Loading";
 import Play from "../../../public/icons/Play";
 import Pause from "../../../public/icons/Pause";
 import AudioProgress from "../AudioProgress/AudioProgress";
 import { Spinner } from "flowbite-react";
+import DragComponent from "../DragComponent/DragComponent";
 
 interface audioStateType {
   loading: boolean;
@@ -143,35 +143,32 @@ const ReceiverAudioDisplay = () => {
   }, [audioFile, rangeValue]);
 
   return (
-    <div>
-      <div className="border-gray-200 border-[1px] ml-auto w-[240px] space-x-[0.5rem] reduce_svg flex border-1 items-center px-[0.5rem] py-[1rem] rounded-[5px]">
-        {/* <Photo /> */}
-        <div className="flex items-center">
-          {audioState.loading && (
-            <button className="h-[20px] w-[20px] ">
-              <Spinner aria-label="Small spinner example" size="sm" />
+    <DragComponent className="border-gray-200 border-[1px] w-[240px] space-x-[0.5rem] reduce_svg flex border-1 items-center px-[0.5rem] py-[1rem] rounded-[5px]">
+      <div className="flex items-center">
+        {audioState.loading && (
+          <button className="h-[20px] w-[20px] ">
+            <Spinner aria-label="Small spinner example" size="sm" />
+          </button>
+        )}
+        {!audioState.loading &&
+          (audioState.state === "idle" || audioState.state === "paused") && (
+            <button className="dalu_audio_svg" onClick={startPlayingFunc}>
+              <Play />
             </button>
           )}
-          {!audioState.loading &&
-            (audioState.state === "idle" || audioState.state === "paused") && (
-              <button className="dalu_audio_svg" onClick={startPlayingFunc}>
-                <Play />
-              </button>
-            )}
-          {!audioState.loading && audioState.state === "playing" && (
-            <button className="dalu_audio_svg" onClick={pausedAudioFunc}>
-              <Pause />
-            </button>
-          )}
-        </div>
-
-        <AudioProgress
-          currentTime={audioCurrentTime}
-          getRangeValueHandler={getRangeValueHandler}
-          audioReady={audioState.ready}
-        />
+        {!audioState.loading && audioState.state === "playing" && (
+          <button className="dalu_audio_svg" onClick={pausedAudioFunc}>
+            <Pause />
+          </button>
+        )}
       </div>
-    </div>
+
+      <AudioProgress
+        currentTime={audioCurrentTime}
+        getRangeValueHandler={getRangeValueHandler}
+        audioReady={audioState.ready}
+      />
+    </DragComponent>
   );
 };
 export default memo(ReceiverAudioDisplay);

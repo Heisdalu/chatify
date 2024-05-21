@@ -32,13 +32,6 @@ const BatchMessagesByDate = ({
 }) => {
   console.log(data);
   //email === item.email... type
-  return (
-    <>
-      {data.map((item) => Transform(item, `${email}`))}
-      {/* <SenderChat /> */}
-      {/* <SenderChat /> */}
-      <AudioDisplay />
-    </>
-  );
+  return <>{data.map((item) => Transform(item, `${email}`))}</>;
 };
 export default BatchMessagesByDate;
