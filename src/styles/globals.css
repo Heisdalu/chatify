@@ -94,3 +94,12 @@
   border-top-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
 }
+
+.shallow_svg svg {
+  height: 10px;
+  width: 10px;
+}
+.shallow svg {
+  height: 12px;
+  width: 12px;
+}

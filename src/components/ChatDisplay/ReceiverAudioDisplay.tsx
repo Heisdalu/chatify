@@ -6,6 +6,7 @@ import AudioProgress from "../AudioProgress/AudioProgress";
 import { Spinner } from "flowbite-react";
 import DragComponent from "../DragComponent/DragComponent";
 import { Messages } from "@/types";
+import ChatDeliveryStatus from "./ChatDeliveryStatus";
 
 interface audioStateType {
   loading: boolean;
@@ -144,31 +145,34 @@ const ReceiverAudioDisplay = ({ item }: { item: Messages }) => {
   }, [audioFile, rangeValue]);
 
   return (
-    <DragComponent className="border-gray-200 border-[1px] w-[240px] space-x-[0.5rem] reduce_svg flex border-1 items-center px-[0.5rem] py-[1rem] rounded-[5px]">
-      <div className="flex items-center">
-        {audioState.loading && (
-          <button className="h-[20px] w-[20px] ">
-            <Spinner aria-label="Small spinner example" size="sm" />
-          </button>
-        )}
-        {!audioState.loading &&
-          (audioState.state === "idle" || audioState.state === "paused") && (
-            <button className="dalu_audio_svg" onClick={startPlayingFunc}>
-              <Play />
+    <DragComponent className="border-gray-200 border-[1px] mr-auto  w-[240px] px-[0.5rem] py-[0.5rem] pt-[1rem] rounded-[5px] md:w-[300px] flex flex-col space-y-[0.5rem] justify-center ">
+      <div className="reduce_svg flex items-center space-x-[0.5rem]">
+        <div className="flex items-center">
+          {audioState.loading && (
+            <button className="h-[20px] w-[20px] ">
+              <Spinner aria-label="Small spinner example" size="sm" />
             </button>
           )}
-        {!audioState.loading && audioState.state === "playing" && (
-          <button className="dalu_audio_svg" onClick={pausedAudioFunc}>
-            <Pause />
-          </button>
-        )}
-      </div>
+          {!audioState.loading &&
+            (audioState.state === "idle" || audioState.state === "paused") && (
+              <button className="dalu_audio_svg" onClick={startPlayingFunc}>
+                <Play />
+              </button>
+            )}
+          {!audioState.loading && audioState.state === "playing" && (
+            <button className="dalu_audio_svg" onClick={pausedAudioFunc}>
+              <Pause />
+            </button>
+          )}
+        </div>
 
-      <AudioProgress
-        currentTime={audioCurrentTime}
-        getRangeValueHandler={getRangeValueHandler}
-        audioReady={audioState.ready}
-      />
+        <AudioProgress
+          currentTime={audioCurrentTime}
+          getRangeValueHandler={getRangeValueHandler}
+          audioReady={audioState.ready}
+        />
+      </div>
+      <ChatDeliveryStatus isSeen={true} sentTimestamp={'0'} />
     </DragComponent>
   );
 };

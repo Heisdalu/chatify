@@ -1,21 +1,42 @@
 import Time from "../../../public/icons/Time";
 import Sent from "../../../public/icons/Sent";
 import Seen from "../../../public/icons/Seen";
+import { convertTo12HourFormat } from "@/utlis";
 
-const ChatDeliveryStatus = () => {
+const ChatDeliveryStatus = ({
+  sentTimestamp,
+  isSeen,
+}: {
+  sentTimestamp: String;
+  isSeen: Boolean;
+}) => {
+  const date = new Date(`${sentTimestamp}`);
+
+  const formatTime = `${date.getHours()}:${`${date.getMinutes()}`.padStart(
+    2,
+    "0"
+  )}`;
+
+  const convertedTime = convertTo12HourFormat(formatTime);
+
   return (
     <div className="flex flex-col">
       <div className="ml-auto flex items-center space-x-[0.2rem]">
-        <time className="text-[0.7rem]">23:10 PM</time>
-        <div>
-          <Time />
-        </div>
-        {/* <div>
-          <Sent />
-        </div>
-        <div>
-          <Seen />
-        </div> */}
+        <time className="text-[0.6rem]">{convertedTime}</time>
+        {false && (
+          <div className="shallow_svg">
+            <Time />
+          </div>
+        )}
+        {isSeen ? (
+          <div className="shallow">
+            <Seen />
+          </div>
+        ) : (
+          <div className="shallow">
+            <Sent />
+          </div>
+        )}
       </div>
     </div>
   );

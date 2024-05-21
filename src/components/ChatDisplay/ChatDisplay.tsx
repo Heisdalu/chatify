@@ -13,14 +13,13 @@ const ChatDisplay = ({ data, email }: { data: Messages[]; email: String }) => {
   return (
     <div className="flex flex-col">
       <div className="flex flex-col space-y-[1rem] px-[1rem]">
-        {dategroup.map((item) => (
+        {dategroup.map((item, i) => (
           <>
             <DateGroup key={item.date} timestamp={item.date || 0} />
-            <BatchMessagesByDate data={data} email={email} />
+            <BatchMessagesByDate key={i} data={data} email={email} />
           </>
         ))}
       </div>
-      {/* <Chatbox /> */}
     </div>
   );
 };

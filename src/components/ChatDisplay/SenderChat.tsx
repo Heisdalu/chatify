@@ -1,24 +1,27 @@
-import { MouseEventHandler, useContext } from "react";
 import ChatDeliveryStatus from "./ChatDeliveryStatus";
-import { PanInfo, motion, useMotionValue } from "framer-motion";
-import { ChatReplyingContext } from "@/context/ChatReplyingProvider";
 import DragComponent from "../DragComponent/DragComponent";
 import { Messages } from "@/types";
 
-const SenderChat = ({ item }: { item: Messages }) => {
+type Props = {
+  item: Omit<Messages, "audioDuration" | "seenAt">;
+};
+
+const SenderChat = ({ item }: Props) => {
   return (
     <DragComponent className="p-[0.5rem] rounded-[10px] leading-[1.3rem] ml-auto inline-block border-gray-200 border-[1px] w-auto max-w-[200px] [word-break:break-word] space-y-[5px] md:max-w-[300px]">
-      <div className=" space-y-[0.3rem] rounded-[5px] border-red-400 border-l-[5px] bg-gray-100 p-[0.3rem] px-[0.5rem]">
-        <h1 className="font-[600]">Doubs</h1>
-        <p className="line-clamp-2 text-[0.8rem] leading-[0.9rem]">
-          {
-            " i see the guy nah.. i been wan tell yo brh is doing okay now. i told her also. she will ge tbakc toyu bruh anytime is okay"
-          }
-        </p>
-      </div>
-      <p className="text-[0.9rem]"> helly is a boy now..i saw him yerterday</p>
+      {item.parentMsgType === "TEXT" || item.parentMsgType === "AUDIO" ? (
+        <div className=" space-y-[0.3rem] rounded-[5px] border-red-400 border-l-[5px] bg-gray-100 p-[0.3rem] px-[0.5rem]">
+          <h1 className="font-[600]">{item?.parentMsgId}</h1>
+          <p className="line-clamp-2 text-[0.8rem] leading-[0.9rem]">
+            {item?.parentMsgContext}
+          </p>
+        </div>
+      ) : (
+        ""
+      )}
+      <p className="text-[0.9rem]"> {item?.msgContext}</p>
 
-      <ChatDeliveryStatus />
+      <ChatDeliveryStatus sentTimestamp={item.sentAt} isSeen={item.isSeen} />
     </DragComponent>
   );
 };

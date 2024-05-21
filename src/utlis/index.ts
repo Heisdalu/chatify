@@ -72,7 +72,6 @@ export const groupDates = (data: Messages[]) => {
     .sort((a, b) => a.date - b.date);
 };
 
-
 export const monthsList: string[] = [
   "January",
   "February",
@@ -87,3 +86,10 @@ export const monthsList: string[] = [
   "November",
   "December",
 ];
+
+export function convertTo12HourFormat(time: string): string {
+  const [hours, minutes] = time.split(":").map(Number);
+  const period = hours >= 12 ? "PM" : "AM";
+  const adjustedHours = hours % 12 || 12; // Convert 0 to 12 for midnight and adjust other hours
+  return `${adjustedHours}:${minutes < 10 ? "0" + minutes : minutes} ${period}`;
+}

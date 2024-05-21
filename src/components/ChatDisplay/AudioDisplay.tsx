@@ -7,6 +7,7 @@ import AudioProgress from "../AudioProgress/AudioProgress";
 import { Spinner } from "flowbite-react";
 import DragComponent from "../DragComponent/DragComponent";
 import { Messages } from "@/types";
+import ChatDeliveryStatus from "./ChatDeliveryStatus";
 
 interface audioStateType {
   loading: boolean;
@@ -147,9 +148,8 @@ const AudioDisplay = ({ item }: { item: Messages }) => {
   console.log("gggg");
 
   return (
-    <DragComponent className="ml-auto border-1">
-      <div className="border-gray-200 border-[1px] ml-auto w-[240px] space-x-[0.5rem] reduce_svg flex border-1 items-center px-[0.5rem] py-[1rem] rounded-[5px]">
-        {/* <Photo /> */}
+    <DragComponent className="border-gray-200 border-[1px] ml-auto  w-[240px] px-[0.5rem] py-[0.5rem] pt-[1rem] rounded-[5px] md:w-[300px] flex flex-col space-y-[0.5rem] justify-center ">
+      <div className="reduce_svg flex items-center space-x-[0.5rem]">
         <div className="flex items-center">
           {audioState.loading && (
             <button className="h-[20px] w-[20px] ">
@@ -175,6 +175,7 @@ const AudioDisplay = ({ item }: { item: Messages }) => {
           audioReady={audioState.ready}
         />
       </div>
+      <ChatDeliveryStatus isSeen={true} sentTimestamp={"0"} />
     </DragComponent>
   );
 };
