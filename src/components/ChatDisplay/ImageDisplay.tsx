@@ -5,6 +5,7 @@ import Overlay from "../Overlay/Overlay";
 import Close from "../../../public/icons/Close";
 import Image from "next/image";
 import { Messages } from "@/types";
+import ChatDeliveryStatus from "./ChatDeliveryStatus";
 
 const ImageDisplay = ({ item }: { item: Messages }) => {
   const [isImageDisplayed, setIsImageDisplayed] = useState(false);
@@ -17,10 +18,16 @@ const ImageDisplay = ({ item }: { item: Messages }) => {
     <div>
       <button
         onClick={() => setIsImageDisplayed(true)}
-        className="border-gray-200 hover:bg-gray-200 active:bg-gray-300 border-[1px] ml-auto w-[100px] space-x-[0.5rem] reduce_svg flex border-1 items-center p-[0.5rem] rounded-[5px]"
+        className="border-gray-200 hover:bg-gray-200 active:bg-gray-300 border-[1px] ml-auto w-[100px] flex flex-col p-[0.5rem] pb-[0.2rem] rounded-[5px]"
       >
-        <Photo />
-        <h1 className="font-[600]">Photo</h1>
+        <div className="space-x-[0.5rem] flex items-center reduce_svg">
+          <Photo />
+          <h1 className="font-[600]">Photo</h1>
+        </div>
+        {/* <div>baller</div> */}
+        <div className="ml-auto">
+          <ChatDeliveryStatus isSeen={true} sentTimestamp={"0"} />
+        </div>
       </button>
 
       {isImageDisplayed && (
