@@ -12,7 +12,7 @@ const LastMessage: FC<{ result: Props }> = ({ result }) => {
   return (
     <div>
       {result.msgType === "TEXT" ? (
-        <div>gg</div>
+        <div>{result.msgContext}</div>
       ) : result.msgType === "PHOTO" ? (
         <div className="flex items-center reduce_svg space-x-[0.3rem]">
           <Photo />

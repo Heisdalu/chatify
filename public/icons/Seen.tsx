@@ -18,10 +18,10 @@ const Seen = () => {
         <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
         <g
           id="SVGRepo_tracerCarrier"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           stroke="#CCCCCC"
-          stroke-width="1.6"
+          strokeWidth="1.6"
         ></g>
         <g id="SVGRepo_iconCarrier">
           {" "}

@@ -49,6 +49,9 @@ const Chatbox = () => {
       textAreaRef.current?.value &&
       textAreaRef.current.value.trim().length > 0
     ) {
+
+      console.log(textAreaRef.current.value);
+      
       textAreaRef.current.value = "";
       return setIsTyping(false);
     }

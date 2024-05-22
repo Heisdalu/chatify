@@ -5,9 +5,14 @@ import { MouseEventHandler, ReactNode, useContext, FC } from "react";
 interface Props {
   children: ReactNode;
   className: string;
+  deactivateDrag: "x" | undefined;
 }
 
-const DragComponent: FC<Props> = ({ children, className }) => {
+const DragComponent: FC<Props> = ({
+  children,
+  className,
+  deactivateDrag = "x",
+}) => {
   const x = useMotionValue(0);
   const { chatReplyStateHandler } = useContext(ChatReplyingContext);
 
@@ -42,7 +47,7 @@ const DragComponent: FC<Props> = ({ children, className }) => {
     <motion.div
       onDragEnd={dragEndFunc}
       style={{ x }}
-      drag="x"
+      drag={deactivateDrag}
       dragConstraints={{ left: 0, right: 0 }}
       onDrag={dragFunc}
       whileTap={{ cursor: "grabbing" }}

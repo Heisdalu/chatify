@@ -148,7 +148,10 @@ const AudioDisplay = ({ item }: { item: Messages }) => {
   console.log("gggg");
 
   return (
-    <DragComponent className="border-gray-200 border-[1px] ml-auto  w-[240px] px-[0.5rem] py-[0.5rem] pt-[1rem] rounded-[5px] md:w-[300px] flex flex-col space-y-[0.5rem] justify-center ">
+    <DragComponent
+      deactivateDrag="x"
+      className="border-gray-200 border-[1px] ml-auto  w-[240px] px-[0.5rem] py-[0.5rem] pt-[1rem] rounded-[5px] md:w-[300px] flex flex-col space-y-[0.5rem] justify-center "
+    >
       <div className="reduce_svg flex items-center space-x-[0.5rem]">
         <div className="flex items-center">
           {audioState.loading && (

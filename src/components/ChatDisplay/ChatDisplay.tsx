@@ -6,18 +6,22 @@ import { groupDates } from "@/utlis";
 import BatchMessagesByDate from "./BatchMessagesByDate";
 
 const ChatDisplay = ({ data, email }: { data: Messages[]; email: String }) => {
-  console.log(data, email);
+  // console.log(data, email);
   const dategroup = groupDates(data);
   console.log(dategroup);
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col space-y-[1rem] px-[1rem]">
-        {dategroup.map((item, i) => (
-          <>
+      <div className="px-[1rem] space-y-[1rem]">
+        {dategroup.map((item) => (
+          <div key={item.date} className="flex flex-col space-y-[1rem]">
             <DateGroup key={item.date} timestamp={item.date || 0} />
-            <BatchMessagesByDate key={i} data={data} email={email} />
-          </>
+            <BatchMessagesByDate
+              key={item.date + 1}
+              data={data}
+              email={email}
+            />
+          </div>
         ))}
       </div>
     </div>

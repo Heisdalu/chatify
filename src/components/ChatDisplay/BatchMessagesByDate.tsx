@@ -33,7 +33,7 @@ const BatchMessagesByDate = ({
   data: Messages[];
   email: String;
 }) => {
-  console.log(data);
+  // console.log(data);
   //email === item.email... type
   return <>{data.map((item) => Transform(item, `${email}`))}</>;
 };
