@@ -146,6 +146,7 @@ const ReceiverAudioDisplay = ({ item }: { item: Messages }) => {
 
   return (
     <DragComponent
+      item={item}
       deactivateDrag="x"
       className="border-gray-200 border-[1px] mr-auto  w-[240px] px-[0.5rem] py-[0.5rem] pt-[1rem] rounded-[5px] md:w-[300px] flex flex-col space-y-[0.5rem] justify-center "
     >

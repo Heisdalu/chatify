@@ -2,14 +2,16 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import ChatDisplay from "../ChatDisplay/ChatDisplay";
 import { ChatReplyingContext } from "@/context/ChatReplyingProvider";
 import { useCallback, useContext } from "react";
-import { Messages } from "@/types";
+import { Messages, UserTypes } from "@/types";
 
 const ChatDisplayContainer = ({
   data,
   email,
+  participant,
 }: {
   data: Messages[];
   email: String;
+  participant: { sender: UserTypes; receiver: UserTypes };
 }) => {
   const { height } = useWindowSize();
   const { chatType } = useContext(ChatReplyingContext);
@@ -32,9 +34,9 @@ const ChatDisplayContainer = ({
         ref={scrollDown}
         style={{
           height: `${
-            typeof height === "number" && chatType === "none"
+            typeof height === "number" && chatType === "NONE"
               ? `${height - 172}px`
-              : chatType !== "none" && typeof height === "number"
+              : chatType !== "NONE" && typeof height === "number"
               ? `${height - 210}px`
               : "700px"
           }`,

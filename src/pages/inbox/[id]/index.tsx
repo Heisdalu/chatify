@@ -45,6 +45,7 @@ const UserDirectChatID = () => {
 
   // console.log(isError, isPaused, other);
   // console.log(result);
+  //participant
 
   return (
     <Authenticated>
@@ -74,8 +75,14 @@ const UserDirectChatID = () => {
             <ChatDisplayContainer
               data={result.data}
               email={data?.user?.email as String}
+              //TODO: refractor particpant in chatheader and chatbox
+              participant={{ sender: result.sender, receiver: result.receiver }}
             />
-            <Chatbox />
+            <Chatbox
+              email={data?.user?.email as String}
+              sender={result.sender}
+              receiver={result.receiver}
+            />
           </div>
         </DirectChatLayout>
       )}

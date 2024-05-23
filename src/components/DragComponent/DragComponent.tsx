@@ -1,22 +1,25 @@
 import { ChatReplyingContext } from "@/context/ChatReplyingProvider";
+import { Messages } from "@/types";
 import { PanInfo, motion, useMotionValue } from "framer-motion";
-import { MouseEventHandler, ReactNode, useContext, FC } from "react";
+import { ReactNode, useContext, FC } from "react";
 
 interface Props {
   children: ReactNode;
   className: string;
   deactivateDrag: "x" | undefined;
+  item?: Omit<Messages, "seenAt">;
 }
 
 const DragComponent: FC<Props> = ({
   children,
   className,
   deactivateDrag = "x",
+  item,
 }) => {
   const x = useMotionValue(0);
   const { chatReplyStateHandler } = useContext(ChatReplyingContext);
 
-  // console.log(ctx);
+  // console.log(item, "drag");
 
   const dragEndFunc = (
     e: MouseEvent | TouchEvent | PointerEvent,
@@ -26,9 +29,15 @@ const DragComponent: FC<Props> = ({
     if (x.get() >= 30) {
       console.log("show message replying UI");
       chatReplyStateHandler({
-        chatType: "text",
-        replyContext: "Hello",
-        userReplyName: "divnie",
+        chatType: item?.msgType || "NONE",
+        //@ts-ignore
+        replyContext:
+          item?.msgType === "AUDIO"
+            ? (item.audioDuration as string) || '0:00'
+            : item?.msgType === "TEXT"
+            ? item.msgContext
+            : "",
+        userReplyName: `${item?.msgSenderId}` || "",
       });
     }
   };

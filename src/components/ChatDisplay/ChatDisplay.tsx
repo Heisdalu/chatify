@@ -18,7 +18,7 @@ const ChatDisplay = ({ data, email }: { data: Messages[]; email: String }) => {
             <DateGroup key={item.date} timestamp={item.date || 0} />
             <BatchMessagesByDate
               key={item.date + 1}
-              data={data}
+              data={item.value}
               email={email}
             />
           </div>

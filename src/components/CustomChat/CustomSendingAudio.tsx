@@ -1,15 +1,20 @@
-import ChatDeliveryStatus from "./ChatDeliveryStatus";
 import DragComponent from "../DragComponent/DragComponent";
 import { Messages } from "@/types";
+import ChatDeliveryStatus from "../ChatDisplay/ChatDeliveryStatus";
+import { useMutation } from "@tanstack/react-query";
+import { fetcherPost } from "@/utlis/fetcher";
 
 type Props = {
-  item: Omit<Messages, "seenAt">;
+  item: Omit<Messages, "audioDuration" | "seenAt">;
 };
 
-const SenderChat = ({ item }: Props) => {
+const CustomSendingChat = ({ item }: Props) => {
+  const p = useMutation({
+    mutationFn: (data) => fetcherPost("/api/chat", data),
+  });
+
   return (
     <DragComponent
-      item={item}
       deactivateDrag="x"
       className="p-[0.5rem] rounded-[10px] leading-[1.3rem] ml-auto inline-block border-gray-200 border-[1px] w-auto max-w-[200px] [word-break:break-word] space-y-[5px] md:max-w-[300px]"
     >
@@ -29,4 +34,4 @@ const SenderChat = ({ item }: Props) => {
     </DragComponent>
   );
 };
-export default SenderChat;
+export default CustomSendingChat;
