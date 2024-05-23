@@ -12,24 +12,24 @@ export type UploadSuccess = {
   secure_url: string;
 };
 
-export type ChatType = "none" | "text" | "photo" | "audio";
+export type ChatType = "NONE" | "TEXT" | "PHOTO" | "AUDIO";
 export type ChatReplyDetail = {
   chatType: ChatType;
   userReplyName: string;
-  replyContext: ChatType extends "audio" ? number : string;
+  replyContext: ChatType extends "AUDIO" ? number : string;
 };
 // export type ChatDetail
 
 export type ChatReplyingContextType = {
   chatType: ChatType;
   userReplyName: string;
-  replyContext: ChatType extends "audio" ? number : string;
+  replyContext: ChatType extends "AUDIO" ? number : string;
   chatReplyStateHandler: (data: ChatReplyDetail) => void;
 };
 
 export type Messages = {
   id: Number;
-  audioDuration: String | null;
+  audioDuration: string | null;
   isSeen: Boolean;
   msgContext: String;
   msgReceiverId: String;
