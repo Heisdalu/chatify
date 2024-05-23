@@ -91,6 +91,17 @@ export default async function handler(
               sentAt: "desc",
             },
             take: 15,
+
+            select: {
+              id: true,
+              msgContext: true,
+              msgReceiverId: true,
+              audioDuration: true,
+              isSeen: true,
+              msgSenderId: true,
+              msgType: true,
+              sentAt: true,
+            },
           },
         },
       });

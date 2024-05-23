@@ -35,10 +35,6 @@ export type Messages = {
   msgReceiverId: String;
   msgSenderId: String;
   msgType: Uppercase<ChatType>;
-  parentMsgContext: String | null;
-  parentMsgId: String | null;
-  parentMsgType: Uppercase<ChatType>;
-  seenAt: String;
   sentAt: String;
 };
 
