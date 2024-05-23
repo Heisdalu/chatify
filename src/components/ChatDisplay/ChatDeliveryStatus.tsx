@@ -6,9 +6,11 @@ import { convertTo12HourFormat } from "@/utlis";
 const ChatDeliveryStatus = ({
   sentTimestamp,
   isSeen,
+  loading,
 }: {
   sentTimestamp: String;
   isSeen: Boolean;
+  loading?: boolean;
 }) => {
   const date = new Date(`${sentTimestamp}`);
 
@@ -23,12 +25,11 @@ const ChatDeliveryStatus = ({
     <div className="flex flex-col">
       <div className="ml-auto flex items-center space-x-[0.2rem]">
         <time className="text-[0.6rem]">{convertedTime}</time>
-        {false && (
+        {loading ? (
           <div className="shallow_svg">
             <Time />
           </div>
-        )}
-        {isSeen ? (
+        ) : isSeen ? (
           <div className="shallow">
             <Seen />
           </div>
