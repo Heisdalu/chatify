@@ -1,15 +1,26 @@
-import { useState, useContext, useRef, useEffect } from "react";
+import { useState, useContext, useRef, useEffect, memo } from "react";
 import Close from "../../../public/icons/Close";
 import { ChatReplyingContext } from "@/context/ChatReplyingProvider";
 import { useRouter } from "next/router";
+import Microphone from "../../../public/icons/Microphone";
+import { UserTypes } from "@/types";
 
-const ReplyBox = () => {
-  const { chatType, chatReplyStateHandler } = useContext(ChatReplyingContext);
+const ReplyBox = ({
+  email,
+  sender,
+  receiver,
+}: {
+  email: String;
+  sender: UserTypes;
+  receiver: UserTypes;
+}) => {
+  const { chatType, chatReplyStateHandler, replyContext, userReplyName } =
+    useContext(ChatReplyingContext);
   const router = useRouter();
 
   const exitReplyHandler = () => {
     chatReplyStateHandler({
-      chatType: "none",
+      chatType: "NONE",
       replyContext: "",
       userReplyName: "",
     });
@@ -26,19 +37,40 @@ const ReplyBox = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.events]);
   return (
-    !(chatType === "none") && (
-      <div className="bg-gray-100 absolute top-[-44px] w-[100%] flex items-center space-x-[0.5rem] pr-[0.3rem]">
-        <div className=" border-red-400 border-l-[5px] bg-gray-100 p-[0.3rem] px-[0.5rem]">
-          <h1 className="font-[600] text-[0.8rem]">Doubs</h1>
+    !(chatType === "NONE") && (
+      <div className="bg-gray-100 absolute top-[-44px] w-[100%] flex items-center pr-[0.3rem]">
+        <div
+          className={`${
+            email === userReplyName
+              ? "border-blue-400"
+              : userReplyName === sender.email
+              ? "border-red-400"
+              : "border-red-400"
+          } border-l-[5px] bg-gray-100 p-[0.3rem] px-[0.5rem]`}
+        >
+          <h1 className="font-[600] text-[0.8rem]">
+            {email === userReplyName
+              ? "You"
+              : userReplyName === sender.email
+              ? sender.displayName
+              : receiver.displayName}
+          </h1>
           <p className="line-clamp-1 text-[0.7rem]">
-            {
-              " i see the guy nah.. i been wan tell yo brh is doing okay now. i told her also. she will ge tbakc toyu bruh anytime is okay"
-            }
+            {chatType === "AUDIO" ? (
+              <span className="shallow flex items-center space-x-[0.3rem]">
+                <span>
+                  <Microphone />
+                </span>
+                <span>{"0:00"}</span>
+              </span>
+            ) : (
+              replyContext
+            )}
           </p>
         </div>
 
         <button
-          className="border-1 reduce_svg p-[0.3rem] rounded-[50%]"
+          className="border-1 reduce_svg p-[0.3rem] ml-auto rounded-[50%]"
           onClick={exitReplyHandler}
         >
           <Close />
@@ -47,4 +79,4 @@ const ReplyBox = () => {
     )
   );
 };
-export default ReplyBox;
+export default memo(ReplyBox);
