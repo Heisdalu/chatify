@@ -60,9 +60,9 @@ export type InboxListDataTypes = {
 };
 
 export type UserTypes = {
-  displayName: String;
-  email: String;
-  profileImageUrl: String;
+  displayName: string;
+  email: string;
+  profileImageUrl: string;
 };
 
 export type AccTypes = {

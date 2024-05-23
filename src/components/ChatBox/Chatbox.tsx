@@ -17,12 +17,10 @@ import ImageBox from "./ImageBox";
 
 const Chatbox = ({
   email,
-  sender,
-  receiver,
+  participant,
 }: {
   email: String;
-  sender: UserTypes;
-  receiver: UserTypes;
+  participant: { sender: UserTypes; receiver: UserTypes };
 }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [isAudioClicked, setIsAudioClicked] = useState(false);

@@ -67,21 +67,17 @@ const UserDirectChatID = () => {
           {" "}
           <div className="h-[100vh] [max-height:-webkit-fill-available] overflow-hidden py-[1rem] max-w-[700px] mx-auto lg:py-[1rem] relative">
             <ChatHeader
-              email={data?.user?.email as String}
-              sender={result.sender}
-              receiver={result.receiver}
+              email={data?.user?.email as string}
+              participant={{ sender: result.sender, receiver: result.receiver }}
             />
             {/* 170 // when replay box is not on*/}
             <ChatDisplayContainer
               data={result.data}
-              email={data?.user?.email as String}
-              //TODO: refractor particpant in chatheader and chatbox
-              participant={{ sender: result.sender, receiver: result.receiver }}
+              email={data?.user?.email as string}
             />
             <Chatbox
-              email={data?.user?.email as String}
-              sender={result.sender}
-              receiver={result.receiver}
+              email={data?.user?.email as string}
+              participant={{ sender: result.sender, receiver: result.receiver }}
             />
           </div>
         </DirectChatLayout>

@@ -6,12 +6,10 @@ import { UserTypes } from "@/types";
 
 const ChatHeader = ({
   email,
-  sender,
-  receiver,
+  participant,
 }: {
   email: String;
-  sender: UserTypes;
-  receiver: UserTypes;
+  participant: { sender: UserTypes; receiver: UserTypes };
 }) => {
   return (
     <div className="sticky top-[0] bg-white px-[1rem] border-b-[1px] border-b-gray-200 py-[0.5rem] flex items-center space-x-[1rem] ">
@@ -29,20 +27,22 @@ const ChatHeader = ({
           height={50}
           width={50}
           alt={
-            email === sender.email
-              ? receiver.displayName + "pic"
-              : sender.displayName + "pic"
+            email === participant.sender.email
+              ? participant.receiver.displayName + "pic"
+              : participant.sender.displayName + "pic"
           }
           src={
-            email === sender.email
-              ? `${receiver.profileImageUrl}`
-              : `${sender.profileImageUrl}`
+            email === participant.sender.email
+              ? `${participant.receiver.profileImageUrl}`
+              : `${participant.sender.profileImageUrl}`
           }
           className="rounded-full border-[1px] border-gray-200"
         />
       </div>
       <h1 className="text-[1.1rem] font-[600] overflow-hidden text-ellipsis">
-        {email === sender.email ? receiver.displayName : sender.displayName}
+        {email === participant.sender.email
+          ? participant.receiver.displayName
+          : participant.sender.displayName}
       </h1>
 
       <div

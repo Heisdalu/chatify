@@ -6,11 +6,9 @@ import { Messages, UserTypes } from "@/types";
 const ChatDisplayContainer = ({
   data,
   email,
-  participant,
 }: {
   data: Messages[];
   email: String;
-  participant: { sender: UserTypes; receiver: UserTypes };
 }) => {
   const { height } = useWindowSize();
 
