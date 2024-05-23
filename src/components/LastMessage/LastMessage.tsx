@@ -10,9 +10,9 @@ type Props = Omit<
 
 const LastMessage: FC<{ result: Props }> = ({ result }) => {
   return (
-    <div>
+    <>
       {result.msgType === "TEXT" ? (
-        <div>{result.msgContext}</div>
+        result.msgContext
       ) : result.msgType === "PHOTO" ? (
         <div className="flex items-center reduce_svg space-x-[0.3rem]">
           <Photo />
@@ -26,7 +26,7 @@ const LastMessage: FC<{ result: Props }> = ({ result }) => {
       ) : (
         ""
       )}
-    </div>
+    </>
   );
 };
 export default LastMessage;

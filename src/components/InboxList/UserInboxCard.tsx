@@ -49,7 +49,7 @@ const UserInboxCard: FC<Props> = ({ data, email }) => {
             aria-label="user last message"
             className={`${
               lastChat?.isSeen ? "font-[400]" : "font-[700]"
-            } overflow-hidden text-ellipsis`}
+            } overflow-hidden text-ellipsis line-clamp-1`}
           >
             <LastMessage result={lastChat} />
           </div>
