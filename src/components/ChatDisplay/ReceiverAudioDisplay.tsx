@@ -4,7 +4,6 @@ import Play from "../../../public/icons/Play";
 import Pause from "../../../public/icons/Pause";
 import AudioProgress from "../AudioProgress/AudioProgress";
 import { Spinner } from "flowbite-react";
-import DragComponent from "../DragComponent/DragComponent";
 import { Messages } from "@/types";
 import ChatDeliveryStatus from "./ChatDeliveryStatus";
 
@@ -145,11 +144,7 @@ const ReceiverAudioDisplay = ({ item }: { item: Messages }) => {
   }, [audioFile, rangeValue]);
 
   return (
-    <DragComponent
-      item={item}
-      deactivateDrag="x"
-      className="border-gray-200 border-[1px] mr-auto  w-[240px] px-[0.5rem] py-[0.5rem] pt-[1rem] rounded-[5px] md:w-[300px] flex flex-col space-y-[0.5rem] justify-center "
-    >
+    <div className="border-gray-200 border-[1px] mr-auto  w-[240px] px-[0.5rem] py-[0.5rem] pt-[1rem] rounded-[5px] md:w-[300px] flex flex-col space-y-[0.5rem] justify-center ">
       <div className="reduce_svg flex items-center space-x-[0.5rem]">
         <div className="flex items-center">
           {audioState.loading && (
@@ -177,7 +172,7 @@ const ReceiverAudioDisplay = ({ item }: { item: Messages }) => {
         />
       </div>
       <ChatDeliveryStatus isSeen={true} sentTimestamp={"0"} />
-    </DragComponent>
+    </div>
   );
 };
 export default memo(ReceiverAudioDisplay);

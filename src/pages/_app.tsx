@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import type { AppProps } from "next/app";
 import { PagesProgressBar as ProgressBar } from "next-nprogress-bar";
 import { Toaster } from "react-hot-toast";
-import ChatReplyingProvider from "@/context/ChatReplyingProvider";
 import { SessionProvider } from "next-auth/react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -29,9 +28,7 @@ export default function App({
               font-family: ${inter.style.fontFamily};
             }
           `}</style>
-          <ChatReplyingProvider>
-            <Component {...pageProps} />
-          </ChatReplyingProvider>
+          <Component {...pageProps} />
           <ProgressBar
             height="4px"
             color="#000"

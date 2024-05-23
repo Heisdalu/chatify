@@ -14,8 +14,6 @@ import { useAudioRecorder } from "react-audio-voice-recorder";
 import { AudioStateType, UserTypes } from "@/types";
 import toast from "react-hot-toast";
 import ImageBox from "./ImageBox";
-import ReplyBox from "./ReplyBox";
-import { ChatReplyingContext } from "@/context/ChatReplyingProvider";
 
 const Chatbox = ({
   email,
@@ -33,7 +31,6 @@ const Chatbox = ({
     useState<AudioStateType>("idle");
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const [audioDuration, setAudioDuration] = useState(0);
-  const { chatType, chatReplyStateHandler } = useContext(ChatReplyingContext);
 
   const { startRecording, recordingBlob, ...controls } = useAudioRecorder(
     {
@@ -46,15 +43,6 @@ const Chatbox = ({
       toast.error("Microphone permisson denied");
     }
   );
-
-  const exitReplyHandler = useCallback(() => {
-    chatReplyStateHandler({
-      chatType: "NONE",
-      replyContext: "",
-      userReplyName: "",
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const audioDurationHandler = (value: number) => {
     setAudioDuration(value);
@@ -76,10 +64,9 @@ const Chatbox = ({
       textAreaRef.current?.value &&
       textAreaRef.current.value.trim().length > 0
     ) {
-      console.log(textAreaRef.current.value, chatType);
+      console.log(textAreaRef.current.value);
 
       textAreaRef.current.value = "";
-      exitReplyHandler();
       return setIsTyping(false);
     }
   };
@@ -148,11 +135,6 @@ const Chatbox = ({
   return (
     <div className="bg-white p-[1rem] px-[0.5rem] max-w-[700px] fixed bottom-0 left-[50%] translate-x-[-50%] w-[100%]">
       <div className="relative flex flex-col">
-        <ReplyBox
-          email={email as String}
-          sender={sender}
-          receiver={receiver}
-        />
         <div className="rounded-[10px] border-[1px] border-gray-300 chatbox">
           {isAudioClicked && controls.isRecording ? (
             <AudioBox
