@@ -3,11 +3,43 @@ import { motion } from "framer-motion";
 import SearchedUsers from "./SearchedUsers";
 import InboxUserLoading from "../Loading/InboxUserLoading";
 import Overlay from "../Overlay/Overlay";
+import { useQuery } from "@tanstack/react-query";
+import { fetcher } from "@/utlis/fetcher";
+import { ChangeEvent, useState } from "react";
+import { SearchUserTypes } from "@/types";
 
-const SearchProfile = ({ close }: { close: any }) => {
+const SearchProfile = ({ close, email }: { close: any; email: string }) => {
+  const [name, setName] = useState("");
+
+  const {
+    isLoading,
+    isSuccess,
+    data: result,
+    isError,
+    ...other
+  } = useQuery<SearchUserTypes>({
+    queryKey: ["search_user", name],
+    queryFn: () => fetcher(`/api/search_user?name=${name}`),
+    retry: 3,
+    refetchOnWindowFocus: false,
+    staleTime: 10 * 1000,
+    enabled: !!name,
+  });
+
   const exitHandler = () => {
     close();
   };
+
+  let timer: NodeJS.Timeout;
+
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      setName(e.target.value);
+    }, 1000);
+  };
+
+  // console.log(name, isLoading, isSuccess, result, isError, other);
 
   return (
     <>
@@ -32,6 +64,7 @@ const SearchProfile = ({ close }: { close: any }) => {
             To:
           </label>
           <input
+            onChange={changeHandler}
             type="text"
             name="search"
             placeholder="Search..."
@@ -41,19 +74,37 @@ const SearchProfile = ({ close }: { close: any }) => {
           />
         </div>
 
-        {/* <div className="p-[1rem]">
-          <h1 className="text-[1rem] text-gray-500">No account found.</h1>
-        </div> */}
-
         <div className="scroll h-[calc(350px-116px)] p-[1rem] px-[0.5rem] space-y-[0.5rem] overflow-y-scroll">
-          {/* loading */}
-          {/* <div className="px-[0.5rem]">
-            <InboxUserLoading />
-            <InboxUserLoading />
-            <InboxUserLoading />
-          </div> */}
-          <SearchedUsers />
-          <SearchedUsers />
+          {isLoading && (
+            <div className="px-[0.5rem]">
+              <InboxUserLoading />
+              <InboxUserLoading />
+            </div>
+          )}
+
+          {isSuccess &&
+            (result.data?.length > 0 ? (
+              result.data.map((item) => (
+                <SearchedUsers key={item.id} email={email} item={item} />
+              ))
+            ) : (
+              <div className="px-[1rem]">
+                <h1 className="text-[1rem] text-gray-500">No account found.</h1>
+              </div>
+            ))}
+
+          {isError && (
+            <div className="px-[1rem]">
+              <h1 className="text-[1rem] text-gray-500">
+                {other.error?.message || "Somethig went wrong"}
+              </h1>
+            </div>
+          )}
+          {name === "" && (
+            <div className="px-[1rem]">
+              <h1 className="text-[1rem] text-gray-500">Search friends and chat</h1>
+            </div>
+          )}
         </div>
       </motion.div>
       <Overlay onClick={exitHandler} />

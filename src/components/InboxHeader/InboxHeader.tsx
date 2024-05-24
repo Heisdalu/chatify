@@ -4,7 +4,7 @@ import SearchProfile from "../SearchProfile/SearchProfile";
 import { FC, useState } from "react";
 
 interface InboxHeaderProps {
-  email: String;
+  email: string;
   displayName: String | undefined;
 }
 
@@ -30,7 +30,7 @@ const InboxHeader: FC<InboxHeaderProps> = ({ email, displayName }) => {
         <Image height={32} width={32} src="/create.png" alt="" />
       </button>
 
-      {isOpen && <SearchProfile close={closeHandler} />}
+      {isOpen && <SearchProfile close={closeHandler} email={email} />}
     </div>
   );
 };

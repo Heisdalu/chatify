@@ -70,3 +70,13 @@ export type UserTypes = {
 export type AccTypes = {
   [timestamp: number]: Messages[];
 };
+
+export type SearchUserTypes = {
+  message: string;
+  data: {
+    id: number;
+    email: string;
+    displayName: string;
+    profileImageUrl: string;
+  }[];
+};

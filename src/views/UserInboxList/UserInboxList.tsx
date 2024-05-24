@@ -43,7 +43,7 @@ const UserInboxList: FC<UserInboxListProps> = ({ email }) => {
           <InboxNavigation />
           <div className="space-y-[1rem]">
             <InboxHeader
-              email={email as String}
+              email={email as string}
               displayName={result.data.displayName}
             />
             <h1 className="fluid font-[600]">Messages</h1>
