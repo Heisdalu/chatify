@@ -106,3 +106,25 @@ export function generateRandomString() {
 
   return result;
 }
+
+export function readableTimestamp(unixTimestamp: number): string {
+  const dt = new Date(unixTimestamp); // Convert to milliseconds
+  const now = new Date();
+
+  // Calculate the difference in days
+  const delta = now.getTime() - dt.getTime();
+  const daysDifference = Math.floor(delta / (1000 * 60 * 60 * 24));
+
+  // Define readable forms for timestamps
+  if (daysDifference < 1) {
+    return "Today";
+  } else if (daysDifference === 1) {
+    return "Yesterday";
+  } else if (daysDifference < 7) {
+    return dt.toLocaleDateString("en-US", { weekday: "long" }); // Day of the week
+  } else {
+    return `${dt?.getDate()}, ${
+      monthsList[dt.getMonth()] || "nil"
+    }, ${dt?.getFullYear()}`; // Format as dd, mm, yyyy
+  }
+}
