@@ -8,7 +8,7 @@ import BatchMessagesByDate from "./BatchMessagesByDate";
 const ChatDisplay = ({ data, email }: { data: Messages[]; email: String }) => {
   // console.log(data, email);
   const dategroup = groupDates(data);
-  console.log(dategroup);
+  // console.log(dategroup);
 
   return (
     <div className="flex flex-col">

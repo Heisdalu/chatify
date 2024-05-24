@@ -32,7 +32,7 @@ const UserDirectChatID = () => {
     queryKey: ["direct_chat", router.query.id],
     queryFn: () =>
       fetcher(`/api/inbox_list/direct_chat?chat_id=${router.query.id}`),
-    staleTime: 30 * 1000,
+    staleTime: 10 * 1000,
     enabled: !!router.query.id,
     refetchOnWindowFocus: false,
   });
@@ -77,6 +77,7 @@ const UserDirectChatID = () => {
             />
             <Chatbox
               email={data?.user?.email as string}
+              url={router.query.id as string}
               participant={{ sender: result.sender, receiver: result.receiver }}
             />
           </div>

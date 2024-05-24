@@ -18,7 +18,7 @@ export const fetcher = async (url: string) => {
 
 export const fetcherPost = async (url: string, data: any) => {
   try {
-    const response = await axios.post(url, data);
+    const response = await axios.post(url, data, { timeout: 30000 });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {

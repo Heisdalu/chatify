@@ -34,6 +34,8 @@ const UserInboxList: FC<UserInboxListProps> = ({ email }) => {
     enabled: true,
   });
 
+  console.log(result);
+
   return (
     <>
       {!isPending && isSuccess && (

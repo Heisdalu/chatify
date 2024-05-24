@@ -29,6 +29,7 @@ export type ChatReplyingContextType = {
 
 export type Messages = {
   loading?: boolean;
+  url?: string;
   id: Number;
   audioDuration: string | null;
   isSeen: Boolean;

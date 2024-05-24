@@ -1,12 +1,4 @@
-import {
-  useState,
-  useEffect,
-  ChangeEvent,
-  useRef,
-  RefObject,
-  useContext,
-  useCallback,
-} from "react";
+import { useState, useEffect, ChangeEvent, useRef } from "react";
 import Microphone from "../../../public/icons/Microphone";
 import Picture from "../../../public/icons/Picture";
 import AudioBox from "./AudioBox";
@@ -14,12 +6,16 @@ import { useAudioRecorder } from "react-audio-voice-recorder";
 import { AudioStateType, UserTypes } from "@/types";
 import toast from "react-hot-toast";
 import ImageBox from "./ImageBox";
+import { useQueryClient } from "@tanstack/react-query";
+import { generateRandomString } from "@/utlis";
 
 const Chatbox = ({
   email,
   participant,
+  url,
 }: {
-  email: String;
+  email: string;
+  url: string;
   participant: { sender: UserTypes; receiver: UserTypes };
 }) => {
   const [isTyping, setIsTyping] = useState(false);
@@ -29,6 +25,7 @@ const Chatbox = ({
     useState<AudioStateType>("idle");
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const [audioDuration, setAudioDuration] = useState(0);
+  const queryClient = useQueryClient();
 
   const { startRecording, recordingBlob, ...controls } = useAudioRecorder(
     {
@@ -62,9 +59,34 @@ const Chatbox = ({
       textAreaRef.current?.value &&
       textAreaRef.current.value.trim().length > 0
     ) {
-      console.log(textAreaRef.current.value);
+      console.log(textAreaRef.current.value, email);
+
+      queryClient.setQueryData(["direct_chat", url], (old: any) => {
+        console.log(old);
+        const newData = {
+          loading: true,
+          url: url,
+          audioDuration: null,
+          id: generateRandomString(),
+          isSeen: false,
+          msgContext: textAreaRef.current?.value as string,
+          msgSenderId: email,
+          msgReceiverId:
+            participant.sender.email === email
+              ? participant.receiver.email
+              : participant.sender.email,
+          msgType: "TEXT",
+          sentAt: "2024-05-24T13:36:00.289Z",
+        };
+
+        const newP = { ...old, data: [...old.data, newData] };
+        console.log(newP);
+
+        return newP;
+      });
 
       textAreaRef.current.value = "";
+
       return setIsTyping(false);
     }
   };

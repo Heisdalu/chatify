@@ -6,9 +6,18 @@ import ReceiverChat from "./ReceiverChat";
 import ImageDisplay from "./ImageDisplay";
 import ReceiverAudioDisplay from "./ReceiverAudioDisplay";
 import ReceiverImageDisplay from "./ReceiverImageDisplay";
+import CustomSendingChat from "../CustomChat/CustomSendingChat";
 
 const Transform = (data: Messages, email: string) => {
-  if (data.msgSenderId === email) {
+  if (data.msgSenderId === email && data?.loading) {
+    if (data.msgType === "TEXT") {
+      // console.log("inn");
+      return <CustomSendingChat item={data} key={data.id as Key} />;
+    }
+    return;
+  }
+
+  if (data.msgSenderId === email && !data?.loading) {
     if (data.msgType === "TEXT")
       return <SenderChat item={data} key={data.id as Key} />;
     if (data.msgType === "AUDIO")
@@ -16,8 +25,11 @@ const Transform = (data: Messages, email: string) => {
     if (data.msgType === "PHOTO")
       return <ImageDisplay item={data} key={data.id as Key} />;
     return;
-  } else {
-    if (data.msgType === "TEXT") return <ReceiverChat item={data} key={data.id as Key} />;
+  }
+
+  if (data.msgSenderId !== email && !data?.loading) {
+    if (data.msgType === "TEXT")
+      return <ReceiverChat item={data} key={data.id as Key} />;
     if (data.msgType === "AUDIO")
       return <ReceiverAudioDisplay item={data} key={data.id as Key} />;
     if (data.msgType === "PHOTO")
