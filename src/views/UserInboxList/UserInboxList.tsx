@@ -34,7 +34,7 @@ const UserInboxList: FC<UserInboxListProps> = ({ email }) => {
     enabled: true,
   });
 
-  console.log(result);
+  // console.log(result);
 
   return (
     <>

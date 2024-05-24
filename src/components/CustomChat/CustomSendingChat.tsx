@@ -18,7 +18,7 @@ const CustomSendingChat = ({ item }: Props) => {
   const mutation = useMutation({
     mutationFn: (data: any) => fetcherPost("/api/send_chat", data),
     onSuccess: (result, ctx, variables) => {
-      console.log(result, ctx, variables);
+      // console.log(result, ctx, variables);
       queryClient.setQueryData(["inbox_list"], (old: InboxListDataTypes) => {
         // console.log(old);
         if (!old) {
@@ -58,7 +58,7 @@ const CustomSendingChat = ({ item }: Props) => {
     },
     onError: (error, variables, context) => {
       setError(true);
-      console.log(error);
+      // console.log(error);
       toast.error(`failed to send "${variables.message}"`);
     },
     retry: 3,

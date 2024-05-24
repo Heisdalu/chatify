@@ -59,10 +59,10 @@ const Chatbox = ({
       textAreaRef.current?.value &&
       textAreaRef.current.value.trim().length > 0
     ) {
-      console.log(textAreaRef.current.value, email);
+      // console.log(textAreaRef.current.value, email);
 
       queryClient.setQueryData(["direct_chat", url], (old: any) => {
-        console.log(old);
+        // console.log(old);
         const newData = {
           loading: true,
           url: url,
@@ -80,7 +80,7 @@ const Chatbox = ({
         };
 
         const newP = { ...old, data: [...old.data, newData] };
-        console.log(newP);
+        // console.log(newP);
 
         return newP;
       });

@@ -21,6 +21,13 @@ const UserInboxCard: FC<Props> = ({ data, email }) => {
   const displayName =
     email === data.senderId ? data.receiverDisplayName : data.senderDisplayName;
 
+  //if user sends the last message.. the n the unread should be switched off
+  const senderUnread = email === lastChat?.msgSenderId;
+
+  // console.log(senderUnread, data);
+
+  // console.log(data);
+
   return (
     <Link
       href={`/inbox/${data.url}`}
@@ -48,14 +55,14 @@ const UserInboxCard: FC<Props> = ({ data, email }) => {
           <div
             aria-label="user last message"
             className={`${
-              lastChat?.isSeen ? "font-[400]" : "font-[700]"
+              lastChat?.isSeen || senderUnread ? "font-[400]" : "font-[700]"
             } overflow-hidden text-ellipsis line-clamp-1`}
           >
             <LastMessage result={lastChat} />
           </div>
         )}
       </div>
-      {lastChat && !lastChat?.isSeen && (
+      {lastChat && !senderUnread && !lastChat?.isSeen && (
         <div className="self-center justify-self-end h-[8px] w-[8px] bg-[#0095f6] rounded-full"></div>
       )}
     </Link>
