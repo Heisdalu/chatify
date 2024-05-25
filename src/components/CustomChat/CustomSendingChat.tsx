@@ -14,7 +14,7 @@ type Props = {
 };
 
 // TODO: bug-- when user intiated chat for the first time... inboxlist should be updated
-// TODO: 
+// TODO: bug-- when user chat send post request twice.. useIsMutation prevent his
 
 const CustomSendingChat = ({ item }: Props) => {
   const queryClient = useQueryClient();
@@ -26,32 +26,63 @@ const CustomSendingChat = ({ item }: Props) => {
     mutationFn: (data: any) => fetcherPost("/api/send_chat", data),
     mutationKey: ["send_chat", item.id],
     onSuccess: (result, ctx, variables) => {
-      // console.log(result, ctx, variables);
-      queryClient.setQueryData(["inbox_list"], (old: InboxListDataTypes) => {
-        // console.log(old);
-        if (!old) {
-          return old;
-        }
-        const filteredChatList = [...old.data.chatsList].map((el) =>
+      
+      // cache logic explained..
+
+      /*
+      check if getInboxList is present in the cache.. if it is not that means inboxlist is visited...
+      so we just update only our chat.. when inboxlist is visited.. it will fetch new data...
+
+      but if inboxlist is present.. we check if the findcChat i.e (sender id and recever id) are present in the cache
+      if inboxlist is true and findChat is false.. we invalidate the inboxlist query and update the chat also
+      this is for first time chat initator.. i.e.. user had no previous chat history with the receiver
+
+      if both are true .. that means we update both the inboxlist and the chat 
+      */
+
+
+      const getInboxList: InboxListDataTypes | undefined =
+        queryClient.getQueryData(["inbox_list"]);
+      
+      const findChat = getInboxList?.data.chatsList.find(
+        (el) =>
           (el.senderId === item.msgSenderId &&
             el.receiverId === item.msgReceiverId) ||
           (el.senderId === item.msgReceiverId &&
             el.receiverId === item.msgSenderId)
-            ? { ...el, messages: [result.data] }
-            : el
-        );
+      );
 
-        // console.log(filteredChatList);
-        const updatedChatlist = {
-          ...old,
-          data: { ...old.data, chatsList: filteredChatList },
-        };
+      // console.log(getInboxList, findChat);
+      // for firstime initating..inboxlist might not have the updated chatpaticpant in it
+      if (getInboxList && !findChat) {
+        queryClient.invalidateQueries({ queryKey: ["inbox_list"] });
+      }
 
-        // console.log(updatedChatlist);
+      //for when inbox list is already fetched and user is found in the chat..
+      if (getInboxList && findChat) {
+        queryClient.setQueryData(["inbox_list"], (old: InboxListDataTypes) => {
+          const filteredChatList = [...old.data.chatsList].map((el) =>
+            (el.senderId === item.msgSenderId &&
+              el.receiverId === item.msgReceiverId) ||
+            (el.senderId === item.msgReceiverId &&
+              el.receiverId === item.msgSenderId)
+              ? { ...el, messages: [result.data] }
+              : el
+          );
 
-        return updatedChatlist;
-      });
+          // console.log(filteredChatList);
+          const updatedChatlist = {
+            ...old,
+            data: { ...old.data, chatsList: filteredChatList },
+          };
 
+          // console.log(updatedChatlist);
+
+          return updatedChatlist;
+        });
+      }
+
+      //it is general..update the current chat
       queryClient.setQueryData(["direct_chat", item.url], (old: any) => {
         // console.log(old);
 
@@ -75,7 +106,7 @@ const CustomSendingChat = ({ item }: Props) => {
   const mutating = useIsMutating({ mutationKey: ["send_chat", item.id] });
 
   const run = useCallback(() => {
-    // console.log("you are running lol");
+    // console.log("you are running getInboxList");
     // console.log(entry);
 
     mutation.mutate({
@@ -93,7 +124,7 @@ const CustomSendingChat = ({ item }: Props) => {
   // console.log(mutation);
 
   useEffect(() => {
-    // mutation prevent user making 2 post request when this component is still loading initally 
+    // mutation prevent user making 2 post request when this component is still loading initally
     if (!mounted.current && mutating === 0) {
       run();
       mounted.current = true;
@@ -123,62 +154,3 @@ const CustomSendingChat = ({ item }: Props) => {
 };
 export default memo(CustomSendingChat);
 
-/*
-[
-    {
-        "id": 3,
-        "senderId": "divineobi07@gmail.com",
-        "senderDisplayName": "dhevine",
-        "senderImageUrl": "https://lh3.googleusercontent.com/a/ACg8ocL_VKLmwuqzTbrMOlDMP4D1-aSqxnIQ_4jgmvHP49DXhWUKdEc=s96-c",
-        "receiverId": "divineobi007@gmail.com",
-        "receiverDisplayName": "dd_boy",
-        "receiverImageUrl": "https://lh3.googleusercontent.com/a/ACg8ocLh0NSuSkWk7RUGoGxiBmDdKLbwqMcJoAvl4tOyKyeZMYzZSg=s96-c",
-        "messages": [
-            {
-                "id": 43,
-                "audioDuration": null,
-                "isSeen": false,
-                "msgContext": "okay gg",
-                "msgReceiverId": "divineobi007@gmail.com",
-                "msgSenderId": "divineobi07@gmail.com",
-                "msgType": "TEXT",
-                "sentAt": "2024-05-24T14:02:00.506Z"
-            }
-        ],
-        "url": "U2FsdGVkX1%2BOAJmGs6dAVfEKSTscT6kSa9bpndz4fHcTogNq1utcWccVZg%2F5Zviy63qneSgo2MIhVmftXwlJsA%3D%3D"
-    },
-    {
-        "id": 5,
-        "senderId": "divineobi100@gmail.com",
-        "senderDisplayName": "hack_Sultan",
-        "senderImageUrl": "https://lh3.googleusercontent.com/a/ACg8ocLEKCobaY6YN8hHUxgwE6Srzi0qZH1-yCOCnZTHCwVG9rmNog=s96-c",
-        "receiverId": "divineobi07@gmail.com",
-        "receiverDisplayName": "dhevine",
-        "receiverImageUrl": "https://lh3.googleusercontent.com/a/ACg8ocL_VKLmwuqzTbrMOlDMP4D1-aSqxnIQ_4jgmvHP49DXhWUKdEc=s96-c",
-        "messages": [
-            {
-                "id": 6,
-                "audioDuration": "0:50",
-                "isSeen": false,
-                "msgContext": "lol geeeee",
-                "msgReceiverId": "divineobi07@gmail.com",
-                "msgSenderId": "divineobi100@gmail.com",
-                "msgType": "AUDIO",
-                "sentAt": "2024-05-19T17:25:38.436Z"
-            }
-        ],
-        "url": "U2FsdGVkX19Wjc19qrAeCg%2BW1xbCuBUVfXd8TR%2BG3ZWlP%2Fr5EBlXX4ENZeyix9jXPahIf0MMTAYsUZxePMVWYw%3D%3D"
-    },
-    {
-        "id": 7,
-        "senderId": "divineobi07@gmail.com",
-        "senderDisplayName": "dhevine",
-        "senderImageUrl": "https://lh3.googleusercontent.com/a/ACg8ocL_VKLmwuqzTbrMOlDMP4D1-aSqxnIQ_4jgmvHP49DXhWUKdEc=s96-c",
-        "receiverId": "prosperobi100@gmail.com",
-        "receiverDisplayName": "propser_baller",
-        "receiverImageUrl": "https://lh3.googleusercontent.com/a/ACg8ocIBzRpGcnref0ckuyBgxC4BH4Cw5-Kc77W1Yz3CCF2w5-tbKA=s96-c",
-        "messages": [],
-        "url": "U2FsdGVkX1%2FtoqTTI62poRwWlIxtyKvvRazAR7oZW7xtBuf4Ds2EMU4fZhvHmOjUEeaDYuuLYgkahlNV71SK7Q%3D%3D"
-    }
-]
-*/
