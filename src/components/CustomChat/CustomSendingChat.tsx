@@ -1,6 +1,10 @@
 import { InboxListDataTypes, Messages } from "@/types";
 import ChatDeliveryStatus from "../ChatDisplay/ChatDeliveryStatus";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  useIsMutating,
+} from "@tanstack/react-query";
 import { fetcherPost } from "@/utlis/fetcher";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
@@ -8,6 +12,9 @@ import toast from "react-hot-toast";
 type Props = {
   item: Omit<Messages, "seenAt">;
 };
+
+// TODO: bug-- when user intiated chat for the first time... inboxlist should be updated
+// TODO: 
 
 const CustomSendingChat = ({ item }: Props) => {
   const queryClient = useQueryClient();
@@ -17,6 +24,7 @@ const CustomSendingChat = ({ item }: Props) => {
 
   const mutation = useMutation({
     mutationFn: (data: any) => fetcherPost("/api/send_chat", data),
+    mutationKey: ["send_chat", item.id],
     onSuccess: (result, ctx, variables) => {
       // console.log(result, ctx, variables);
       queryClient.setQueryData(["inbox_list"], (old: InboxListDataTypes) => {
@@ -64,6 +72,8 @@ const CustomSendingChat = ({ item }: Props) => {
     retry: 3,
   });
 
+  const mutating = useIsMutating({ mutationKey: ["send_chat", item.id] });
+
   const run = useCallback(() => {
     // console.log("you are running lol");
     // console.log(entry);
@@ -83,7 +93,8 @@ const CustomSendingChat = ({ item }: Props) => {
   // console.log(mutation);
 
   useEffect(() => {
-    if (!mounted.current) {
+    // mutation prevent user making 2 post request when this component is still loading initally 
+    if (!mounted.current && mutating === 0) {
       run();
       mounted.current = true;
     }
