@@ -6,8 +6,7 @@ import { useAudioRecorder } from "react-audio-voice-recorder";
 import { AudioStateType, UserTypes } from "@/types";
 import toast from "react-hot-toast";
 import ImageBox from "./ImageBox";
-import { useQueryClient } from "@tanstack/react-query";
-import { generateRandomString } from "@/utlis";
+import useSendMessage from "@/hooks/useSendMessage";
 
 const Chatbox = ({
   email,
@@ -24,8 +23,14 @@ const Chatbox = ({
   const [isAudioPermitted, setIsAudioPermitted] =
     useState<AudioStateType>("idle");
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [audioDuration, setAudioDuration] = useState(0);
-  const queryClient = useQueryClient();
+  const [audioDuration, setAudioDuration] = useState<{
+    status: "idle" | "send";
+    value: number;
+  }>({
+    status: "idle",
+    value: 0,
+  });
+  const { sendMessage } = useSendMessage();
 
   const { startRecording, recordingBlob, ...controls } = useAudioRecorder(
     {
@@ -39,8 +44,11 @@ const Chatbox = ({
     }
   );
 
-  const audioDurationHandler = (value: number) => {
-    setAudioDuration(value);
+  const audioDurationHandler = (data: {
+    status: "idle" | "send";
+    value: number;
+  }) => {
+    setAudioDuration(data);
   };
 
   const typingHandler = (e: ChangeEvent) => {
@@ -61,28 +69,12 @@ const Chatbox = ({
     ) {
       // console.log(textAreaRef.current.value, email);
 
-      queryClient.setQueryData(["direct_chat", url], (old: any) => {
-        // console.log(old);
-        const newData = {
-          loading: true,
-          url: url,
-          audioDuration: null,
-          id: generateRandomString(),
-          isSeen: false,
-          msgContext: textAreaRef.current?.value as string,
-          msgSenderId: email,
-          msgReceiverId:
-            participant.sender.email === email
-              ? participant.receiver.email
-              : participant.sender.email,
-          msgType: "TEXT",
-          sentAt: "2024-05-25T13:36:00.289Z",
-        };
-
-        const newP = { ...old, data: [...old.data, newData] };
-        // console.log(newP);
-
-        return newP;
+      sendMessage({
+        url: url,
+        email: email,
+        message: textAreaRef.current?.value as string,
+        messageType: "TEXT",
+        participant: participant,
       });
 
       textAreaRef.current.value = "";
@@ -148,9 +140,21 @@ const Chatbox = ({
   }, [controls]);
 
   useEffect(() => {
-    if (!recordingBlob) return;
+    if (!recordingBlob || audioDuration.status === "idle") return;
     console.log(recordingBlob, audioDuration);
-  }, [recordingBlob, audioDuration]);
+    // send audio here
+    sendMessage({
+      url: url,
+      email: email,
+      message: recordingBlob,
+      messageType: "AUDIO",
+      participant: participant,
+      audioDuration: `${audioDuration.value}`,
+    });
+
+    setAudioDuration({ status: "idle", value: 0 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [recordingBlob]);
 
   return (
     <div className="bg-white p-[1rem] px-[0.5rem] max-w-[700px] fixed bottom-0 left-[50%] translate-x-[-50%] w-[100%]">

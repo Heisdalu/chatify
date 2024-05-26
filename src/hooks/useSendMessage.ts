@@ -7,7 +7,7 @@ type Props = {
   url: string;
   email: string;
   audioDuration?: string;
-  message: string;
+  message: string | Blob;
   messageType: "TEXT" | "AUDIO" | "IMAGE";
   participant: {
     sender: UserTypes;

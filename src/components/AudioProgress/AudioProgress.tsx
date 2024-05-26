@@ -1,17 +1,20 @@
 import { ChangeEventHandler, useCallback, FC, useRef, useEffect } from "react";
 import { RangeSlider } from "flowbite-react";
 import toast from "react-hot-toast";
+import { convertSecToAudioTimeStamp } from "@/utlis";
 
 interface AudioProgressProps {
   currentTime: number;
   getRangeValueHandler: (value: number) => void;
   audioReady: boolean;
+  maxDuration: number;
 }
 
 const AudioProgress: FC<AudioProgressProps> = ({
   currentTime,
   getRangeValueHandler,
   audioReady,
+  maxDuration,
 }) => {
   const rangeRef = useRef<HTMLInputElement | null>(null);
 
@@ -29,7 +32,7 @@ const AudioProgress: FC<AudioProgressProps> = ({
       return toast.error("Error occured. Kindly refresh browser");
 
     const changedTime = Number(
-      ((Number(rangeRef.current.value) / 100) * 16.139).toFixed(3)
+      ((Number(rangeRef.current.value) / 100) * maxDuration).toFixed(3)
     );
     console.log(rangeRef.current.value, changedTime);
 
@@ -39,13 +42,13 @@ const AudioProgress: FC<AudioProgressProps> = ({
   useEffect(() => {
     //16.139 replaces audio duration
     if (rangeRef.current) {
-      const timeProgress = ((currentTime / 16.139) * 100).toFixed(2);
+      const timeProgress = ((currentTime / maxDuration) * 100).toFixed(2);
 
       rangeRef.current.style.background = `linear-gradient(to right, #2563eb ${timeProgress}%, #ccc ${timeProgress}%)`;
       rangeRef.current.value = `${timeProgress}`;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTime]);
-
 
   return (
     <>
@@ -63,7 +66,10 @@ const AudioProgress: FC<AudioProgressProps> = ({
         />
       </div>
 
-      <div className="text-[1rem]">1:00</div>
+      <div className="text-[1rem]">
+        {convertSecToAudioTimeStamp(maxDuration) || "0:00"
+        }
+      </div>
     </>
   );
 };

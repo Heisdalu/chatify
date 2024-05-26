@@ -8,14 +8,23 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
-const useCustomMutation = (item: Messages) => {
+const useCustomMutation = (item: Messages & { data?: FormData }) => {
   const queryClient = useQueryClient();
   const [error, setError] = useState(false);
 
   const mounted = useRef(false);
 
+  const endpoint =
+    item.msgType === "TEXT"
+      ? "send_chat"
+      : item.msgType === "AUDIO"
+      ? "send_audio"
+      : item.msgType === "PHOTO"
+      ? "send_image"
+      : "";
+
   const mutation = useMutation({
-    mutationFn: (data: any) => fetcherPost("/api/send_chat", data),
+    mutationFn: (data: any) => fetcherPost(`/api/${endpoint}`, data),
     mutationKey: ["send_chat", item.id],
     onSuccess: (result, ctx, variables) => {
       // cache logic explained..
@@ -93,18 +102,21 @@ const useCustomMutation = (item: Messages) => {
     retry: 3,
   });
 
-  const mutating = useIsMutating({ mutationKey: ["send_chat", item.id] });
+  const mutating = useIsMutating({ mutationKey: [endpoint, item.id] });
 
   const run = useCallback(() => {
     // console.log("you are running getInboxList");
     // console.log(entry);
-
-    mutation.mutate({
-      senderId: item.msgSenderId,
-      receiverId: item.msgReceiverId,
-      message: item.msgContext,
-      type: item.msgType,
-    });
+    const body =
+      item.msgType === "TEXT"
+        ? {
+            senderId: item.msgSenderId,
+            receiverId: item.msgReceiverId,
+            message: item.msgContext,
+            type: item.msgType,
+          }
+        : item.data;
+    mutation.mutate(body);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

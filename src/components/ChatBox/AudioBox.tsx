@@ -8,7 +8,10 @@ import { useRouter } from "next/router";
 
 interface AudioBoxProps {
   toggleAudio: (state: boolean) => void;
-  audioDurationHandler: (value: number) => void;
+  audioDurationHandler: (data: {
+    status: "idle" | "send";
+    value: number;
+  }) => void;
   controls: {
     stopRecording: () => void;
     togglePauseResume: () => void;
@@ -34,9 +37,11 @@ const AudioBox: FC<AudioBoxProps> = ({
   };
 
   const sendAudioHandler = () => {
-    audioDurationHandler(controls.recordingTime); //send audio current time
+    audioDurationHandler({ status: "send", value: controls.recordingTime }); //send audio current time
     controls.stopRecording();
     toggleAudio(false);
+
+    // console.log(controls);
   };
 
   const pauseAudio = () => {

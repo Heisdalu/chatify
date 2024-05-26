@@ -7,12 +7,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "GET") {
+  if (req.method === "POST") {
     try {
-      const { name } = req.query;
+      const d = req.body;
+      console.log(d);
 
       return res.status(200).json({
         message: "success",
+        data: "i am bruhhhh",
       });
     } catch (err: unknown) {
       if (

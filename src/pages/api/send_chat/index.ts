@@ -16,11 +16,12 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     try {
-      const { senderId, receiverId, message, type } = req.body as {
+      const { senderId, receiverId, message, type, duration } = req.body as {
         senderId: string;
         receiverId: string;
         message: string;
         type: "TEXT" | "AUDIO" | "IMAGE";
+        duration?: string;
       };
 
       console.log(req.body);
@@ -72,6 +73,7 @@ export default async function handler(
             msgReceiverId: receiverId,
             msgContext: message,
             msgType: type as Type,
+            audioDuration: duration || null,
             Chatsparticipant: {
               connect: [{ id: userInfo.id }],
             },
@@ -131,6 +133,7 @@ export default async function handler(
               msgReceiverId: receiverId,
               msgContext: message,
               msgType: type as Type,
+              audioDuration: duration || null,
             },
           },
         },
