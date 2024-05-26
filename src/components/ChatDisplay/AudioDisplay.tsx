@@ -34,8 +34,7 @@ const AudioDisplay = ({ item }: { item: Messages }) => {
     if (!audioFile) return toast.error("Something went wrong. Try again");
     if (!audioFile.src) {
       //playing for the first time
-      audioFile.src =
-        "https://res.cloudinary.com/dfusdfpfh/video/upload/v1715339673/chatify/chatify_audios/eaa4a1562e865f16d5e199a07_koiwp1.mp3";
+      audioFile.src = item.msgContext as string;
       return setAudioState((prev) => ({
         ...prev,
         loading: true,
@@ -144,7 +143,7 @@ const AudioDisplay = ({ item }: { item: Messages }) => {
     }
   }, [audioFile, rangeValue]);
 
-  console.log("gggg");
+  // console.log("gggg");
 
   return (
     <div className="border-gray-200 border-[1px] ml-auto  w-[240px] px-[0.5rem] py-[0.5rem] pt-[1rem] rounded-[5px] md:w-[300px] flex flex-col space-y-[0.5rem] justify-center ">
@@ -172,9 +171,10 @@ const AudioDisplay = ({ item }: { item: Messages }) => {
           currentTime={audioCurrentTime}
           getRangeValueHandler={getRangeValueHandler}
           audioReady={audioState.ready}
+          maxDuration={Number(item.audioDuration)}
         />
       </div>
-      <ChatDeliveryStatus isSeen={true} sentTimestamp={"0"} />
+      <ChatDeliveryStatus isSeen={item.isSeen} sentTimestamp={item.sentAt} />
     </div>
   );
 };

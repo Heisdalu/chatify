@@ -109,7 +109,7 @@ export default async function handler(
         return res.status(200).json({
           status: 200,
           message: "Success",
-          data: result.data,
+          data: result.data.data,
         });
       } catch (e) {
         console.log(e);

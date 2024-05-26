@@ -2,6 +2,7 @@ import { Messages } from "@/types";
 import { FC } from "react";
 import Photo from "../../../public/icons/Photo";
 import Microphone from "../../../public/icons/Microphone";
+import { convertSecToAudioTimeStamp } from "@/utlis";
 
 type Props = Omit<
   Messages,
@@ -21,7 +22,9 @@ const LastMessage: FC<{ result: Props }> = ({ result }) => {
       ) : result.msgType === "AUDIO" ? (
         <div className="flex items-center reduce_svg space-x-[0.3rem]">
           <Microphone />
-          <div>{result.audioDuration || "0:00"}</div>
+          <div>
+            {convertSecToAudioTimeStamp(Number(result.audioDuration)) || "0:00"}
+          </div>
         </div>
       ) : (
         ""

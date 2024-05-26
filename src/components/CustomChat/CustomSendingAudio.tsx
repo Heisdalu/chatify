@@ -38,9 +38,12 @@ const CustomAudioDisplay = ({ item }: { item: Messages }) => {
   const [audioCurrentTime, setAudioCurrentTime] = useState(0);
   const [rangeValue, setRangeValue] = useState(0);
 
-  const mutation = useCustomMutation({ ...item, data: formData });
+  const { error, mutation, resend } = useCustomMutation({
+    ...item,
+    data: formData,
+  });
 
-  console.log(item, mutation);
+  // console.log(item, mutation);
 
   const getRangeValueHandler = (value: number) => {
     setRangeValue(value);
@@ -49,7 +52,7 @@ const CustomAudioDisplay = ({ item }: { item: Messages }) => {
   const startPlayingFunc = () => {
     //@ts-expect-error
     const url = URL.createObjectURL(item.msgContext);
-    console.log(url);
+    // console.log(url);
 
     if (!audioFile) return toast.error("Something went wrong. Try again");
     if (!audioFile.src) {
@@ -79,7 +82,7 @@ const CustomAudioDisplay = ({ item }: { item: Messages }) => {
 
   useEffect(() => {
     const errorFunc = (e: ErrorEvent) => {
-      console.log(e);
+      // console.log(e);
       toast.error("Failed to play audio. Check your Internet connection");
       setAudioState((prev) => ({
         ...prev,
@@ -202,6 +205,15 @@ const CustomAudioDisplay = ({ item }: { item: Messages }) => {
         sentTimestamp={item.sentAt}
         loading={item.loading}
       />
+
+      {(mutation.isError || error) && (
+        <button
+          onClick={() => resend()}
+          className="text-[0.6rem] ml-auto text-red-500 border-[1px] border-red-500 rounded-[5px] px-[1rem]"
+        >
+          Retry
+        </button>
+      )}
     </div>
   );
 };

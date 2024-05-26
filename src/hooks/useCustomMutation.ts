@@ -25,7 +25,7 @@ const useCustomMutation = (item: Messages & { data?: FormData }) => {
 
   const mutation = useMutation({
     mutationFn: (data: any) => fetcherPost(`/api/${endpoint}`, data),
-    mutationKey: ["send_chat", item.id],
+    mutationKey: [endpoint, item.id],
     onSuccess: (result, ctx, variables) => {
       // cache logic explained..
 
@@ -97,7 +97,15 @@ const useCustomMutation = (item: Messages & { data?: FormData }) => {
     onError: (error, variables, context) => {
       setError(true);
       // console.log(error);
-      toast.error(`failed to send "${variables.message}"`);
+      toast.error(
+        `failed to send ${
+          item.msgType === "TEXT"
+            ? `"${variables.message}"`
+            : item.msgType === "AUDIO"
+            ? "audio"
+            : "image"
+        }`
+      );
     },
     retry: 3,
   });
