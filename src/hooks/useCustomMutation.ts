@@ -103,6 +103,7 @@ const useCustomMutation = (item: Messages) => {
       senderId: item.msgSenderId,
       receiverId: item.msgReceiverId,
       message: item.msgContext,
+      type: item.msgType,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

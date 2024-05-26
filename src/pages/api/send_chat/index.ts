@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 import prisma from "@/utlis/prisma";
+import { Type } from "@prisma/client";
 
 export const config = {
   api: {
@@ -15,13 +16,16 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     try {
-      const { senderId, receiverId, message } = req.body as {
+      const { senderId, receiverId, message, type } = req.body as {
         senderId: string;
         receiverId: string;
         message: string;
+        type: "TEXT" | "AUDIO" | "IMAGE";
       };
 
-      console.log(senderId, receiverId, message);
+      console.log(req.body);
+
+      // console.log(senderId, receiverId, message);
 
       if (!senderId || !receiverId || !message) {
         return res.status(404).json({ status: 404, message: "Invalid inputs" });
@@ -67,7 +71,7 @@ export default async function handler(
             msgSenderId: senderId,
             msgReceiverId: receiverId,
             msgContext: message,
-            msgType: "TEXT",
+            msgType: type as Type,
             Chatsparticipant: {
               connect: [{ id: userInfo.id }],
             },
@@ -126,7 +130,7 @@ export default async function handler(
               msgSenderId: senderId,
               msgReceiverId: receiverId,
               msgContext: message,
-              msgType: "TEXT",
+              msgType: type as Type,
             },
           },
         },
