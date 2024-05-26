@@ -141,7 +141,7 @@ const Chatbox = ({
 
   useEffect(() => {
     if (!recordingBlob || audioDuration.status === "idle") return;
-    console.log(recordingBlob, audioDuration);
+    // console.log(recordingBlob, audioDuration);
     // send audio here
     sendMessage({
       url: url,
