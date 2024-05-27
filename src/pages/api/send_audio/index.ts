@@ -47,7 +47,7 @@ export default async function handler(
           });
         }
 
-        console.log(sentAt[0]);
+        // console.log(sentAt[0]);
         // must be an image format
         if (
           !file.mimetype?.includes("audio") &&
@@ -80,7 +80,7 @@ export default async function handler(
           format: "mp3",
         });
 
-        console.log(cloudinaryResponse?.secure_url);
+        // console.log(cloudinaryResponse?.secure_url);
 
         if (!cloudinaryResponse.secure_url) {
           return res.status(404).json({
@@ -108,7 +108,7 @@ export default async function handler(
           });
         }
 
-        console.log(result.data, result.status);
+        // console.log(result.data, result.status);
 
         return res.status(200).json({
           status: 200,
@@ -116,7 +116,7 @@ export default async function handler(
           data: result.data.data,
         });
       } catch (e) {
-        console.log(e);
+        // console.log(e);
 
         res.status(404).json({
           error: (e as Error).message || "Failed to connect",
