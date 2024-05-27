@@ -1,4 +1,4 @@
-import { FC, Key, memo } from "react";
+import { FC, Key, memo, useEffect, useMemo } from "react";
 import InboxHeader from "@/components/InboxHeader/InboxHeader";
 import UserInboxCard from "@/components/InboxList/UserInboxCard";
 import InboxNavigation from "@/components/InboxNavigation/InboxNavigation";
@@ -9,6 +9,7 @@ import InboxLoading from "@/components/Loading/InboxLoading";
 import NoChatPresent from "@/components/InboxList/NoChatPresent";
 import { InboxListDataTypes } from "@/types";
 import ErrorDisplay from "@/components/ErrorDisplay/ErrorDisplay";
+import SortedList from "@/components/InboxList/SortedList";
 
 interface UserInboxListProps {
   email: string | null | undefined;
@@ -34,8 +35,6 @@ const UserInboxList: FC<UserInboxListProps> = ({ email }) => {
     enabled: true,
   });
 
-  // console.log(result);
-
   return (
     <>
       {!isPending && isSuccess && (
@@ -58,13 +57,10 @@ const UserInboxList: FC<UserInboxListProps> = ({ email }) => {
               className="scroll space-y-[1rem] h-[400px] overflow-y-scroll"
             >
               {result.data?.chatsList?.length > 0 ? (
-                result.data.chatsList.map((el) => (
-                  <UserInboxCard
-                    key={el.id as Key}
-                    data={el}
-                    email={email as String}
-                  />
-                ))
+                <SortedList
+                  chatsList={result.data.chatsList}
+                  email={email as string}
+                />
               ) : (
                 <NoChatPresent />
               )}
