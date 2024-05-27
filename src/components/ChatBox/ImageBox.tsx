@@ -4,8 +4,10 @@ import toast from "react-hot-toast";
 
 const ImageBox = ({
   toggleImage,
+  sendImage,
 }: {
   toggleImage: (state: boolean) => void;
+  sendImage: (imageBlob: Blob) => void;
 }) => {
   const picRef = useRef<HTMLInputElement | null>(null);
 
@@ -19,7 +21,7 @@ const ImageBox = ({
   const changeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     const pic = e.target.files;
 
-    if (!pic || !pic[0].type.includes("image")) {
+    if (!pic || !pic[0]?.type.includes("image")) {
       return toast.error("Kindly select an image");
     }
     if (pic && pic[0]) {
@@ -30,12 +32,13 @@ const ImageBox = ({
   };
 
   const photoHandler = () => {
-    console.log(picRef);
+    // console.log(picRef);
     picRef.current?.click();
   };
 
   const sendImageToServer = () => {
-    console.log("senttt to server");
+    // console.log("senttt to server", picFile);
+    sendImage(picFile as Blob);
     toggleImage(false);
   };
 

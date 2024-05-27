@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent, useRef } from "react";
+import { useState, useEffect, ChangeEvent, useRef, useCallback } from "react";
 import Microphone from "../../../public/icons/Microphone";
 import Picture from "../../../public/icons/Picture";
 import AudioBox from "./AudioBox";
@@ -82,6 +82,18 @@ const Chatbox = ({
       return setIsTyping(false);
     }
   };
+
+  const sendImageHandler = useCallback((imageBlob: Blob) => {
+    // console.log(imageBlob);
+    sendMessage({
+      url: url,
+      email: email,
+      message: imageBlob,
+      messageType: "PHOTO",
+      participant: participant,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const toggleAudio = (state: boolean) => {
     setIsAudioClicked(state);
@@ -167,7 +179,7 @@ const Chatbox = ({
               audioDurationHandler={audioDurationHandler}
             />
           ) : isImageClicked ? (
-            <ImageBox toggleImage={toggleImage} />
+            <ImageBox toggleImage={toggleImage} sendImage={sendImageHandler} />
           ) : (
             <div className="px-[0.5rem] flex items-center space-x-[1rem]">
               <textarea

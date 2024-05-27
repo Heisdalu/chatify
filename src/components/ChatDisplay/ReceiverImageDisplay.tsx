@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import Photo from "../../../public/icons/Photo";
 import Overlay from "../Overlay/Overlay";
 import Close from "../../../public/icons/Close";
@@ -13,6 +13,14 @@ const ReceiverImageDisplay = ({ item }: { item: Messages }) => {
     setIsImageDisplayed(false);
   };
 
+  const loadHandler = (e: SyntheticEvent<HTMLImageElement>) => {
+    // console.log(e.target.classList);
+    //@ts-ignore
+    e.target?.classList.remove("animate-pulse");
+    //@ts-ignore
+    e.target?.classList.remove("bg-gray-100");
+  };
+
   return (
     <div className="">
       <button
@@ -24,7 +32,10 @@ const ReceiverImageDisplay = ({ item }: { item: Messages }) => {
           <h1 className="font-[600]">Photo</h1>
         </div>
         <div className="ml-auto">
-          <ChatDeliveryStatus isSeen={true} sentTimestamp={"0"} />
+          <ChatDeliveryStatus
+            isSeen={item.isSeen}
+            sentTimestamp={item.sentAt}
+          />
         </div>
       </button>
 
@@ -42,10 +53,10 @@ const ReceiverImageDisplay = ({ item }: { item: Messages }) => {
               <Image
                 height={300}
                 width={300}
-                // onLoad={loadHandler}
-                className="z-[160] bg-gray-100 rounded-[5px] overflow-hidden"
-                src="/humans_talking.svg"
-                alt="home chatting with their phones"
+                onLoad={loadHandler}
+                className="z-[160] bg-gray-100 animate-pulse rounded-[5px] overflow-hidden"
+                src={item.msgContext as string}
+                alt=""
               />
             </div>
           </div>

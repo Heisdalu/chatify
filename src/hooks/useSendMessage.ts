@@ -8,7 +8,7 @@ type Props = {
   email: string;
   audioDuration?: string;
   message: string | Blob;
-  messageType: "TEXT" | "AUDIO" | "IMAGE";
+  messageType: "TEXT" | "AUDIO" | "PHOTO";
   participant: {
     sender: UserTypes;
     receiver: UserTypes;
@@ -44,7 +44,7 @@ const useSendMessage = () => {
         sentAt: new Date().toISOString(),
       };
 
-      const updatedCacheData = { ...old, data: [...old.data, newData] };
+      const updatedCacheData = { ...old, data: [...old.data, newData] };      
       // console.log(newP);
 
       return updatedCacheData;

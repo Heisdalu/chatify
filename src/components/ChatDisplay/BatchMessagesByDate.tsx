@@ -8,16 +8,18 @@ import ReceiverAudioDisplay from "./ReceiverAudioDisplay";
 import ReceiverImageDisplay from "./ReceiverImageDisplay";
 import CustomSendingChat from "../CustomChat/CustomSendingChat";
 import CustomSendingAudio from "../CustomChat/CustomSendingAudio";
+import CustomSendingImage from "../CustomChat/CustomSendingImage";
 
 const Transform = (data: Messages, email: string) => {
   if (data.msgSenderId === email && data?.loading) {
     if (data.msgType === "TEXT") {
-      // console.log("inn");
       return <CustomSendingChat item={data} key={data.id as Key} />;
     }
     if (data.msgType === "AUDIO") {
-      // console.log("inn");
       return <CustomSendingAudio item={data} key={data.id as Key} />;
+    }
+    if (data.msgType === "PHOTO") {
+      return <CustomSendingImage item={data} key={data.id as Key} />;
     }
     return;
   }
