@@ -36,6 +36,9 @@ export default async function handler(
         const receiverId = fields?.receiverId || "";
         const type = fields?.type || "";
         const duration = fields?.duration || "";
+        const sentAt = fields?.sentAt || "";
+
+        // console.log(sentAt[0]);
 
         if (!senderId[0] || !receiverId[0] || !type[0] || !duration[0]) {
           return res.status(404).json({
@@ -44,7 +47,7 @@ export default async function handler(
           });
         }
 
-        console.log(senderId[0], receiverId[0], type[0], duration[0]);
+        console.log(sentAt[0]);
         // must be an image format
         if (
           !file.mimetype?.includes("audio") &&
@@ -94,6 +97,7 @@ export default async function handler(
             message: cloudinaryResponse.secure_url,
             type: "AUDIO",
             duration: duration[0],
+            sentAt: sentAt[0],
           }
         );
 

@@ -16,15 +16,17 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     try {
-      const { senderId, receiverId, message, type, duration } = req.body as {
-        senderId: string;
-        receiverId: string;
-        message: string;
-        type: "TEXT" | "AUDIO" | "IMAGE";
-        duration?: string;
-      };
+      const { senderId, receiverId, message, type, duration, sentAt } =
+        req.body as {
+          senderId: string;
+          receiverId: string;
+          message: string;
+          type: "TEXT" | "AUDIO" | "IMAGE";
+          sentAt: string;
+          duration?: string;
+        };
 
-      console.log(req.body);
+      // console.log(req.body);
 
       // console.log(senderId, receiverId, message);
 
@@ -63,7 +65,7 @@ export default async function handler(
         },
       });
 
-      console.log(userInfo);
+      // console.log(userInfo);
 
       // chat exits... update the message array
       if (userInfo?.id) {
@@ -74,6 +76,7 @@ export default async function handler(
             msgContext: message,
             msgType: type as Type,
             audioDuration: duration || null,
+            sentAt: sentAt,
             Chatsparticipant: {
               connect: [{ id: userInfo.id }],
             },
@@ -134,6 +137,7 @@ export default async function handler(
               msgContext: message,
               msgType: type as Type,
               audioDuration: duration || null,
+              sentAt: sentAt,
             },
           },
         },

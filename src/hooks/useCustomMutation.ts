@@ -122,6 +122,7 @@ const useCustomMutation = (item: Messages & { data?: FormData }) => {
             receiverId: item.msgReceiverId,
             message: item.msgContext,
             type: item.msgType,
+            sentAt: item.sentAt,
           }
         : item.data;
     mutation.mutate(body);
