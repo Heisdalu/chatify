@@ -1,6 +1,5 @@
-import { FC, Key, memo, useEffect, useMemo } from "react";
+import { FC, memo, useEffect, useMemo } from "react";
 import InboxHeader from "@/components/InboxHeader/InboxHeader";
-import UserInboxCard from "@/components/InboxList/UserInboxCard";
 import InboxNavigation from "@/components/InboxNavigation/InboxNavigation";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { useQuery } from "@tanstack/react-query";
