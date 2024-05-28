@@ -41,7 +41,7 @@ export default async function handler(
         throw new Error("Invalid chat conversion");
       }
 
-      console.log(sender, receiver);
+      // console.log(sender, receiver);
 
       // TODO: // add a vliadation to check if user is authorized to view the chats..
       // FIXME: session.email === sender | recevier

@@ -17,7 +17,7 @@ export default async function handler(
     try {
       const { name } = req.query;
 
-      console.log(name);
+      // console.log(name);
 
       if (!name) {
         return res.status(404).json({ status: 404, message: "Invalid inputs" });
