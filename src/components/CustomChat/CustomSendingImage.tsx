@@ -12,7 +12,7 @@ import useCustomMutation from "@/hooks/useCustomMutation";
 
 const CustomSendingImage = ({ item }: { item: Messages }) => {
   const formData = new FormData();
-  //@ts-expect-error
+  //@ts-ignore
   formData.append("file", item.msgContext);
   formData.append("senderId", item.msgSenderId as string);
   formData.append("receiverId", item.msgReceiverId as string);
@@ -28,7 +28,7 @@ const CustomSendingImage = ({ item }: { item: Messages }) => {
 
   // console.log(item);
 
-  //@ts-expect-error
+  //@ts-ignore
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const url = useMemo(() => URL.createObjectURL(item.msgContext), []);
 

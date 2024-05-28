@@ -20,7 +20,7 @@ interface audioStateType {
 
 const CustomAudioDisplay = ({ item }: { item: Messages }) => {
   const formData = new FormData();
-  //@ts-expect-error
+  //@ts-ignore
   formData.append("file", item.msgContext);
   formData.append("senderId", item.msgSenderId as string);
   formData.append("receiverId", item.msgReceiverId as string);
@@ -51,7 +51,7 @@ const CustomAudioDisplay = ({ item }: { item: Messages }) => {
   };
 
   const startPlayingFunc = () => {
-    //@ts-expect-error
+    //@ts-ignore
     const url = URL.createObjectURL(item.msgContext);
     // console.log(url);
 
