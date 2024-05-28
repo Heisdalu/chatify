@@ -11,11 +11,11 @@ const SortedList = ({
   email: string;
 }) => {
   const sortedData = useMemo(() => {
-    const ass = [...chatsList].sort((a, b) =>
-      b.messages[0].sentAt.localeCompare(a.messages[0].sentAt as string)
+    const sorted = [...chatsList].sort((a, b) =>
+      b.messages[0].sentAt.localeCompare(a.messages[0]?.sentAt as string)
     );
 
-    return ass;
+    return sorted;
   }, [chatsList]);
 
   return (

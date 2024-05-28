@@ -7,10 +7,12 @@ const ChatDeliveryStatus = ({
   sentTimestamp,
   isSeen,
   loading,
+  turnOff,
 }: {
   sentTimestamp: String;
   isSeen: Boolean;
   loading?: boolean;
+  turnOff?: boolean;
 }) => {
   const date = new Date(`${sentTimestamp}`);
 
@@ -25,7 +27,9 @@ const ChatDeliveryStatus = ({
     <div className="flex flex-col">
       <div className="ml-auto flex items-center space-x-[0.2rem]">
         <time className="text-[0.6rem]">{convertedTime}</time>
-        {loading ? (
+        {turnOff ? (
+          ""
+        ) : loading ? (
           <div className="shallow_svg">
             <Time />
           </div>

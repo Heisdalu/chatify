@@ -30,33 +30,33 @@ export type ChatReplyingContextType = {
 export type Messages = {
   loading?: boolean;
   url?: string;
-  id: Number;
+  id: number;
   audioDuration: string | null;
-  isSeen: Boolean;
-  msgContext: String;
-  msgReceiverId: String;
-  msgSenderId: String;
+  isSeen: boolean;
+  msgContext: string;
+  msgReceiverId: string;
+  msgSenderId: string;
   msgType: Uppercase<ChatType>;
-  sentAt: String;
+  sentAt: string;
 };
 
 export type ChatListTypes = {
-  url: String;
-  id: Number;
-  receiverId: String;
-  receiverDisplayName: String;
-  receiverImageUrl: String;
-  senderDisplayName: String;
-  senderId: String;
-  senderImageUrl: String;
+  url: string;
+  id: number;
+  receiverId: string;
+  receiverDisplayName: string;
+  receiverImageUrl: string;
+  senderDisplayName: string;
+  senderId: string;
+  senderImageUrl: string;
   messages: Messages[];
 };
 
 export type InboxListDataTypes = {
-  message: String;
+  message: string;
   data: {
-    email: String;
-    displayName: String;
+    email: string;
+    displayName: string;
     chatsList: ChatListTypes[];
   };
 };
@@ -79,4 +79,9 @@ export type SearchUserTypes = {
     displayName: string;
     profileImageUrl: string;
   }[];
+};
+
+export type VisblityResultTypes = {
+  message: string;
+  data: Messages;
 };
