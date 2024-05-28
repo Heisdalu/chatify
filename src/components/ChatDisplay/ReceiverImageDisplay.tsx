@@ -5,8 +5,14 @@ import Close from "../../../public/icons/Close";
 import Image from "next/image";
 import { Messages } from "@/types";
 import ChatDeliveryStatus from "./ChatDeliveryStatus";
+import useVisiblity from "@/hooks/useVisiblity";
 
 const ReceiverImageDisplay = ({ item }: { item: Messages }) => {
+  const { activateMutate } = useVisiblity({
+    id: item.id as number,
+    isSeen: item.isSeen as boolean,
+  });
+
   const [isImageDisplayed, setIsImageDisplayed] = useState(false);
 
   const exitImagePreview = () => {
@@ -21,10 +27,15 @@ const ReceiverImageDisplay = ({ item }: { item: Messages }) => {
     e.target?.classList.remove("bg-gray-100");
   };
 
+  const photoClicked = () => {
+    setIsImageDisplayed(true);
+    activateMutate();
+  };
+
   return (
     <div className="">
       <button
-        onClick={() => setIsImageDisplayed(true)}
+        onClick={photoClicked}
         className="border-gray-200 hover:bg-gray-200 active:bg-gray-300  border-1 p-[0.5rem] pb-[0.2rem] rounded-[5px] space-y-[0.5rem]"
       >
         <div className="space-x-[0.5rem] reduce_svg flex items-center">
@@ -35,6 +46,7 @@ const ReceiverImageDisplay = ({ item }: { item: Messages }) => {
           <ChatDeliveryStatus
             isSeen={item.isSeen}
             sentTimestamp={item.sentAt}
+            turnOff={true}
           />
         </div>
       </button>

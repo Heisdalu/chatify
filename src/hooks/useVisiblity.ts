@@ -3,7 +3,7 @@ import { fetcherPost } from "@/utlis/fetcher";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useIntersectionObserver } from "@uidotdev/usehooks";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const useVisiblity = ({ id, isSeen }: { id: number; isSeen: boolean }) => {
   const queryClient = useQueryClient();
@@ -80,7 +80,18 @@ const useVisiblity = ({ id, isSeen }: { id: number; isSeen: boolean }) => {
         return updatedData;
       });
     },
+    onError(_error, _variables, _context) {
+      //   console.log("error occured");
+    },
   });
+
+  const activateMutate = useCallback(() => {
+    if (!seenOnce && !isSeen && router.query.id) {
+      setSeenOnce(true);
+      mutation.mutate({ id: id });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seenOnce, isSeen]);
 
   useEffect(() => {
     //   console.log(entry, id);
@@ -95,6 +106,6 @@ const useVisiblity = ({ id, isSeen }: { id: number; isSeen: boolean }) => {
 
   useEffect(() => {}, []);
 
-  return { ref };
+  return { ref, activateMutate };
 };
 export default useVisiblity;

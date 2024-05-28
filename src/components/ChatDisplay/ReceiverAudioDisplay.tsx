@@ -6,6 +6,7 @@ import AudioProgress from "../AudioProgress/AudioProgress";
 import { Spinner } from "flowbite-react";
 import { Messages } from "@/types";
 import ChatDeliveryStatus from "./ChatDeliveryStatus";
+import useVisiblity from "@/hooks/useVisiblity";
 
 interface audioStateType {
   loading: boolean;
@@ -25,12 +26,18 @@ const ReceiverAudioDisplay = ({ item }: { item: Messages }) => {
   const [audioCurrentTime, setAudioCurrentTime] = useState(0);
   const [rangeValue, setRangeValue] = useState(0);
 
+  const { activateMutate } = useVisiblity({
+    id: item.id as number,
+    isSeen: item.isSeen as boolean,
+  });
+
   const getRangeValueHandler = (value: number) => {
     setRangeValue(value);
   };
 
   const startPlayingFunc = () => {
     if (!audioFile) return toast.error("Something went wrong. Try again");
+    activateMutate();
     if (!audioFile.src) {
       //playing for the first time
       audioFile.src = item.msgContext as string;
@@ -171,7 +178,11 @@ const ReceiverAudioDisplay = ({ item }: { item: Messages }) => {
           maxDuration={Number(item.audioDuration)}
         />
       </div>
-      <ChatDeliveryStatus isSeen={item.isSeen} sentTimestamp={item.sentAt} />
+      <ChatDeliveryStatus
+        isSeen={item.isSeen}
+        sentTimestamp={item.sentAt}
+        turnOff={true}
+      />
     </div>
   );
 };
