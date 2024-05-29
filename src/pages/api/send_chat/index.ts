@@ -3,11 +3,17 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 import prisma from "@/utlis/prisma";
 import { Type } from "@prisma/client";
+import AES from "crypto-js/aes";
 
 export const config = {
   api: {
     externalResolver: true,
   },
+};
+
+const encryptId = (str: string) => {
+  const encryptedString = AES.encrypt(str, process.env.HASH!);
+  return encodeURIComponent(encryptedString.toString());
 };
 
 export default async function handler(
@@ -130,6 +136,7 @@ export default async function handler(
               email: senderId,
             },
           },
+          url: encryptId(`${user1.email}&${user2.email}`),
           messages: {
             create: {
               msgSenderId: senderId,
