@@ -50,7 +50,14 @@ const ChatHeader = ({
         style={{ marginLeft: "auto" }}
         title="user profile"
       >
-        <Link href="/inbox/135768/profile" className="active:bg-gray-400">
+        <Link
+          href={`/inbox/view/profile?name=${
+            email === participant.sender.email
+              ? participant.receiver.displayName
+              : participant.sender.displayName
+          }`}
+          className="active:bg-gray-400"
+        >
           <Information />
         </Link>
       </div>

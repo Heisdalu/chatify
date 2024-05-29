@@ -97,15 +97,11 @@ export type LatestMessage = {
   isSeen: boolean;
 };
 
-/*
-msgSenderId      String   @map("message_senderId")
-  msgReceiverId    String   @map("message_receiverId")
-  msgType          Type     @default(NONE) @map("message_type")
-  msgContext       String   @map("message_context")
-  parentMsgType    Type     @default(NONE) @map("parent_messageType")
-  audioDuration    String?  @map("audio_duration")
-  parentMsgId      String?  @map("parent_messageId")
-  parentMsgContext String?  @map("parent_messageContext")
-  sentAt           DateTime @default(now()) @map("sent_at")
-  isSeen           Boolean  @default(false)
-  seenAt           DateTime @updatedAt() */
+export type profileTypes = {
+  message: string;
+  data: {
+    bio: string;
+    displayName: string;
+    profileImageUrl: string;
+  };
+};
