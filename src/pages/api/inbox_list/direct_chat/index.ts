@@ -13,12 +13,12 @@ export default async function handler(
     try {
       const { chat_id } = req.query;
 
-      //   const session = await getServerSession(req, res, authOptions);
-      //   if (!session) {
-      //     return res
-      //       .status(404)
-      //       .json({ status: 404, message: "You need to be authenticated" });
-      //   }
+      const session = await getServerSession(req, res, authOptions);
+      if (!session) {
+        return res
+          .status(404)
+          .json({ status: 404, message: "You need to be authenticated" });
+      }
 
       if (!chat_id || typeof chat_id !== "string") {
         throw new Error("Invalid user");
@@ -46,6 +46,15 @@ export default async function handler(
       // TODO: // add a vliadation to check if user is authorized to view the chats..
       // FIXME: session.email === sender | recevier
 
+      if (
+        !(session.user?.email === sender) ||
+        !(session.user?.email === receiver)
+      ) {
+        return res.status(404).json({
+          status: 404,
+          message: "Invalid access",
+        });
+      }
       // check if sender and receiver are registered users
       const userAvailability = await prisma.user.findMany({
         where: {
