@@ -41,15 +41,18 @@ export default async function handler(
         throw new Error("Invalid chat conversion");
       }
 
-      // console.log(sender, receiver);
-
       // TODO: // add a vliadation to check if user is authorized to view the chats..
       // FIXME: session.email === sender | recevier
 
-      if (
-        !(session.user?.email === sender) ||
-        !(session.user?.email === receiver)
-      ) {
+      if (!`${sender}${receiver}`.includes(session?.user?.email as string)) {
+        console.log(
+          !(session.user?.email === sender),
+          !(session.user?.email === receiver)
+        );
+        console.log();
+
+        console.log(session.user?.email, sender, receiver);
+
         return res.status(404).json({
           status: 404,
           message: "Invalid access",

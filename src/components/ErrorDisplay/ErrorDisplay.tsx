@@ -22,7 +22,7 @@ const ErrorDisplay = ({ message, refetch }: Props) => {
           </button>
         ) : (
           <Link
-            className="bg-black rounded-[5px] active:bg-white active:text-black w-[10rem] mx-auto text-white py-[0.5rem] px-[1rem]"
+            className="bg-black rounded-[5px] t4xt-center active:bg-white active:text-black w-[10rem] mx-auto text-white py-[0.5rem] px-[1rem]"
             href="/inbox"
           >
             Go back Home
