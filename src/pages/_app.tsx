@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "next-auth/react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import MessageProvider from "@/context/MessageProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,21 +24,23 @@ export default function App({
     <>
       <SessionProvider session={session}>
         <QueryClientProvider client={queryClient}>
-          <style jsx global>{`
-            html {
-              font-family: ${inter.style.fontFamily};
-            }
-          `}</style>
-          <Component {...pageProps} />
-          <ProgressBar
-            height="4px"
-            color="#000"
-            options={{ showSpinner: false }}
-            shallowRouting
-          />
-          <div>
-            <Toaster />
-          </div>
+          <MessageProvider>
+            <style jsx global>{`
+              html {
+                font-family: ${inter.style.fontFamily};
+              }
+            `}</style>
+            <Component {...pageProps} />
+            <ProgressBar
+              height="4px"
+              color="#000"
+              options={{ showSpinner: false }}
+              shallowRouting
+            />
+            <div>
+              <Toaster />
+            </div>
+          </MessageProvider>
           <ReactQueryDevtools initialIsOpen />
         </QueryClientProvider>
       </SessionProvider>

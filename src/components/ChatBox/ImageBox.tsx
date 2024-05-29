@@ -25,7 +25,7 @@ const ImageBox = ({
       return toast.error("Kindly select an image");
     }
     if (pic && pic[0]) {
-      console.log(pic[0]);
+      // console.log(pic[0]);
 
       setPicFile(pic[0]);
     }

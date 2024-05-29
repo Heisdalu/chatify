@@ -85,3 +85,27 @@ export type VisblityResultTypes = {
   message: string;
   data: Messages;
 };
+
+export type LatestMessage = {
+  id: number;
+  message_senderId: string;
+  message_receiverId: string;
+  message_context: string;
+  message_type: ChatType;
+  audio_duration: string;
+  sent_at: string;
+  isSeen: boolean;
+};
+
+/*
+msgSenderId      String   @map("message_senderId")
+  msgReceiverId    String   @map("message_receiverId")
+  msgType          Type     @default(NONE) @map("message_type")
+  msgContext       String   @map("message_context")
+  parentMsgType    Type     @default(NONE) @map("parent_messageType")
+  audioDuration    String?  @map("audio_duration")
+  parentMsgId      String?  @map("parent_messageId")
+  parentMsgContext String?  @map("parent_messageContext")
+  sentAt           DateTime @default(now()) @map("sent_at")
+  isSeen           Boolean  @default(false)
+  seenAt           DateTime @updatedAt() */
