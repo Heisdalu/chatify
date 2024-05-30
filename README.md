@@ -13,9 +13,11 @@ A Chat messaging application. Share texts, voice notes, and pictures with loved 
 
 ## Overview
 
+
+
 ### Clip
 
-![Clip](./public/clip/clip.mp4)
+https://github.com/Heisdalu/chatify/assets/67029282/c0f1cf67-ed7f-49ab-824d-c15c54c7ea0e
 
 ### Built with
 
