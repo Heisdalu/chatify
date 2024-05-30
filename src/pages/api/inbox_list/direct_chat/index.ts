@@ -102,7 +102,6 @@ export default async function handler(
             orderBy: {
               sentAt: "desc",
             },
-            take: 15,
 
             select: {
               id: true,
